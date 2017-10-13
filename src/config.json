@@ -1,0 +1,5 @@
+{
+    "DEBUG": false,
+    "localApiRoot": "http://localhost:5000",
+    "apiRoot": "http://HashtagGreet.com"
+}
