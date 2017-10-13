@@ -1,8 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const app = express()
-var cors = require('cors')
+const app = express();
+const graphqlHTTP = require('express-graphql');
+const API = require('./src/api');
+
+var cors = require('cors');
 app.use(cors())
 
 // Logger
@@ -11,9 +14,12 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 // Serves static assets
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Serves REST API
-const apiRouter = require('./src/apiRoutes');
-app.use('/api', apiRouter);
+// Serves GraphQL API
+app.use('/graphql', graphqlHTTP({
+  schema: API.schema,
+  rootValue: API.root,
+  graphiql: true,
+}));
 
 // Serves React's build
 app.get('/*', (req, res) => {

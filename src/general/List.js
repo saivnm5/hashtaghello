@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Event from '../events/Event';
+import Event from '../stories/Story';
 import axios from 'axios';
 
 class List extends Component {
@@ -30,7 +30,7 @@ class List extends Component {
         var events = this.state.events;
         for (var i=0; i < events.length; i++) {
             if(events[i].isArchived === undefined){
-                rows.push(<Event data={events[i]} key={i} />);
+                rows.push(<Story data={events[i]} key={i} />);
             }
         }
 
