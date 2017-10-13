@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import List from './general/List';
 import './App.css';
 import config from './config';
+import logoImg from './assets/logo.png';
 
 class App extends Component {
 
@@ -27,7 +28,13 @@ class App extends Component {
         <div className="app-container">
 
           <div id="header">
-            <div className="font-x-large" onClick={()=> this.handleTestEvent()}>#Greet</div>
+            <div className="header-image">
+              <img src={logoImg} />
+            </div>
+
+            <div className="header-actions">
+              <div title="Your Stories" className="font-heading">#i</div>
+            </div>
           </div>
 
           <div id="body">
@@ -36,7 +43,7 @@ class App extends Component {
 
           <div id="footer">
             <div className="font-sub-heading">
-              we publish a monthly calendar
+              we publish a monthly newsletter
             </div>
             <div className="font-heading"><a href="https://hashhello.typeform.com/to/lrL7KZ"><u>#StayInTouch</u></a></div>
           </div>

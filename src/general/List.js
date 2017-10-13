@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Event from '../stories/Story';
+import Story from '../stories/Story';
 import axios from 'axios';
 
 class List extends Component {
@@ -8,36 +8,41 @@ class List extends Component {
         super(props)
 
         this.state = {
-            events: []
+            stories: []
         }
     }
 
     componentWillMount(){
+
         var comp = this;
         var apiRoot = localStorage.getItem('apiRoot');
+        var data = {
+            query: "{ stories { hashtag \n coverImg } }"
+        }
         axios({
-          method: 'get',
-          url: apiRoot+'/api/events/list'
+          method: 'post',
+          url: apiRoot+'/api',
+          data: data
         }).then(function(response){
+            var data = response.data.data;
             comp.setState({
-                events: response.data
+                stories: data.stories
             })
         });
+
     }
 
     render() {
         var rows = [];
-        var events = this.state.events;
-        for (var i=0; i < events.length; i++) {
-            if(events[i].isArchived === undefined){
-                rows.push(<Story data={events[i]} key={i} />);
-            }
+        var stories = this.state.stories;
+        for (var i=0; i < stories.length; i++) {
+            rows.push(<Story data={stories[i]} key={i} />);
         }
 
         return (
             <div className="list">
                 <div className="list-header">
-                    <div className="font-x-large">Events in #India </div>
+                    <div className="font-sub-heading">Stories from around the world</div>
                 </div>
                 <div className="list-body">
                     {rows}

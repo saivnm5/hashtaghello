@@ -1,14 +1,21 @@
-var { buildSchema } = require('graphql');;
+var { graphql, buildSchema } = require('graphql');
+var stories = require('./stories/initData');
 
 var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
+    type Story{
+        hashtag: String!
+        description: String
+        coverImg: String
+    }
+
+    type Query {
+        stories: [Story]
+    }
 `);
 
 var root = {
-  hello: () => {
-    return 'Hello world!';
+  stories: () => {
+    return stories;
   },
 };
 
