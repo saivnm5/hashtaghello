@@ -7,13 +7,17 @@ import {
 import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
+import Create from './stories/Create';
 
 
 class Routes extends React.Component{
   render() {
     return (
       <Router>
-          <Route exact path="/" component={() => (<App type="events" />)} />
+        <div className="pseudo-root">
+          <Route exact path="/" component={App} />
+          <Route exact path="/create" component={Create} />
+        </div>
       </Router>
     );
   }

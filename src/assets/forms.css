@@ -1,0 +1,24 @@
+/* Text Input */
+input[type="text"].form{
+    background: transparent;
+    border: 0px;
+    border-bottom: 1px solid white;
+    width: 100%;
+}
+input[type="text"].hashtag{
+    font-size: 20px !important;
+}
+
+/* Textarea */
+textarea.form{
+    background: transparent;
+    border: 0px;
+    resize: none;
+    font-size: 16px !important;
+    width: 100%;
+}
+
+/* removes blue focus from everything */
+*:focus {
+    outline: none;
+}

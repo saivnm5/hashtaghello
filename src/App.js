@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import List from './general/List';
+import './assets/forms.css';
 import './App.css';
 import config from './config';
 import logoImg from './assets/logo.png';
+import { Link } from 'react-router-dom';
 
 class App extends Component {
 
@@ -15,29 +17,23 @@ class App extends Component {
     }
   }
 
-  handleTestEvent = () => {
-    window.ga('send', 'event', {
-        eventCategory: 'Test',
-        eventAction: 'click',
-        eventLabel: 'heading'
-    });
-  }
-
   render() {
     return (
-        <div className="app-container">
+        <div className="container">
 
           <div id="header">
             <div className="header-image">
-              <img src={logoImg} />
+              <img src={logoImg} alt="hashtag hello's logo" />
             </div>
 
             <div className="header-actions">
-              <div title="Your Stories" className="font-heading">#i</div>
+              <div title="Your Stories" className="font-heading">
+                <Link to="/create">#i</Link>
+              </div>
             </div>
           </div>
 
-          <div id="body">
+          <div>
             <List />
           </div>
 
