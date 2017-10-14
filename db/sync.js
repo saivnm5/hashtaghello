@@ -30,7 +30,26 @@ readFiles('./db/migrations/', function(filename, content) {
 setTimeout(function(){ // giving two seconds for the files to be read
 
     db.query(sql).then(function(result){
-        console.log('Migration applied successfully!');
+        console.log('Migrations applied successfully!');
+    }).catch(function(error){
+        console.log('Something wrong'+error);
+        process.exit();
+    });
+
+}, 2000);
+
+var sqlF = '';
+readFiles('./db/functions/', function(filename, content) {
+    console.log(filename);
+    sqlF = sqlF + content;
+}, function(err) {
+  throw err;
+});
+
+setTimeout(function(){ // giving two seconds for the files to be read
+
+    db.query(sqlF).then(function(result){
+        console.log('Functions updated successfully!');
         process.exit();
     }).catch(function(error){
         console.log('Something wrong'+error);

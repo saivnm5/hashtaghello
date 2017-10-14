@@ -3,6 +3,11 @@ var stories = require('./stories/initData');
 var db = require('./db');
 
 var schema = buildSchema(`
+    input StoryInput{
+        hashtag: String!
+        description: String
+    }
+
     type Story{
         hashtag: String!
         description: String
@@ -12,15 +17,29 @@ var schema = buildSchema(`
     type Query {
         stories: [Story]
     }
+
+    type Mutation {
+        createStory(input: StoryInput): Int
+    }
 `);
 
 var root = {
   stories: () => {
-    db.query('select * from hashtag').then(function(response){
+    return db.query('select * from hashtag').then(function(response){
         var rows = response[0];
+        return stories;
     });
-    return stories;
   },
+  createStory: (data) => {
+    var input = data.input;
+    var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
+    var sql = "select * from createStory('"+hashtag+"','"+input.description+"')";
+    return db.query(sql).then(function(response){
+        return response[0][0].storyid;
+    }).catch(function(error){
+        console.log(error);
+    });
+  }
 };
 
 module.exports = {
