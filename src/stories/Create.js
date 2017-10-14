@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Create extends Component {
 
@@ -8,7 +9,8 @@ class Create extends Component {
 
     this.state = {
         hashtag: '#',
-        description: ''
+        description: '',
+        story: null
     }
   }
 
@@ -28,6 +30,30 @@ class Create extends Component {
     }
   }
 
+  createStory = () => {
+    var comp = this;
+    var apiRoot = localStorage.getItem('apiRoot');
+    var data = {
+        query: "mutation createStory($input: StoryInput) { \n createStory(input: $input) \n }",
+        variables: {
+          input:{
+            hashtag: this.state.hashtag,
+            description: this.state.description
+          }
+        }
+    }
+    axios({
+      method: 'post',
+      url: apiRoot+'/api',
+      data: data
+    }).then(function(response){
+        var data = response.data.data;
+        comp.setState({
+            story: data.createStory
+        })
+    });
+  }
+
   render() {
     return (
         <div className="container">
@@ -36,7 +62,7 @@ class Create extends Component {
             <div className="btn">
               <Link to="/">Back</Link>
             </div>
-            <div className="btn right-align">
+            <div className="btn right-align" onClick={this.createStory} >
               Start
             </div>
           </div>
