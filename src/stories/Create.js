@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {uploadPhoto} from '../utils/aws';
 
 class Create extends Component {
 
@@ -42,6 +43,7 @@ class Create extends Component {
           }
         }
     }
+    /*
     axios({
       method: 'post',
       url: apiRoot+'/api',
@@ -50,8 +52,17 @@ class Create extends Component {
         var data = response.data.data;
         comp.setState({
             story: data.createStory
-        })
+        });
     });
+    */
+
+    // trigger file upload
+    this.firstImageInput.click();
+  }
+
+  handleImageUpload = (event) => {
+    console.log('selected file: '+event.target.files[0]);
+    uploadPhoto(event.target.files);
   }
 
   render() {
@@ -64,6 +75,13 @@ class Create extends Component {
             </div>
             <div className="btn right-align" onClick={this.createStory} >
               Start
+              <input
+                type="file"
+                accept="image/*"
+                ref={(input) => { this.firstImageInput = input; }}
+                style={{display:'none'}}
+                onChange = {this.handleImageUpload}
+              />
             </div>
           </div>
 
