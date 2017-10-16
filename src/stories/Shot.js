@@ -9,17 +9,29 @@ class Shot extends Component {
         }
     }
 
-    changeOrder = () => {
-        this.props.changeOrder(this.state.order)
+    moveRight = () => {
+        this.props.moveRight(this.state.order)
     }
+
     render(){
         return(
             <div
-                className="scene-shot"
+                className={"scene-shot "+this.props.animationClass}
                 style={{order: this.state.order}}
-                onClick={this.changeOrder}
             >
-                {this.props.content}
+                <div
+                    className="move-left"
+                    onClick={this.moveRight}
+                >
+                    &lt;
+                </div>
+                    {this.props.content}
+                <div
+                    className="move-right"
+                    onClick={this.moveRight}
+                >
+                    &gt;
+                </div>
             </div>
         );
     }

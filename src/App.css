@@ -156,36 +156,53 @@ a:hover{
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 15vh;
+  height: 19vh;
   border-top: 1px solid #353535;
 }
-.left-marker{
-  font-size: 24px;
-  font-weight: 700;
-  width: 5vw;
-  height: 15vh;
-  justify-content: center;
-  align-items: center;
-}
 .scene-list{
-  width: 90vw;
-  height: 15vh;
+  width: 100vw;
+  height: 19vh;
   overflow: scroll;
 }
 .scene-shot{
-  min-width: 13vw;
-  height: 13vh;
+  min-width: 12vw;
+  height: 17vh;
   margin: 1vh 1vw;
   background: white;
   opacity: 0.2;
   color: black;
+  transition: all 0.5s;
 }
-.right-marker{
+.scene-shot.shift-right{
+  transform: translate(14vw, 0);
+}
+
+@media only screen and (max-width: 576px) {
+  .scene-shot{
+    min-width: 30vw;
+  }
+  .scene-shot.shift-right{
+    transform: translate(32vw, 0);
+  }
+}
+
+.scene-shot .move-left{
   font-size: 24px;
-  font-weight: 700;
-  width: 5vw;
-  height: 15vh;
-  right: 0;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
+  margin-right: auto;
+  justify-content: flex-start;
+  visibility: hidden;
+}
+.scene-shot:hover .move-left{
+  visibility: visible;
+}
+.scene-shot .move-right{
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
+  justify-content: flex-end;
+  visibility: hidden;
+}
+.scene-shot:hover .move-right{
+  visibility: visible;
 }
