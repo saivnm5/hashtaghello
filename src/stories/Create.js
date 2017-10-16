@@ -40,6 +40,7 @@ class Create extends Component {
   }
 
   createStory = () => {
+    /*
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
@@ -51,7 +52,7 @@ class Create extends Component {
           }
         }
     }
-    /*
+
     axios({
       method: 'post',
       url: apiRoot+'/api',

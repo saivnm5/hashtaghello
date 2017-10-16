@@ -152,32 +152,39 @@ a:hover{
   background-position: center;
   background-repeat: no-repeat;
 }
-.sceneboard{
+.scene-board{
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 20vh;
+  height: 15vh;
   border-top: 1px solid #353535;
 }
 .left-marker{
   font-size: 24px;
   font-weight: 700;
-  width: 9vw;
-  height: 20vh;
+  width: 5vw;
+  height: 15vh;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid #353535;
+}
+.scene-list{
+  width: 90vw;
+  height: 15vh;
+  overflow: scroll;
 }
 .scene-shot{
-  width: 20vw;
-  height: 20vh;
-  border-right: 1px solid #353535;
+  min-width: 13vw;
+  height: 13vh;
+  margin: 1vh 1vw;
+  background: white;
+  opacity: 0.2;
+  color: black;
 }
 .right-marker{
   font-size: 24px;
   font-weight: 700;
-  width: 9vw;
-  height: 20vh;
+  width: 5vw;
+  height: 15vh;
   right: 0;
   justify-content: center;
   align-items: center;
