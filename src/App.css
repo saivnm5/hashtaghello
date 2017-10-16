@@ -17,14 +17,18 @@ div{
   justify-content: center;
 }
 
-@media only screen and (max-width: 384px) {
+@media only screen and (max-width: 576px) {
     .container{
         width: 100%;
         padding: 0px 12px;
     }
 }
 .container{
-  width: 384px;
+  width: 576px;
+  flex-flow: column wrap;
+}
+.pseudo-container{
+  width: 100%;
   flex-flow: column wrap;
 }
 .right-align{
@@ -135,10 +139,46 @@ a:hover{
 }
 
 
-/* Story Create */
+/* Story */
 .create-body{
   height: 70vh;
   justify-content: center;
   flex-flow: column wrap;
 }
-
+.storyboard{
+  width: 100%;
+  background-size: contain;
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.sceneboard{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 20vh;
+  border-top: 1px solid #353535;
+}
+.left-marker{
+  font-size: 24px;
+  font-weight: 700;
+  width: 9vw;
+  height: 20vh;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #353535;
+}
+.scene-shot{
+  width: 20vw;
+  height: 20vh;
+  border-right: 1px solid #353535;
+}
+.right-marker{
+  font-size: 24px;
+  font-weight: 700;
+  width: 9vw;
+  height: 20vh;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import {uploadPhoto} from '../utils/aws';
+import ChooseHashtag from './ChooseHashtag';
+import StoryBoard from './StoryBoard';
+
+const STAGES = [
+  'HASHTAG',
+  'STORYBOARD',
+  'PUBLISH'
+];
+
 
 class Create extends Component {
 
   constructor(props){
-    super(props)
+    super(props);
 
     this.state = {
         hashtag: '#',
         description: '',
+        stage: STAGES[1],
         story: null
-    }
+    };
   }
 
   handleTagChange = (event) => {
     if(event.target.value && event.target.value.length <= 30){
       this.setState({
         hashtag: event.target.value
-      })
+      });
     }
   }
 
@@ -55,61 +63,54 @@ class Create extends Component {
         });
     });
     */
-
-    // trigger file upload
-    this.firstImageInput.click();
+    this.setState({
+      stage: STAGES[1]
+    });
+    //this.firstImageInput.click();
   }
 
   handleImageUpload = (event) => {
-    console.log('selected file: '+event.target.files[0]);
     uploadPhoto(event.target.files);
   }
 
+  CurrentStage = (props) => {
+    if (this.state.stage === STAGES[0]){
+      return (
+            <ChooseHashtag
+                handleTagChange = {this.handleTagChange}
+                handleDescriptionChange = {this.handleDescriptionChange}
+                handleImageUpload = {this.handleImageUpload}
+                createStory = {this.createStory}
+                data = {this.state}
+            />
+      );
+    }
+    else if (this.state.stage === STAGES[1]){
+      return (
+            <StoryBoard
+                handleTagChange = {this.handleTagChange}
+                handleDescriptionChange = {this.handleDescriptionChange}
+                handleImageUpload = {this.handleImageUpload}
+                createStory = {this.createStory}
+                data = {this.state}
+            />
+      );
+    }
+  }
+
   render() {
-    return (
+      return(
         <div className="container">
-
-          <div className="nav-header">
-            <div className="btn">
-              <Link to="/">Back</Link>
-            </div>
-            <div className="btn right-align" onClick={this.createStory} >
-              Start
-              <input
-                type="file"
-                accept="image/*"
-                ref={(input) => { this.firstImageInput = input; }}
-                style={{display:'none'}}
-                onChange = {this.handleImageUpload}
-              />
-            </div>
-          </div>
-
-          <div className="create-body">
-            <div className="font-heading">Hello Sai,</div>
-            <div className="font-sub-heading">What's your story?</div>
-            <br/><br/>
-            <div>
-              <input
-                type="text"
-                className="form hashtag"
-                value={this.state.hashtag}
-                onChange={this.handleTagChange}
-              />
-            </div>
-            <br/>
-            <div>
-              <textarea
-                className="form"
-                placeholder="Description"
-                value={this.state.description}
-                onChange={this.handleDescriptionChange}
-              />
-            </div>
-          </div>
-
+          <this.CurrentStage />
+          <input
+            type="file"
+            accept="image/*"
+            ref={(input) => { this.firstImageInput = input; }}
+            style={{display:'none'}}
+            onChange = {this.props.handleImageUpload}
+          />
         </div>
-    );
+      );
   }
 }
 

@@ -50,24 +50,4 @@ export function uploadPhoto(files) {
     },
   });
 
-  var params = {
-    Key: fileName,
-    Body: file,
-    ACL: 'public-read'
-  }
-  /*
-  s3.upload({
-    Key: fileName,
-    Body: file,
-    ACL: 'public-read'
-  }, function(err, data) {
-    if (err) {
-      return alert('There was an error uploading your photo: ', err.message);
-    }
-    alert('Successfully uploaded photo.');
-    // do magic here
-  });
-  */
-
-
 }
