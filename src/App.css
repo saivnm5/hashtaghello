@@ -148,7 +148,7 @@ a:hover{
 .storyboard{
   width: 100%;
   background-size: contain;
-  min-height: 100vh;
+  min-height: 81vh;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -157,7 +157,6 @@ a:hover{
   bottom: 0;
   left: 0;
   height: 19vh;
-  border-top: 1px solid #353535;
 }
 .scene-list{
   width: 100vw;
@@ -168,10 +167,11 @@ a:hover{
   min-width: 12vw;
   height: 17vh;
   margin: 1vh 1vw;
-  background: white;
-  opacity: 0.2;
-  color: black;
+  background: black;
+  opacity: 0.5;
   transition: all 0.5s;
+  background-position: center;
+  background-size: cover;
 }
 .scene-shot.shift-right{
   transform: translate(14vw, 0);
@@ -187,22 +187,29 @@ a:hover{
 }
 
 .scene-shot .move-left{
-  font-size: 24px;
+  font-size: 18px;
   cursor: pointer;
   margin-right: auto;
-  justify-content: flex-start;
-  visibility: hidden;
+  justify-content: center;
+  display: none;
 }
 .scene-shot:hover .move-left{
   visibility: visible;
 }
 .scene-shot .move-right{
-  font-size: 24px;
+  font-size: 18px;
   cursor: pointer;
   margin-left: auto;
-  justify-content: flex-end;
+  justify-content: center;
   visibility: hidden;
+  display: none;
 }
 .scene-shot:hover .move-right{
   visibility: visible;
+}
+.scene-shot .upload-trigger{
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }

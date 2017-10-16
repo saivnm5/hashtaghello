@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+import bgImg from '../assets/bg.jpg';
 
 
 class Shot extends Component {
     constructor(props){
         super(props);
+        var style = { order: this.props.order };
+        if(this.props.content){
+            style.backgroundImage = 'url("'+this.props.content+'")';
+        }
+        else{
+            style.backgroundImage = 'url("'+bgImg+'")';
+        }
         this.state = {
-            order: this.props.order
+            order: this.props.order,
+            style: style
         }
     }
 
@@ -17,7 +26,7 @@ class Shot extends Component {
         return(
             <div
                 className={"scene-shot "+this.props.animationClass}
-                style={{order: this.state.order}}
+                style={this.state.style}
             >
                 <div
                     className="move-left"
@@ -25,7 +34,11 @@ class Shot extends Component {
                 >
                     &lt;
                 </div>
-                    {this.props.content}
+
+                <div className="upload-trigger">
+
+                </div>
+
                 <div
                     className="move-right"
                     onClick={this.moveRight}

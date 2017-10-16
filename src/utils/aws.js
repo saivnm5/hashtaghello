@@ -16,7 +16,7 @@ var s3 = new window.AWS.S3({
   params: {Bucket: awsBucketName}
 });
 
-export function uploadPhoto(files) {
+export function uploadPhoto(files, successCallback) {
   if (!files.length) {
     return alert('Please choose a file to upload first.');
   }
@@ -41,7 +41,8 @@ export function uploadPhoto(files) {
         if (err) {
           return alert('There was an error uploading your photo: ', err.message);
         }
-        alert("File uploaded successfully.");
+        var imgUrl = data.Location;
+        successCallback(imgUrl);
       });
 
     },

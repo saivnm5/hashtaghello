@@ -1,48 +1,46 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import bgImg from '../assets/bg.jpg';
 import Shot from './Shot';
 
 
 var shots = [
     {
-        content: 'something0'
+        content: null
     },
     {
-        content: 'something1'
+        content: null
     },
     {
-        content: 'something2'
+        content: null
     },
     {
-        content: 'something3'
+        content: null
     },
     {
-        content: 'something4'
+        content: null
     },
     {
-        content: 'something5'
+        content: null
     },
     {
-        content: 'something6'
+        content: null
     },
     {
-        content: 'something7'
-    },
-    {
-        content: 'something8'
+        content: null
     }
 ]
 
 class StoryBoard extends Component {
-
     constructor(props){
         super(props);
-
         this.state = {
-            img: bgImg,
+            img: this.props.data.img,
             shots: shots
         }
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({img: newProps.data.img});
     }
 
     changeOrder = (index) => {
@@ -90,6 +88,7 @@ class StoryBoard extends Component {
     }
 
     render(){
+
         return(
             <div className="pseudo-container storyboard" style={ { backgroundImage: 'url("'+this.state.img+'")' } }>
 

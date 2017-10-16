@@ -18,8 +18,9 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[1],
-        story: null
+        stage: STAGES[0],
+        story: null,
+        img: ''
     };
   }
 
@@ -67,48 +68,49 @@ class Create extends Component {
     this.setState({
       stage: STAGES[1]
     });
-    //this.firstImageInput.click();
+    this.firstImageInput.click();
+  }
+
+  changeImage = (imgUrl) => {
+    this.setState({
+      img: imgUrl
+    });
   }
 
   handleImageUpload = (event) => {
-    uploadPhoto(event.target.files);
-  }
-
-  CurrentStage = (props) => {
-    if (this.state.stage === STAGES[0]){
-      return (
-            <ChooseHashtag
-                handleTagChange = {this.handleTagChange}
-                handleDescriptionChange = {this.handleDescriptionChange}
-                handleImageUpload = {this.handleImageUpload}
-                createStory = {this.createStory}
-                data = {this.state}
-            />
-      );
-    }
-    else if (this.state.stage === STAGES[1]){
-      return (
-            <StoryBoard
-                handleTagChange = {this.handleTagChange}
-                handleDescriptionChange = {this.handleDescriptionChange}
-                handleImageUpload = {this.handleImageUpload}
-                createStory = {this.createStory}
-                data = {this.state}
-            />
-      );
-    }
+    var callback = this.changeImage;
+    uploadPhoto(event.target.files, callback);
   }
 
   render() {
+    var currentStage = null;
+    if (this.state.stage === STAGES[0]){
+      currentStage = <ChooseHashtag
+                    handleTagChange = {this.handleTagChange}
+                    handleDescriptionChange = {this.handleDescriptionChange}
+                    handleImageUpload = {this.handleImageUpload}
+                    createStory = {this.createStory}
+                    data = {this.state}
+                  />;
+    }
+    else if (this.state.stage === STAGES[1]){
+      currentStage = <StoryBoard
+                    handleTagChange = {this.handleTagChange}
+                    handleDescriptionChange = {this.handleDescriptionChange}
+                    handleImageUpload = {this.handleImageUpload}
+                    createStory = {this.createStory}
+                    data = {this.state}
+                  />
+    }
       return(
         <div className="container">
-          <this.CurrentStage />
+          {currentStage}
           <input
             type="file"
             accept="image/*"
             ref={(input) => { this.firstImageInput = input; }}
             style={{display:'none'}}
-            onChange = {this.props.handleImageUpload}
+            onChange = {this.handleImageUpload}
           />
         </div>
       );
