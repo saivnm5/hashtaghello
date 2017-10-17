@@ -16,7 +16,7 @@ var s3 = new window.AWS.S3({
   params: {Bucket: awsBucketName}
 });
 
-export function uploadPhoto(files, successCallback) {
+export function uploadPhoto(files, callbackObj) {
   if (!files.length) {
     return alert('Please choose a file to upload first.');
   }
@@ -41,8 +41,9 @@ export function uploadPhoto(files, successCallback) {
         if (err) {
           return alert('There was an error uploading your photo: ', err.message);
         }
-        var imgUrl = data.Location;
-        successCallback(imgUrl);
+        var imgKey = data.key;
+        var shotIndex = callbackObj.shotIndex;
+        callbackObj.success(imgKey, shotIndex);
       });
 
     },
@@ -51,4 +52,16 @@ export function uploadPhoto(files, successCallback) {
     },
   });
 
+}
+
+export function getImgUrl(imgKey, size) {
+  /*var urlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/';
+  if(size === 'thumbnail'){
+    imgKey = 'thumb-'+imgKey;
+  }
+  else{
+    imgKey = 'full-'+imgKey;
+  }*/
+  var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/';
+  return (urlPrefix+imgKey);
 }

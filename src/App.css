@@ -156,12 +156,14 @@ a:hover{
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 19vh;
+  height: 25vh;
+  align-items: flex-end;
 }
 .scene-list{
   width: 100vw;
-  height: 19vh;
+  height: 25vh;
   overflow: scroll;
+  align-items: flex-end;
 }
 .scene-shot{
   min-width: 12vw;
@@ -172,9 +174,23 @@ a:hover{
   transition: all 0.5s;
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 .scene-shot.shift-right{
   transform: translate(14vw, 0);
+}
+.scene-shot.shift-left{
+  transform: translate(-14vw, 0);
+}
+
+.scene-options{
+  width: 12vw;
+  height: 4vh;
+  font-size: 18px;
+  position: relative;
+  top: -4vh;
+  align-items: center;
+  visibility: hidden;
 }
 
 @media only screen and (max-width: 576px) {
@@ -184,32 +200,26 @@ a:hover{
   .scene-shot.shift-right{
     transform: translate(32vw, 0);
   }
+  .scene-shot.shift-left{
+    transform: translate(-32vw, 0);
+  }
+  .scene-options{
+    width: 30vw;
+  }
 }
 
-.scene-shot .move-left{
-  font-size: 18px;
-  cursor: pointer;
-  margin-right: auto;
-  justify-content: center;
-  display: none;
-}
-.scene-shot:hover .move-left{
+.scene-shot.focus .scene-options{
   visibility: visible;
 }
-.scene-shot .move-right{
-  font-size: 18px;
-  cursor: pointer;
-  margin-left: auto;
-  justify-content: center;
-  visibility: hidden;
-  display: none;
+.action-left{
+  justify-content: flex-start;
 }
-.scene-shot:hover .move-right{
-  visibility: visible;
+.action-right{
+  justify-content: flex-end;
 }
-.scene-shot .upload-trigger{
-  font-size: 30px;
-  justify-content: center;
-  align-items: center;
+.action-left, .action-right{
   cursor: pointer;
+}
+.action-left:hover, .action-right:hover{
+  font-size: 24px;
 }

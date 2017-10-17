@@ -1,86 +1,75 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {getImgUrl} from '../utils/aws';
 import Shot from './Shot';
 
-
-var shots = [
-    {
-        content: null
-    },
-    {
-        content: null
-    },
-    {
-        content: null
-    },
-    {
-        content: null
-    },
-    {
-        content: null
-    },
-    {
-        content: null
-    },
-    {
-        content: null
-    },
-    {
-        content: null
-    }
-]
 
 class StoryBoard extends Component {
     constructor(props){
         super(props);
+
         this.state = {
-            img: this.props.data.img,
-            shots: shots
+            img: this.deriveImgUrl(this.props.data),
+            shots: this.props.data.shots,
+            shotInFocus: this.props.data.shotInFocus
         }
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({img: newProps.data.img});
+        this.setState({
+            img: this.deriveImgUrl(newProps.data),
+            shots: newProps.data.shots,
+            shotInFocus: newProps.data.shotInFocus
+        });
     }
 
-    changeOrder = (index) => {
+    deriveImgUrl = (propsData) => {
+        var shotInFocus = propsData.shotInFocus;
+        var imgKey = propsData.shots[shotInFocus].imgKey;
+        return getImgUrl(imgKey);
+    }
+
+    changeOrder = (index, direction) => {
         var shotB = this.state.shots;
         var temp = shotB[index];
+        var shotInFocus = index + 1;
+        if(direction === 'left'){ shotInFocus = index -1; }
+
         shotB.splice(index,1);
-        shotB.splice(index+1, 0, temp);
+        shotB.splice(shotInFocus, 0, temp);
         shotB[index].animationClass = '';
-        shotB[index+1].animationClass = '';
-        this.setState({
-            shots: shotB
-        });
+        shotB[shotInFocus].animationClass = '';
+        this.props.updateShots(shotB, shotInFocus);
     }
 
-    moveRight = (index) => {
+    moveShot = (index, direction) => {
         var comp = this;
         var shotB = this.state.shots;
-        shotB[index].animationClass = 'shift-right';
-        this.setState({
-            shots: shotB
-        });
+        shotB[index].animationClass = 'shift-'+direction;
+        this.props.updateShots(shotB);
 
         setTimeout(function(){
-            comp.changeOrder(index);
-        }, 510)
+            comp.changeOrder(index, direction);
+        }, 510);
     }
 
     Shots = () => {
         var shots = [];
         for(var i=0; i < this.state.shots.length; i++){
+            var isFocused = false;
             var animationClass = '';
+            if(i === this.props.data.shotInFocus){ isFocused = true; }
             if(this.state.shots[i].animationClass){ animationClass = this.state.shots[i].animationClass; }
 
             shots.push(
                 <Shot
                     order={i}
                     key={i}
-                    content={this.state.shots[i].content}
-                    moveRight={this.moveRight}
+                    imgKey={this.state.shots[i].imgKey}
+                    moveShot={this.moveShot}
                     animationClass={animationClass}
+                    isFocused={isFocused}
+                    originalOrder={this.state.shots[i].originalOrder}
                 />
             );
         }

@@ -14,13 +14,18 @@ class Create extends Component {
 
   constructor(props){
     super(props);
+    var shots = [];
+    for(var i=0; i<10; i++){
+      shots.push({imgKey: null, originalOrder: i});
+    }
 
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[0],
+        stage: STAGES[1],
         story: null,
-        img: ''
+        shots: shots,
+        shotInFocus: 0
     };
   }
 
@@ -71,15 +76,29 @@ class Create extends Component {
     this.firstImageInput.click();
   }
 
-  changeImage = (imgUrl) => {
+  updateShot = (imgKey, shotIndex) => {
+    var shotB = this.state.shots;
+    shotB[shotIndex].imgKey = imgKey;
     this.setState({
-      img: imgUrl
+      shots: shotB
     });
   }
 
   handleImageUpload = (event) => {
-    var callback = this.changeImage;
-    uploadPhoto(event.target.files, callback);
+    var callbackObj = {
+      success: this.updateShot,
+      shotIndex: 0
+    };
+    uploadPhoto(event.target.files, callbackObj);
+  }
+
+  updateShots = (newShots, shotInFocus) => {
+    var newState = {};
+    newState.shots = newShots;
+    if(shotInFocus !== undefined){
+      newState.shotInFocus = shotInFocus;
+    }
+    this.setState(newState);
   }
 
   render() {
@@ -99,6 +118,7 @@ class Create extends Component {
                     handleDescriptionChange = {this.handleDescriptionChange}
                     handleImageUpload = {this.handleImageUpload}
                     createStory = {this.createStory}
+                    updateShots = {this.updateShots}
                     data = {this.state}
                   />
     }

@@ -1,49 +1,67 @@
 import React, { Component } from 'react';
 import bgImg from '../assets/bg.jpg';
+import {getImgUrl} from '../utils/aws';
 
 
 class Shot extends Component {
     constructor(props){
         super(props);
-        var style = { order: this.props.order };
-        if(this.props.content){
-            style.backgroundImage = 'url("'+this.props.content+'")';
+
+        this.state = {
+            order: this.props.order,
+            style: this.getStyle(this.props)
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            order: newProps.order,
+            style: this.getStyle(newProps)
+        });
+    }
+
+    getStyle = (props) => {
+        var style = { order: props.order };
+        if(props.imgKey){
+            var url = getImgUrl(props.imgKey, 'thumbnail');
+            style.backgroundImage = 'url("'+url+'")';
         }
         else{
             style.backgroundImage = 'url("'+bgImg+'")';
         }
-        this.state = {
-            order: this.props.order,
-            style: style
-        }
+        return style;
     }
 
     moveRight = () => {
-        this.props.moveRight(this.state.order)
+        this.props.moveShot(this.state.order, 'right')
+    }
+
+    moveLeft = () => {
+        this.props.moveShot(this.state.order, 'left')
     }
 
     render(){
+        var focusClass = '';
+        if(this.props.isFocused){ focusClass = 'focus'; }
+
         return(
             <div
-                className={"scene-shot "+this.props.animationClass}
+                className={"scene-shot "+this.props.animationClass+" "+focusClass}
                 style={this.state.style}
             >
-                <div
-                    className="move-left"
-                    onClick={this.moveRight}
-                >
-                    &lt;
-                </div>
-
-                <div className="upload-trigger">
-
-                </div>
-
-                <div
-                    className="move-right"
-                    onClick={this.moveRight}
-                >
-                    &gt;
+                <div className="scene-options">
+                    <div className="action-left" onClick={this.moveLeft} >
+                        <i className="fa fa-rotate-left"></i>
+                    </div>
+                    <div className="action-left">
+                        <i className="fa fa-camera-retro"></i>
+                    </div>
+                    <div className="action-right">
+                        <i className="fa fa-trash"></i>
+                    </div>
+                    <div className="action-right" onClick={this.moveRight} >
+                        <i className="fa fa-rotate-right"></i>
+                    </div>
                 </div>
             </div>
         );
