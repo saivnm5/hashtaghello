@@ -15,14 +15,14 @@ class Create extends Component {
   constructor(props){
     super(props);
     var shots = [];
-    for(var i=0; i<10; i++){
+    for(var i=0; i<100; i++){
       shots.push({imgKey: null, originalOrder: i});
     }
 
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[0],
+        stage: STAGES[1],
         story: null,
         shots: shots,
         shotInFocus: 0,
@@ -75,10 +75,20 @@ class Create extends Component {
     this.setState({
       stage: STAGES[1]
     });
-    this.firstImageInput.click();
+    this.triggerUpload();
   }
 
-  updateShot = (imgKey, shotIndex) => {
+  triggerUpload = () => {
+    this.imageInput.click();
+  }
+
+  updateShotInFocus = (newShotIndex) => {
+    this.setState({
+      shotInFocus: newShotIndex
+    });
+  }
+
+  updateShotPhoto = (imgKey, shotIndex) => {
     var shotB = this.state.shots;
     shotB[shotIndex].imgKey = imgKey;
     this.setState({
@@ -95,8 +105,8 @@ class Create extends Component {
 
   handleImageUpload = (event) => {
     var callbackObj = {
-      success: this.updateShot,
-      shotIndex: 0,
+      success: this.updateShotPhoto,
+      shotIndex: this.state.shotInFocus,
       progress: this.uploadProgress
     };
     uploadPhoto(event.target.files, callbackObj);
@@ -132,6 +142,9 @@ class Create extends Component {
                     handleImageUpload = {this.handleImageUpload}
                     createStory = {this.createStory}
                     updateShots = {this.updateShots}
+                    updateShotInFocus = {this.updateShotInFocus}
+                    triggerUpload = {this.triggerUpload}
+                    updateShotPhoto = {this.updateShotPhoto}
                     data = {this.state}
                   />
     }
@@ -141,7 +154,7 @@ class Create extends Component {
           <input
             type="file"
             accept="image/*"
-            ref={(input) => { this.firstImageInput = input; }}
+            ref={(input) => { this.imageInput = input; }}
             style={{display:'none'}}
             onChange = {this.handleImageUpload}
           />

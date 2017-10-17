@@ -182,6 +182,7 @@ a:hover{
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 .scene-shot.shift-right{
   transform: translate(14vw, 0);

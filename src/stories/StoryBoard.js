@@ -70,6 +70,9 @@ class StoryBoard extends Component {
                     animationClass={animationClass}
                     isFocused={isFocused}
                     originalOrder={this.state.shots[i].originalOrder}
+                    updateShotInFocus={this.props.updateShotInFocus}
+                    updateShotPhoto={this.props.updateShotPhoto}
+                    triggerUpload = {this.props.triggerUpload}
                 />
             );
         }

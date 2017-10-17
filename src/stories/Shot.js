@@ -32,6 +32,14 @@ class Shot extends Component {
         return style;
     }
 
+    updateShotInFocus = () => {
+        this.props.updateShotInFocus(this.state.order);
+    }
+
+    removeShotPhoto = () => {
+        this.props.updateShotPhoto(null, this.state.order);
+    }
+
     moveRight = () => {
         this.props.moveShot(this.state.order, 'right')
     }
@@ -48,15 +56,16 @@ class Shot extends Component {
             <div
                 className={"scene-shot "+this.props.animationClass+" "+focusClass}
                 style={this.state.style}
+                onClick={this.updateShotInFocus}
             >
                 <div className="scene-options">
                     <div className="action-left" onClick={this.moveLeft} >
                         <i className="fa fa-rotate-left"></i>
                     </div>
-                    <div className="action-left">
+                    <div className="action-left" onClick={this.props.triggerUpload} >
                         <i className="fa fa-camera-retro"></i>
                     </div>
-                    <div className="action-right">
+                    <div className="action-right" onClick={this.removeShotPhoto} >
                         <i className="fa fa-trash"></i>
                     </div>
                     <div className="action-right" onClick={this.moveRight} >
