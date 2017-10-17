@@ -5,6 +5,8 @@ CREATE TABLE "public"."hashtag" (
     PRIMARY KEY ("id"),
     UNIQUE ("realText")
 );
+ALTER TABLE "public"."hashtag" ADD COLUMN "createdAt" timestamp DEFAULT now();
+
 
 CREATE TABLE "public"."story" (
     "id" serial,
@@ -16,6 +18,15 @@ CREATE TABLE "public"."story" (
     PRIMARY KEY ("id"),
     CONSTRAINT "hashtag_id" FOREIGN KEY ("hashtag") REFERENCES "public"."hashtag"("id")
 );
-
-ALTER TABLE "public"."hashtag" ADD COLUMN "createdAt" timestamp DEFAULT now();
 ALTER TABLE "public"."story" ADD COLUMN "createdAt" timestamp DEFAULT now();
+
+
+CREATE TABLE "public"."shot" (
+    "id" serial,
+    "story" integer NOT NULL,
+    "order" integer NOT NULL,
+    "imgKey" text,
+    "createdAt" timestamp DEFAULT now(),
+    PRIMARY KEY ("id"),
+    CONSTRAINT "story_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
+);

@@ -8,6 +8,11 @@ var schema = buildSchema(`
         description: String
     }
 
+    input ShotInput{
+        story: Int!
+        shots: [String!]
+    }
+
     type Story{
         hashtag: String!
         description: String
@@ -20,6 +25,7 @@ var schema = buildSchema(`
 
     type Mutation {
         createStory(input: StoryInput): Int
+        saveStory(input: ShotInput): Int
     }
 `);
 
@@ -39,6 +45,25 @@ var root = {
     }).catch(function(error){
         console.log(error);
     });
+  },
+  saveStory: (data) => {
+    var input = data.input;
+    var storyId = input.story;
+    var shots = input.shots;
+    var shotsArrayString = '';
+    for(var i=0; i<shots.length; i++){
+        shotsArrayString += "'"+shots[i]+"',";
+    }
+    shotsArrayString = shotsArrayString.slice(0, -1); // removing the last comma
+
+    var sql = "select * from saveStory("+storyId+", ARRAY["+shotsArrayString+"])";
+
+    return db.query(sql).then(function(response){
+        return response[0][0].success;
+    }).catch(function(error){
+        console.log(error);
+    });
+
   }
 };
 

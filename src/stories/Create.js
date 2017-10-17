@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {uploadPhoto} from '../utils/aws';
 import ChooseHashtag from './ChooseHashtag';
 import StoryBoard from './StoryBoard';
@@ -22,7 +23,7 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[1],
+        stage: STAGES[0],
         story: null,
         shots: shots,
         shotInFocus: 0,
@@ -48,7 +49,7 @@ class Create extends Component {
   }
 
   createStory = () => {
-    /*
+
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
@@ -71,21 +72,47 @@ class Create extends Component {
             story: data.createStory
         });
     });
-    */
+
     this.setState({
       stage: STAGES[1]
     });
     this.triggerUpload();
   }
 
-  triggerUpload = () => {
-    this.imageInput.click();
+  saveStory = () => {
+
+    var apiRoot = localStorage.getItem('apiRoot');
+    var shots = [];
+    for(var i=0; i < this.state.shots.length; i++){
+      var imgKey = this.state.shots[i].imgKey;
+      if(imgKey){
+        shots.push(imgKey);
+      }
+    }
+    var data = {
+        query: "mutation saveStory($input: ShotInput) { \n saveStory(input: $input) \n }",
+        variables: {
+          input:{
+            story: this.state.story,
+            shots: shots
+          }
+        }
+    }
+
+    axios({
+      method: 'post',
+      url: apiRoot+'/api',
+      data: data
+    }).then(function(response){
+        var data = response.data.data;
+        if(data.saveStory === 1){
+          alert('Story saved successfully!');
+        }
+    });
   }
 
-  updateShotInFocus = (newShotIndex) => {
-    this.setState({
-      shotInFocus: newShotIndex
-    });
+  triggerUpload = () => {
+    this.imageInput.click();
   }
 
   updateShotPhoto = (imgKey, shotIndex) => {
@@ -140,7 +167,7 @@ class Create extends Component {
                     handleTagChange = {this.handleTagChange}
                     handleDescriptionChange = {this.handleDescriptionChange}
                     handleImageUpload = {this.handleImageUpload}
-                    createStory = {this.createStory}
+                    saveStory = {this.saveStory}
                     updateShots = {this.updateShots}
                     updateShotInFocus = {this.updateShotInFocus}
                     triggerUpload = {this.triggerUpload}

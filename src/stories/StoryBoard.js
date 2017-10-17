@@ -94,7 +94,7 @@ class StoryBoard extends Component {
                     <div className="btn">
                       <Link to="/">Back</Link>
                     </div>
-                    <div className="btn right-align" onClick={this.props.createStory} >
+                    <div className="btn right-align" onClick={this.props.saveStory} >
                       Publish
                     </div>
                 </div>
