@@ -22,10 +22,12 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[1],
+        stage: STAGES[0],
         story: null,
         shots: shots,
-        shotInFocus: 0
+        shotInFocus: 0,
+        uploadInProgress: false,
+        uploadPercentage: 0
     };
   }
 
@@ -80,16 +82,27 @@ class Create extends Component {
     var shotB = this.state.shots;
     shotB[shotIndex].imgKey = imgKey;
     this.setState({
-      shots: shotB
+      shots: shotB,
+      uploadInProgress: false
+    });
+  }
+
+  uploadProgress = (percentage) => {
+    this.setState({
+      uploadPercentage: percentage
     });
   }
 
   handleImageUpload = (event) => {
     var callbackObj = {
       success: this.updateShot,
-      shotIndex: 0
+      shotIndex: 0,
+      progress: this.uploadProgress
     };
     uploadPhoto(event.target.files, callbackObj);
+    this.setState({
+      uploadInProgress: true
+    });
   }
 
   updateShots = (newShots, shotInFocus) => {

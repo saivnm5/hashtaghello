@@ -36,7 +36,8 @@ export function uploadPhoto(files, callbackObj) {
       }
       s3.upload(params)
       .on('httpUploadProgress', function(evt) {
-        console.log("Uploaded :: " + parseInt(((evt.loaded * 100) / evt.total), 10)+'%');
+        var percentage = parseInt(((evt.loaded * 100) / evt.total), 10);
+        callbackObj.progress(percentage);
       }).send(function(err, data) {
         if (err) {
           return alert('There was an error uploading your photo: ', err.message);

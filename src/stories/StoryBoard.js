@@ -77,6 +77,12 @@ class StoryBoard extends Component {
     }
 
     render(){
+        var boardBody = null;
+        if(this.props.data.uploadInProgress){
+            boardBody = <div className="storyboard-body">
+                            <div className="font-heading">Uploading: {this.props.data.uploadPercentage}%</div>
+                        </div>;
+        }
 
         return(
             <div className="pseudo-container storyboard" style={ { backgroundImage: 'url("'+this.state.img+'")' } }>
@@ -89,6 +95,8 @@ class StoryBoard extends Component {
                       Publish
                     </div>
                 </div>
+
+                {boardBody}
 
                 <div className="scene-board">
                     <div className="scene-list">

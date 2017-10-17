@@ -152,6 +152,13 @@ a:hover{
   background-position: center;
   background-repeat: no-repeat;
 }
+.storyboard-body{
+  height: 40vh;
+  align-items: center;
+}
+.storyboard-body div{
+  justify-content: center;
+}
 .scene-board{
   position: fixed;
   bottom: 0;
