@@ -1,7 +1,7 @@
 {
-    "DEBUG": true,
+    "DEBUG": false,
     "localApiRoot": "http://localhost:5000",
-    "apiRoot": "http://HashtagHello.in",
+    "apiRoot": "http://hashtaghello.herokuapp.com",
     "db": {
         "username" : "psykrsna",
         "password" : "#hindustani#",
