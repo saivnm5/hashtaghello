@@ -13,6 +13,12 @@ var schema = buildSchema(`
         shots: [String!]
     }
 
+    input ActorInput{
+        name: String!
+        email: String
+        fbUserId: String!
+    }
+
     type Story{
         hashtag: String!
         description: String
@@ -21,11 +27,13 @@ var schema = buildSchema(`
 
     type Query {
         stories: [Story]
+        test: String
     }
 
     type Mutation {
         createStory(input: StoryInput): Int
         saveStory(input: ShotInput): Int
+        createActor(input: ActorInput): Int
     }
 `);
 
@@ -36,10 +44,10 @@ var root = {
         return stories;
     });
   },
-  createStory: (data) => {
+  createStory: (data, request) => {
     var input = data.input;
     var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
-    var sql = "select * from createStory('"+hashtag+"','"+input.description+"')";
+    var sql = "select * from createStory('"+hashtag+"','"+input.description+"', "+request.actor+")";
     return db.query(sql).then(function(response){
         return response[0][0].storyid;
     }).catch(function(error){
@@ -64,10 +72,37 @@ var root = {
         console.log(error);
     });
 
+  },
+  createActor: (data) => {
+    var input = data.input;
+    var email = "null";
+    if(input.email){ email = "'"+input.email+"'"; }
+
+    var sql = "select * from createActor('"+input.name+"',"+email+",'"+input.fbUserId+"')";
+    return db.query(sql).then(function(response){
+        return response[0][0].actor;
+    }).catch(function(error){
+        console.log(error);
+    });
+  },
+  test: (data, request) => {
+    return request.actor;
   }
 };
 
+function authMiddleware(req, res, next) {
+    var authToken = req.get('Authorization');
+    var sql = "select * from getActor('"+authToken+"')";
+    db.query(sql).then(function(response){
+        if(response[0][0].actor){
+            req.actor = response[0][0].actor;
+        }
+        next();
+    });
+}
+
 module.exports = {
     schema: schema,
-    root: root
+    root: root,
+    authMiddleware: authMiddleware
 };

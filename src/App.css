@@ -84,20 +84,28 @@ a:hover{
   height: 48px;
   align-items: center;
   border-bottom: 1px solid #353535;
+  font-size: 18px;
 }
 .nav-header{
   height: 48px;
   align-items: center;
 }
 .header-actions{
-  flex: 1;
+  justify-content: flex-end;
 }
 .header-actions div{
-  width: 24px;
   justify-content: flex-end;
   text-decoration: underline;
+}
+.header-actions div{
   position: relative;
+  top: 1px;
+}
+.header-actions.main div{ /* to vertical align with logo */
   top: -1px;
+}
+.header-back{
+  margin-right: 12px;
 }
 
 /* Body/Layout/Common */

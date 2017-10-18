@@ -15,6 +15,7 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Serves GraphQL API
+app.use(API.authMiddleware);
 app.use('/api', graphqlHTTP({
   schema: API.schema,
   rootValue: API.root,

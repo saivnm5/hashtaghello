@@ -33,16 +33,22 @@ class List extends Component {
     }
 
     render() {
-        var rows = [];
+        var rows = []; var text = '';
         var stories = this.state.stories;
         for (var i=0; i < stories.length; i++) {
             rows.push(<Story data={stories[i]} key={i} />);
+        }
+        if(this.props.type === "featured"){
+            text = 'stories from around the world';
+        }
+        else if(this.props.type === "home"){
+            text = 'your stories';
         }
 
         return (
             <div className="list">
                 <div className="list-header">
-                    <div className="font-sub-heading">Stories from around the world</div>
+                    <div className="font-sub-heading">{text}</div>
                 </div>
                 <div className="list-body">
                     {rows}

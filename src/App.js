@@ -3,39 +3,32 @@ import List from './general/List';
 import './assets/forms.css';
 import './App.css';
 import './assets/font-awesome/css/font-awesome.min.css';
-import config from './config';
 import logoImg from './assets/logo.png';
 import { Link } from 'react-router-dom';
 
-class App extends Component {
 
-  componentWillMount(){
-    if(config.DEBUG){
-      localStorage.setItem('apiRoot', config.localApiRoot);
-    }
-    else{
-      localStorage.setItem('apiRoot', config.apiRoot);
-    }
-  }
+class App extends Component {
 
   render() {
     return (
         <div className="container">
 
           <div id="header">
-            <div className="header-image">
+            <div className="header-image" >
               <img src={logoImg} alt="hashtag hello's logo" />
             </div>
 
-            <div className="header-actions">
+            <div className="header-actions main">
               <div title="Your Stories" className="font-heading">
-                <Link to="/create">#i</Link>
+                <Link to="/home">
+                  <i className="fa fa-hashtag"></i>
+                </Link>
               </div>
             </div>
           </div>
 
           <div>
-            <List />
+            <List type="featured" />
           </div>
 
           <div id="footer">

@@ -52,6 +52,7 @@ class Create extends Component {
 
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
+    let headers = { "Authorization" : localStorage.getItem("authToken") };
     var data = {
         query: "mutation createStory($input: StoryInput) { \n createStory(input: $input) \n }",
         variables: {
@@ -60,11 +61,12 @@ class Create extends Component {
             description: this.state.description
           }
         }
-    }
+    };
 
     axios({
       method: 'post',
       url: apiRoot+'/api',
+      headers: headers,
       data: data
     }).then(function(response){
         var data = response.data.data;
