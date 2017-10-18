@@ -22,7 +22,7 @@ var schema = buildSchema(`
     type Story{
         hashtag: String!
         description: String
-        coverImg: String
+        imgKey: String
     }
 
     type Query {
@@ -39,9 +39,9 @@ var schema = buildSchema(`
 
 var root = {
   stories: () => {
-    return db.query('select * from hashtag').then(function(response){
+    return db.query('select * from storyView').then(function(response){
         var rows = response[0];
-        return stories;
+        return rows;
     });
   },
   createStory: (data, request) => {

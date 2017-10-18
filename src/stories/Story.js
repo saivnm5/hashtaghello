@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import {getImgUrl} from '../utils/aws';
 
 class Event extends Component {
 
     render() {
-        let media = <img src={this.props.data.coverImg} alt={this.props.data.hashtag} />;
+        let img = getImgUrl(this.props.data.imgKey);
+        let media = <img src={img} alt={this.props.data.hashtag} />;
 
         return (
             <div className="event">
@@ -12,15 +14,9 @@ class Event extends Component {
                 </div>
                 <div className="event-content">
                     <div className="font-heading">
-                        <a
-                            href={this.props.data.link}
-                            target="_blank"
-                        >
-                            {this.props.data.hashtag}
-                        </a>
+                        #{this.props.data.hashtag}
                     </div>
-                    <div className="font-sub-heading">{this.props.data.location}</div>
-                    <div className="font-sub-heading">{this.props.data.date}</div>
+                    <div className="font-sub-heading">{this.props.data.description}</div>
                 </div>
             </div>
         );

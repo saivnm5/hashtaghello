@@ -117,6 +117,12 @@ class Create extends Component {
     this.imageInput.click();
   }
 
+  updateShotInFocus = (newShotIndex) => {
+    this.setState({
+      shotInFocus: newShotIndex
+    });
+  }
+
   updateShotPhoto = (imgKey, shotIndex) => {
     var shotB = this.state.shots;
     shotB[shotIndex].imgKey = imgKey;
