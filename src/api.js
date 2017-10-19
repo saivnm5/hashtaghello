@@ -19,15 +19,26 @@ var schema = buildSchema(`
         fbUserId: String!
     }
 
+    type Shot{
+        imgKey: String!
+    }
+
     type Story{
         hashtag: String!
         description: String
         imgKey: String
     }
 
+    type ViewStory{
+        hashtag: String!
+        description: String
+        shots: [Shot]
+    }
+
     type Query {
         stories: [Story]
         test: String
+        story(id: Int!): ViewStory
     }
 
     type Mutation {
@@ -87,6 +98,23 @@ var root = {
   },
   test: (data, request) => {
     return request.actor;
+  },
+  story: (data) => {
+    var sql1 = "select * from storyView where id = "+data.id;
+    var sql2 = "select * from shot where story = "+data.id+" order by \"order\" asc";
+    var response = {};
+
+    return db.query(sql1).then(function(results){
+        var story = results[0][0];
+        response.hashtag = story.hashtag;
+        response.description = story.description;
+        return db.query(sql2).then(function(results){
+            var rows = results[0];
+            response.shots = rows;
+            return response;
+        });
+    });
+
   }
 };
 

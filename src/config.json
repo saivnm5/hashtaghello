@@ -1,5 +1,5 @@
 {
-    "DEBUG": false,
+    "DEBUG": true,
     "localApiRoot": "http://localhost:5000",
     "apiRoot": "http://hashtaghello.herokuapp.com",
     "db": {
@@ -10,6 +10,10 @@
             "logging" : false,
             "host" : "hello-prod.cuqptdxecfhw.ap-south-1.rds.amazonaws.com",
             "dialect": "postgres",
+            "multipleStatements": true,
+            "dialectOptions": {
+                "multipleStatements": true
+            },
             "pool": {
                 "max": 5,
                 "min": 0,

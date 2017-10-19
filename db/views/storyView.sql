@@ -1,6 +1,7 @@
 CREATE OR REPLACE VIEW storyView
 AS
 select
+story."id",
 hashtag."realText" as "hashtag",
 story."description",
 shot."imgKey"
