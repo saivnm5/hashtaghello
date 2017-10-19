@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import List from '../general/List';
 import { fbLogin } from '../utils/fb';
-import { verifyActor } from './auth';
+import { getActor } from './auth';
 
 
 class Home extends Component {
@@ -15,7 +15,7 @@ class Home extends Component {
     if(localStorage.getItem('isLoggedIn') !== "true" || localStorage.getItem('authToken') === null){
       var comp = this;
       var callbackObj = {
-        success: verifyActor
+        success: getActor
       }
       if (typeof window.FB !== 'undefined') {
         console.log('Calling FB login');

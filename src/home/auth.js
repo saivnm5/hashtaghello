@@ -1,23 +1,18 @@
 import axios from 'axios';
 import { getFbUserData } from '../utils/fb';
 
-export function verifyActor(fbUserId) {
-  // call api and check if this user exists
-  // if yes
-    //localStorage.setItem('authToken', fbUserId);
-  // else
-  var callbackObj = { success: createActor };
+export function getActor(fbUserId) {
+  var callbackObj = { success: getOrCreateActor };
   getFbUserData(callbackObj);
 }
 
-function createActor(userData) {
-	console.log('Creating Actor');
+function getOrCreateActor(userData) {
 	var apiRoot = localStorage.getItem('apiRoot');
 	var email = null;
 	if(userData.email !== undefined){ email = userData.email; }
 
   var data = {
-      query: "mutation createActor($input: ActorInput) { \n createActor(input: $input) \n }",
+      query: "mutation getOrCreateActor($input: ActorInput) { \n getOrCreateActor(input: $input) \n }",
       variables: {
         input:{
           name: userData.name,
@@ -33,8 +28,9 @@ function createActor(userData) {
     data: data
   }).then(function(response){
       var data = response.data.data;
-      if(data.createActor){
-      	localStorage.setItem('authToken', userData.id)
+      if(data.getOrCreateActor){
+      	localStorage.setItem('authToken', userData.id);
+        console.log('logged in');
       }
   });
 }

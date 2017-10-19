@@ -44,17 +44,19 @@ var schema = buildSchema(`
     type Mutation {
         createStory(input: StoryInput): Int
         saveStory(input: ShotInput): Int
-        createActor(input: ActorInput): Int
+        getOrCreateActor(input: ActorInput): Int
     }
 `);
 
 var root = {
+
   stories: () => {
     return db.query('select * from storyView').then(function(response){
         var rows = response[0];
         return rows;
     });
   },
+
   createStory: (data, request) => {
     var input = data.input;
     var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
@@ -65,6 +67,7 @@ var root = {
         console.log(error);
     });
   },
+
   saveStory: (data) => {
     var input = data.input;
     var storyId = input.story;
@@ -84,21 +87,24 @@ var root = {
     });
 
   },
-  createActor: (data) => {
+
+  getOrCreateActor: (data) => {
     var input = data.input;
     var email = "null";
     if(input.email){ email = "'"+input.email+"'"; }
 
-    var sql = "select * from createActor('"+input.name+"',"+email+",'"+input.fbUserId+"')";
+    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+",'"+input.fbUserId+"')";
     return db.query(sql).then(function(response){
         return response[0][0].actor;
     }).catch(function(error){
         console.log(error);
     });
   },
+
   test: (data, request) => {
     return request.actor;
   },
+
   story: (data) => {
     var sql1 = "select * from storyView where id = "+data.id;
     var sql2 = "select * from shot where story = "+data.id+" order by \"order\" asc";
