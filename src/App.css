@@ -75,7 +75,6 @@ a:hover{
 .btn{
   text-decoration: underline;
   cursor: pointer;
-  font-size: 16px;
 }
 
 
@@ -238,4 +237,14 @@ a:hover{
 }
 .action-left:hover, .action-right:hover{
   font-size: 24px;
+}
+
+
+/* Home */
+.login-body{
+  height: 60vh;
+  align-items: center;
+}
+.login-body div{
+  justify-content: center;
 }

@@ -9,7 +9,7 @@ import config from './config';
 
 import App from './App';
 import Create from './stories/Create';
-import Home from './home/Home';
+import Home from './home/Index';
 import View from './stories/View';
 
 

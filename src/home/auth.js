@@ -30,7 +30,10 @@ function getOrCreateActor(userData) {
       var data = response.data.data;
       if(data.getOrCreateActor){
       	localStorage.setItem('authToken', userData.id);
-        console.log('logged in');
+        localStorage.setItem('actorName', userData.name);
+        localStorage.setItem('isLoggedIn', true);
+        window.location.reload();
+        console.log('Logged in');
       }
   });
 }

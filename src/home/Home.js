@@ -1,32 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import List from '../general/List';
-import { fbLogin } from '../utils/fb';
-import { getActor } from './auth';
 
 
 class Home extends Component {
 
-  componentWillMount(){
-    this.login();
-  }
-
-  login = () => {
-    if(localStorage.getItem('isLoggedIn') !== "true" || localStorage.getItem('authToken') === null){
-      var comp = this;
-      var callbackObj = {
-        success: getActor
-      }
-      if (typeof window.FB !== 'undefined') {
-        console.log('Calling FB login');
-        fbLogin(callbackObj);
-      }
-      else{
-        setTimeout(function(){
-          comp.login();
-        }, 200);
-      }
-    }
+  constructor(props){
+    super(props);
+    var name = localStorage.getItem('actorName').replace(/ /g,'');
+    this.state = {
+      name: name
+    };
   }
 
   render() {
@@ -39,7 +23,7 @@ class Home extends Component {
           </div>
           </Link>
           <div className="header-title" >
-              #home
+              #{this.state.name}
           </div>
 
           <div className="header-actions">

@@ -23,7 +23,6 @@ export function fbLogin(callbackObj){
 
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
-      localStorage.setItem('isLoggedIn', true);
       callbackObj.success(response.userId);
     }
     else {
