@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {getImgUrl} from '../utils/aws';
-import { Link } from 'react-router-dom';
 import View from './View';
+import Img from 'react-image';
 
 class Story extends Component {
 
@@ -25,8 +25,8 @@ class Story extends Component {
     }
 
     render() {
-        let img = getImgUrl(this.props.data.imgKey);
-        let media = <img src={img} alt={this.props.data.hashtag} />;
+        let imgArray = getImgUrl(this.props.data.imgKey, 'all');
+        let media = <Img src={imgArray} alt={this.props.data.hashtag} />;
         var view = null;
         if(this.state.viewStory){
             view = <View id={this.props.data.id} closeStory={this.closeStory} />

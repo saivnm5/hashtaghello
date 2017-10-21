@@ -3,7 +3,6 @@ import axios from 'axios';
 import './view.css';
 import { getImgUrl } from '../utils/aws';
 import Swipeable from 'react-swipeable';
-import { Link } from 'react-router-dom';
 
 
 class Home extends Component {
@@ -100,7 +99,7 @@ class Home extends Component {
         </div>
         <div className="navigation">
           <i className="fa fa-caret-left left" onClick={this.showLeft} ></i>
-          <i className="fa fa-caret-right right" onClick={this.showRight} s></i>
+          <i className="fa fa-caret-right right" onClick={this.showRight} ></i>
         </div>
         <div className="body">
         <Swipeable

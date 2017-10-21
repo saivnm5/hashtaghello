@@ -56,17 +56,19 @@ export function uploadPhoto(files, callbackObj) {
 }
 
 export function getImgUrl(imgKey, size) {
-  /*var urlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/';
-  if(size === 'thumbnail'){
-    imgKey = 'thumb-'+imgKey;
+  var imgArray = [];
+  var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/';
+  var resizedUrlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/';
+
+  if(size === 'all'){
+    imgArray.push(resizedUrlPrefix+'full-'+imgKey);
+    imgArray.push(urlPrefix+imgKey);
+    return(imgArray);
+  }
+  else if(size === 'full'){
+    return (resizedUrlPrefix+'full-'+imgKey);
   }
   else{
-    imgKey = 'full-'+imgKey;
-  }*/
-  var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/';
-  if(size === 'full'){
-    urlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/';
-    imgKey = 'full-'+imgKey;
+    return (urlPrefix+imgKey);
   }
-  return (urlPrefix+imgKey);
 }
