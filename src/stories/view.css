@@ -1,3 +1,13 @@
+.view-story-container{
+	z-index: 50;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vh;
+	width: 100vw;
+	background: #191919;
+	justify-content: center;
+}
 .view-story .header{
 	height: 5vh;
 	align-items: center;
@@ -5,6 +15,9 @@
 	z-index: 1;
 	visibility: hidden;
 	background: rgba(25, 25, 25, .2);
+}
+.view-story .header .fa{
+	cursor: pointer;
 }
 .view-story:hover .header{
 	visibility: visible;
@@ -35,13 +48,15 @@
   }
 }
 
-.view-story .part{
+.view-story .body{
 	height: 100vh;
+	position: relative;
+	top: -5vh;
+}
+.view-story .part{
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
-	position: relative;
-	top: -5vh;
 	display: none;
 }
 .view-story .part.active{

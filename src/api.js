@@ -24,6 +24,7 @@ var schema = buildSchema(`
     }
 
     type Story{
+        id: Int!
         hashtag: String!
         description: String
         imgKey: String

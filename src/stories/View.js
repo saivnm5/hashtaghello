@@ -2,17 +2,38 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './view.css';
 import { getImgUrl } from '../utils/aws';
+import Swipeable from 'react-swipeable';
+import { Link } from 'react-router-dom';
+
 
 class Home extends Component {
 
   constructor(props){
     super(props);
+
+    var storyId = null;
+    if(props.id){
+      storyId = props.id;
+    }
+    else if(props.match.params.id){
+      storyId = props.match.params.id;
+    }
+
     this.state = {
-      storyId: props.match.params.id,
+      storyId: storyId,
       hashtag: '',
       description: '',
       shots: [],
       activePart: 0
+    }
+  }
+
+  closeStory = () => {
+    if(this.props.closeStory){
+      this.props.closeStory();
+    }
+    else{
+      window.document.location.href="/";
     }
   }
 
@@ -40,7 +61,7 @@ class Home extends Component {
     });
   }
 
-  swipeLeft = () => {
+  showLeft = () => {
     var currentActive = this.state.activePart;
     if(currentActive !== 0){
       this.setState({
@@ -49,7 +70,7 @@ class Home extends Component {
     }
   }
 
-  swipeRight = () => {
+  showRight = () => {
     var currentActive = this.state.activePart;
     if(currentActive !== (this.state.shots.length-1)){
       this.setState({
@@ -63,26 +84,33 @@ class Home extends Component {
     for(var i=0; i<this.state.shots.length; i++){
       var activeClass = '';
       var imgUrl = getImgUrl(this.state.shots[i].imgKey, 'full');
-      if(i == this.state.activePart){ activeClass = 'active'; }
+      if(i === this.state.activePart){ activeClass = 'active'; }
       parts.push(<div className={"part "+activeClass} style={ { backgroundImage: 'url("'+imgUrl+'")' } }></div>)
     }
     return (
-      <div className="container view-story" tabindex="1">
+      <div className="view-story-container">
+      <div className="container view-story" tabIndex="1">
         <div className="header">
           <div>
             {this.state.hashtag}
           </div>
           <div className="right-align">
-            <i className="fa fa-close"></i>
+              <i className="fa fa-close" onClick={this.closeStory} ></i>
           </div>
         </div>
         <div className="navigation">
-          <i className="fa fa-caret-left left" onClick={this.swipeLeft} ></i>
-          <i className="fa fa-caret-right right" onClick={this.swipeRight} s></i>
+          <i className="fa fa-caret-left left" onClick={this.showLeft} ></i>
+          <i className="fa fa-caret-right right" onClick={this.showRight} s></i>
         </div>
         <div className="body">
+        <Swipeable
+          onSwipingLeft={this.showRight}
+          onSwipingRight={this.showLeft}
+        >
           {parts}
+        </Swipeable>
         </div>
+      </div>
       </div>
     );
   }

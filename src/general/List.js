@@ -17,7 +17,7 @@ class List extends Component {
         var comp = this;
         var apiRoot = localStorage.getItem('apiRoot');
         var data = {
-            query: "{ stories { hashtag \n description \n imgKey } }"
+            query: "{ stories { id \n hashtag \n description \n imgKey } }"
         }
         axios({
           method: 'post',
