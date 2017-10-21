@@ -23,7 +23,7 @@ class Shot extends Component {
     getStyle = (props) => {
         var style = { order: props.order };
         if(props.imgKey){
-            var url = getImgUrl(props.imgKey, 'thumbnail');
+            var url = getImgUrl(props.imgKey);
             style.backgroundImage = 'url("'+url+'")';
         }
         else{

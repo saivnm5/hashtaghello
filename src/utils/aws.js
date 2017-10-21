@@ -64,5 +64,9 @@ export function getImgUrl(imgKey, size) {
     imgKey = 'full-'+imgKey;
   }*/
   var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/';
+  if(size === 'full'){
+    urlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/';
+    imgKey = 'full-'+imgKey;
+  }
   return (urlPrefix+imgKey);
 }
