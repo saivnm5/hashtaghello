@@ -15,3 +15,4 @@ on shot.id = (
     order by "order" asc
     limit 1
 )
+order by story."createdAt" desc

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import {getImgUrl} from '../utils/aws';
 import Shot from './Shot';
 
@@ -13,6 +12,10 @@ class StoryBoard extends Component {
             shots: this.props.data.shots,
             shotInFocus: this.props.data.shotInFocus
         }
+    }
+
+    goBack = () => {
+        this.props.changeStage(0);
     }
 
     componentWillReceiveProps(newProps) {
@@ -91,8 +94,8 @@ class StoryBoard extends Component {
             <div className="pseudo-container storyboard" style={ { backgroundImage: 'url("'+this.state.img+'")' } }>
 
                 <div className="nav-header">
-                    <div className="btn">
-                      <Link to="/">Back</Link>
+                    <div className="btn" onClick={this.goBack}>
+                      Back
                     </div>
                     <div className="btn right-align" onClick={this.props.saveStory} >
                       Publish

@@ -6,6 +6,7 @@ var schema = buildSchema(`
     input StoryInput{
         hashtag: String!
         description: String
+        id: Int
     }
 
     input ShotInput{
@@ -43,7 +44,7 @@ var schema = buildSchema(`
     }
 
     type Mutation {
-        createStory(input: StoryInput): Int
+        createOrUpdateStory(input: StoryInput): Int
         saveStory(input: ShotInput): Int
         getOrCreateActor(input: ActorInput): Int
     }
@@ -58,10 +59,10 @@ var root = {
     });
   },
 
-  createStory: (data, request) => {
+  createOrUpdateStory: (data, request) => {
     var input = data.input;
     var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
-    var sql = "select * from createStory('"+hashtag+"','"+input.description+"', "+request.actor+")";
+    var sql = "select * from createOrUpdateStory('"+hashtag+"','"+input.description+"', "+request.actor+", "+input.id+")";
     return db.query(sql).then(function(response){
         return response[0][0].storyid;
     }).catch(function(error){

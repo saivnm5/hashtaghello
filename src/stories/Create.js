@@ -32,6 +32,12 @@ class Create extends Component {
     };
   }
 
+  changeStage = (stage) => {
+    this.setState({
+      stage: STAGES[stage]
+    });
+  }
+
   handleTagChange = (event) => {
     if(event.target.value && event.target.value.length <= 30){
       this.setState({
@@ -54,11 +60,12 @@ class Create extends Component {
     var apiRoot = localStorage.getItem('apiRoot');
     let headers = { "Authorization" : localStorage.getItem("authToken") };
     var data = {
-        query: "mutation createStory($input: StoryInput) { \n createStory(input: $input) \n }",
+        query: "mutation createOrUpdateStory($input: StoryInput) { \n createOrUpdateStory(input: $input) \n }",
         variables: {
           input:{
-            hashtag: this.state.hashtag,
-            description: this.state.description
+            hashtag: comp.state.hashtag,
+            description: comp.state.description,
+            id: comp.state.story
           }
         }
     };
@@ -71,14 +78,14 @@ class Create extends Component {
     }).then(function(response){
         var data = response.data.data;
         comp.setState({
-            story: data.createStory
+            story: data.createOrUpdateStory
         });
     });
 
     this.setState({
       stage: STAGES[1]
     });
-    this.triggerUpload();
+    //this.triggerUpload();
   }
 
   saveStory = () => {
@@ -180,6 +187,7 @@ class Create extends Component {
                     updateShotInFocus = {this.updateShotInFocus}
                     triggerUpload = {this.triggerUpload}
                     updateShotPhoto = {this.updateShotPhoto}
+                    changeStage = {this.changeStage}
                     data = {this.state}
                   />
     }
