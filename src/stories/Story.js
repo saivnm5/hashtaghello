@@ -21,7 +21,12 @@ class Story extends Component {
     closeStory = () => {
         this.setState({
             viewStory: false
-        })
+        });
+    }
+
+    triggerEdit = () => {
+        var url = '/storyboard/'+this.props.data.id;
+        window.location.href = url;
     }
 
     render() {
@@ -31,6 +36,14 @@ class Story extends Component {
         if(this.state.viewStory){
             view = <View id={this.props.data.id} closeStory={this.closeStory} />
         }
+        var Edit = null;
+        if(this.props.type === "home"){
+            Edit = (
+                <div className="font-sub-heading right-align btn" onClick={this.triggerEdit} >
+                    edit
+                </div>
+            );
+        }
 
         return (
             <div className="story">
@@ -38,9 +51,13 @@ class Story extends Component {
                     {media}
                 </div>
                 <div className="story-content">
-                    <div className="font-heading soft-btn" onClick={this.viewStory} >
-                        #{this.props.data.hashtag}
+                    <div>
+                        <div className="font-heading soft-btn" onClick={this.viewStory} >
+                            #{this.props.data.hashtag}
+                        </div>
+                        {Edit}
                     </div>
+
                     <div className="font-sub-heading">{this.props.data.description}</div>
                 </div>
                 {view}

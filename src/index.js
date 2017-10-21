@@ -29,6 +29,7 @@ class Routes extends React.Component{
           <Route exact path="/" component={App} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/create" component={Create} />
+          <Route exact path="/storyboard/:id" component={Create} />
           <Route exact path="/view/:id" component={View} />
         </div>
       </Router>

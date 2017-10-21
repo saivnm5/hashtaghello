@@ -4,6 +4,14 @@ import { Link } from 'react-router-dom';
 
 class ChooseHashtag extends Component {
 
+    constructor(props){
+        super(props);
+        var name = localStorage.getItem('name').split(' ')[0];
+        this.state = {
+            name: name
+        };
+    }
+
     render(){
         return(
             <div className="pseudo-container">
@@ -24,7 +32,7 @@ class ChooseHashtag extends Component {
                 </div>
 
                 <div className="create-body">
-                    <div className="font-heading">Hello Stranger,</div>
+                    <div className="font-heading">Hello {this.state.name},</div>
                     <div className="font-sub-heading">What's your story?</div>
                     <br/><br/>
                     <div>

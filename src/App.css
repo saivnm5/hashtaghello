@@ -32,7 +32,6 @@ div{
   flex-flow: column wrap;
 }
 .right-align{
-  flex: 1;
   justify-content: flex-end;
 }
 
@@ -126,118 +125,6 @@ a:hover{
 #footer div{
   justify-content: center;
   text-align: center;
-}
-
-
-/* Story */
-.story{
-  flex-flow: column wrap;
-  margin-bottom: 32px;
-}
-.story-media{
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-.story-media img{
-  width: 100%;
-  height: 100%;
-}
-.story-content{
-  flex-flow: column wrap;
-}
-
-
-/* Story */
-.create-body{
-  height: 70vh;
-  justify-content: center;
-  flex-flow: column wrap;
-}
-.storyboard{
-  width: 100%;
-  background-size: contain;
-  min-height: 81vh;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.storyboard-body{
-  height: 40vh;
-  align-items: center;
-}
-.storyboard-body div{
-  justify-content: center;
-}
-.scene-board{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 25vh;
-  align-items: flex-end;
-}
-.scene-list{
-  width: 100vw;
-  height: 25vh;
-  overflow: scroll;
-  align-items: flex-end;
-}
-.scene-shot{
-  min-width: 12vw;
-  height: 17vh;
-  margin: 1vh 1vw;
-  background: black;
-  opacity: 0.5;
-  transition: all 0.5s;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-.scene-shot.shift-right{
-  transform: translate(14vw, 0);
-}
-.scene-shot.shift-left{
-  transform: translate(-14vw, 0);
-}
-
-.scene-options{
-  width: 12vw;
-  height: 4vh;
-  font-size: 18px;
-  position: relative;
-  top: -4vh;
-  align-items: center;
-  visibility: hidden;
-}
-
-@media only screen and (max-width: 576px) {
-  .scene-shot{
-    min-width: 30vw;
-  }
-  .scene-shot.shift-right{
-    transform: translate(32vw, 0);
-  }
-  .scene-shot.shift-left{
-    transform: translate(-32vw, 0);
-  }
-  .scene-options{
-    width: 30vw;
-  }
-}
-
-.scene-shot.focus .scene-options{
-  visibility: visible;
-}
-.action-left{
-  justify-content: flex-start;
-}
-.action-right{
-  justify-content: flex-end;
-}
-.action-left, .action-right{
-  cursor: pointer;
-}
-.action-left:hover, .action-right:hover{
-  font-size: 24px;
 }
 
 

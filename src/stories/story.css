@@ -1,3 +1,21 @@
+/* Story */
+.story{
+  flex-flow: column wrap;
+  margin-bottom: 32px;
+}
+.story-media{
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.story-media img{
+  width: 100%;
+  height: 100%;
+}
+.story-content{
+  flex-flow: column wrap;
+}
+
+/* View */
 .view-story-container{
 	z-index: 50;
 	position: fixed;

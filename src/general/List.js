@@ -36,7 +36,7 @@ class List extends Component {
         var rows = []; var text = '';
         var stories = this.state.stories;
         for (var i=0; i < stories.length; i++) {
-            rows.push(<Story data={stories[i]} key={i} />);
+            rows.push(<Story data={stories[i]} key={i} type={this.props.type} />);
         }
         if(this.props.type === "featured"){
             text = 'stories from around the world';

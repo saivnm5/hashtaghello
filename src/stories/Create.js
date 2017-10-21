@@ -3,6 +3,7 @@ import axios from 'axios';
 import {uploadPhoto} from '../utils/aws';
 import ChooseHashtag from './ChooseHashtag';
 import StoryBoard from './StoryBoard';
+import './create.css';
 
 const STAGES = [
   'HASHTAG',
@@ -15,7 +16,12 @@ class Create extends Component {
 
   constructor(props){
     super(props);
+    var storyId = null;
     var shots = [];
+    if(props.match){
+      storyId = props.match.params.id;
+      this.loadData(storyId);
+    }
     for(var i=0; i<100; i++){
       shots.push({imgKey: null, originalOrder: i});
     }
@@ -24,12 +30,39 @@ class Create extends Component {
         hashtag: '#',
         description: '',
         stage: STAGES[0],
-        story: null,
+        story: storyId,
         shots: shots,
         shotInFocus: 0,
         uploadInProgress: false,
         uploadPercentage: 0
     };
+  }
+
+  loadData = (storyId) => {
+    var comp = this;
+    var apiRoot = localStorage.getItem('apiRoot');
+    var data = {
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n shots { \n imgKey \n } \n } \n }",
+        variables: {
+          id: storyId
+        }
+    };
+
+    axios({
+      method: 'post',
+      url: apiRoot+'/api',
+      data: data
+    }).then(function(response){
+        var story = response.data.data.story;
+        var shots = story.shots;
+        var newShots = shots.concat(comp.state.shots);
+        comp.setState({
+            hashtag: '#'+story.hashtag,
+            description: story.description,
+            shots: newShots,
+            story: storyId
+        });
+    });
   }
 
   changeStage = (stage) => {

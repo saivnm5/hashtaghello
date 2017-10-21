@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import List from './general/List';
 import './assets/forms.css';
 import './App.css';
+import './stories/story.css';
 import './assets/font-awesome/css/font-awesome.min.css';
 import logoImg from './assets/logo.png';
 import { Link } from 'react-router-dom';
