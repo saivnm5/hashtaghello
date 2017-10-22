@@ -9,9 +9,9 @@ var schema = buildSchema(`
         id: Int
     }
 
-    input ShotInput{
+    input PartInput{
         story: Int!
-        shots: [String!]
+        parts: [String!]
     }
 
     input ActorInput{
@@ -20,7 +20,7 @@ var schema = buildSchema(`
         fbUserId: String!
     }
 
-    type Shot{
+    type Part{
         imgKey: String!
     }
 
@@ -34,7 +34,7 @@ var schema = buildSchema(`
     type ViewStory{
         hashtag: String!
         description: String
-        shots: [Shot]
+        parts: [Part]
     }
 
     type Query {
@@ -45,7 +45,7 @@ var schema = buildSchema(`
 
     type Mutation {
         createOrUpdateStory(input: StoryInput): Int
-        saveStory(input: ShotInput): Int
+        saveStory(input: PartInput): Int
         getOrCreateActor(input: ActorInput): Int
     }
 `);
@@ -109,7 +109,7 @@ var root = {
 
   story: (data) => {
     var sql1 = "select * from storyView where id = "+data.id;
-    var sql2 = "select * from shot where story = "+data.id+" order by \"order\" asc";
+    var sql2 = "select * from part where story = "+data.id+" order by \"order\" asc";
     var response = {};
 
     return db.query(sql1).then(function(results){
@@ -118,7 +118,7 @@ var root = {
         response.description = story.description;
         return db.query(sql2).then(function(results){
             var rows = results[0];
-            response.shots = rows;
+            response.parts = rows;
             return response;
         });
     });

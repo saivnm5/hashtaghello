@@ -47,6 +47,13 @@ CREATE TABLE "public"."shot" (
     PRIMARY KEY ("id"),
     CONSTRAINT "story_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
 );
+ALTER TABLE "public"."shot" RENAME TO "part";
+ALTER TABLE "public"."part"
+  ADD COLUMN "soundcloudUrl" text,
+  ADD COLUMN "youtubeUrl" text,
+  ADD COLUMN "vimeoUrl" text,
+  ADD COLUMN "thumbnailUrl" text;
+
 
 
 

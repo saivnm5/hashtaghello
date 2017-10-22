@@ -132,7 +132,7 @@ class Create extends Component {
       }
     }
     var data = {
-        query: "mutation saveStory($input: ShotInput) { \n saveStory(input: $input) \n }",
+        query: "mutation saveStory($input: PartInput) { \n saveStory(input: $input) \n }",
         variables: {
           input:{
             story: this.state.story,

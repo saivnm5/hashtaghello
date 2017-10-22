@@ -1,17 +1,17 @@
 CREATE OR REPLACE FUNCTION saveStory(
     storyId integer,
-    shotImgKeys text[],
+    partImgKeys text[],
     OUT success integer)
 AS $$
 DECLARE
     i integer = 0 ;
 BEGIN
-    DELETE FROM shot where "story" = storyId;
-    FOR i in array_lower(shotImgKeys, 1) .. array_upper(shotImgKeys, 1)
+    DELETE FROM part where "story" = storyId;
+    FOR i in array_lower(partImgKeys, 1) .. array_upper(partImgKeys, 1)
     LOOP
         INSERT INTO
-        shot ("story", "order", "imgKey")
-        VALUES (storyId, i-1, shotImgKeys[i]);
+        part ("story", "order", "imgKey")
+        VALUES (storyId, i-1, partImgKeys[i]);
     END LOOP;
     success := 1;
 END; $$
