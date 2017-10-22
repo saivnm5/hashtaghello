@@ -14,9 +14,16 @@
 .storyboard-body{
   height: 40vh;
   align-items: center;
+  flex-flow: column wrap;
 }
 .storyboard-body div{
   justify-content: center;
+}
+.upload-options{
+  margin: 24px 0 0 0;
+}
+.upload-options li{
+  margin: 0px 0px 24px 0px;
 }
 .scene-board{
   position: fixed;
@@ -78,15 +85,9 @@
 .scene-shot.focus .scene-options{
   visibility: visible;
 }
-.action-left{
-  justify-content: flex-start;
+.scene-options div{
+  justify-content: center;
 }
-.action-right{
-  justify-content: flex-end;
-}
-.action-left, .action-right{
-  cursor: pointer;
-}
-.action-left:hover, .action-right:hover{
+.scene-options div:hover{
   font-size: 24px;
 }

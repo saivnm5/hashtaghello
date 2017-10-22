@@ -29,7 +29,12 @@ class StoryBoard extends Component {
     deriveImgUrl = (propsData) => {
         var shotInFocus = propsData.shotInFocus;
         var imgKey = propsData.shots[shotInFocus].imgKey;
-        return getImgUrl(imgKey);
+        if(imgKey === null){
+            return null;
+        }
+        else{
+            return getImgUrl(imgKey);
+        }
     }
 
     changeOrder = (index, direction) => {
@@ -75,20 +80,50 @@ class StoryBoard extends Component {
                     originalOrder={this.state.shots[i].originalOrder}
                     updateShotInFocus={this.props.updateShotInFocus}
                     updateShotPhoto={this.props.updateShotPhoto}
-                    triggerUpload = {this.props.triggerUpload}
                 />
             );
         }
         return shots;
     }
 
+    emptyState = () => {
+        var emptyState = (
+            <div className="storyboard-body font-heading">
+                <div className="">
+                    Upload
+                </div>
+                <ul className="upload-options">
+                    <li onClick={this.props.triggerUpload}>
+                        <i className="fa fa-camera-retro"></i>
+                        &nbsp;&nbsp;<span className="btn">Image</span>
+                    </li>
+                    <li>
+                        <i className="fa fa-music"></i>
+                        &nbsp;&nbsp;<span className="btn">Audio</span> (via soundcloud)
+                    </li>
+                    <li>
+                        <i className="fa fa-film"></i>
+                        &nbsp;&nbsp;<span className="btn">Video</span> (via youtube/vimeo)
+                    </li>
+                </ul>
+            </div>
+        );
+        return emptyState;
+    }
+
     render(){
         var boardBody = null;
-        if(this.props.data.uploadInProgress){
-            boardBody = <div className="storyboard-body">
-                            <div className="font-heading">Uploading: {this.props.data.uploadPercentage}%</div>
-                        </div>;
+        if(!this.state.img){
+            boardBody = this.emptyState();
         }
+        if(this.props.data.uploadInProgress){
+            boardBody = (
+                <div className="storyboard-body">
+                    <div className="font-heading">Uploading: {this.props.data.uploadPercentage}%</div>
+                </div>
+            );
+        }
+
 
         return(
             <div className="pseudo-container storyboard" style={ { backgroundImage: 'url("'+this.state.img+'")' } }>

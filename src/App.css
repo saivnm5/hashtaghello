@@ -113,6 +113,16 @@ a:hover{
 .list-header{
   margin: 12px 0px;
 }
+ul, li {
+  list-style-type: none;
+  padding: 0px;
+}
+ul{
+  margin: 16px 0;
+}
+li{
+  margin: 8px 0;
+}
 
 
 /* Footer */

@@ -18,7 +18,7 @@ class Create extends Component {
     super(props);
     var storyId = null;
     var shots = [];
-    if(props.match){
+    if(props.match.params.id){
       storyId = props.match.params.id;
       this.loadData(storyId);
     }
@@ -29,7 +29,7 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[0],
+        stage: STAGES[1],
         story: storyId,
         shots: shots,
         shotInFocus: 0,

@@ -49,8 +49,27 @@ class Shot extends Component {
     }
 
     render(){
-        var focusClass = '';
+        var focusClass = ''; var optionLeft = null; var optionClose = null; var optionRight = null;
         if(this.props.isFocused){ focusClass = 'focus'; }
+        if(this.state.order !== 0){
+            optionLeft = (
+                <div onClick={this.moveLeft} >
+                    <i className="fa fa-arrow-left"></i>
+                </div>
+            );
+        }
+        if(this.props.imgKey){
+            optionClose = (
+                <div onClick={this.removeShotPhoto} >
+                    <i className="fa fa-trash"></i>
+                </div>
+            );
+        }
+        optionRight = (
+            <div onClick={this.moveRight} >
+                <i className="fa fa-arrow-right"></i>
+            </div>
+        );
 
         return(
             <div
@@ -59,18 +78,9 @@ class Shot extends Component {
                 onClick={this.updateShotInFocus}
             >
                 <div className="scene-options">
-                    <div className="action-left" onClick={this.moveLeft} >
-                        <i className="fa fa-rotate-left"></i>
-                    </div>
-                    <div className="action-left" onClick={this.props.triggerUpload} >
-                        <i className="fa fa-camera-retro"></i>
-                    </div>
-                    <div className="action-right" onClick={this.removeShotPhoto} >
-                        <i className="fa fa-trash"></i>
-                    </div>
-                    <div className="action-right" onClick={this.moveRight} >
-                        <i className="fa fa-rotate-right"></i>
-                    </div>
+                    {optionLeft}
+                    {optionClose}
+                    {optionRight}
                 </div>
             </div>
         );
