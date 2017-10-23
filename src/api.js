@@ -1,6 +1,8 @@
 var { graphql, buildSchema } = require('graphql');
 var stories = require('./stories/initData');
 var db = require('./db');
+var { getRootDomain } = require('./utils/simpl');
+var axios = require('axios');
 
 var schema = buildSchema(`
     input StoryInput{
@@ -11,7 +13,10 @@ var schema = buildSchema(`
 
     input PartInput{
         story: Int!
-        parts: [String!]
+        imgKeys: [String!],
+        soundcloudUrls: [String!],
+        youtubeUrls: [String!],
+        vimeoUrls: [String!]
     }
 
     input ActorInput{
@@ -21,7 +26,10 @@ var schema = buildSchema(`
     }
 
     type Part{
-        imgKey: String!
+        imgKey: String
+        soundcloudUrl: String,
+        youtubeUrl: String,
+        vimeoUrl: String
     }
 
     type Story{
@@ -37,10 +45,16 @@ var schema = buildSchema(`
         parts: [Part]
     }
 
+    type Oembed{
+        thumbnail_url: String!,
+        html: String!
+    }
+
     type Query {
         stories: [Story]
         test: String
         story(id: Int!): ViewStory
+        oembed(url: String!): Oembed
     }
 
     type Mutation {
@@ -123,6 +137,27 @@ var root = {
         });
     });
 
+  },
+
+  oembed: (data) => {
+    var url = data.url;
+    var domain = getRootDomain(url);
+    return axios.get('http://'+domain+'/oembed', {
+        params: {
+          url: url,
+          format: 'json'
+        }
+    })
+    .then(function (response) {
+        console.log(response);
+        var data = {};
+        data.thumbnail_url = response.data.thumbnail_url;
+        data.html = response.data.html;
+        return data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
   }
 };
 

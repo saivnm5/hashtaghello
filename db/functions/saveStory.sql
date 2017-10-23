@@ -1,18 +1,22 @@
 CREATE OR REPLACE FUNCTION saveStory(
     storyId integer,
-    partImgKeys text[],
+    imgKeys text[],
+    soundcloudUrls text[],
+    youtubeUrls text[],
+    vimeoUrls text[],
     OUT success integer)
 AS $$
 DECLARE
     i integer = 0 ;
+    tempOrder integer;
+    tempUrl text;
+    tempThumbUrl text;
 BEGIN
     DELETE FROM part where "story" = storyId;
-    FOR i in array_lower(partImgKeys, 1) .. array_upper(partImgKeys, 1)
-    LOOP
-        INSERT INTO
-        part ("story", "order", "imgKey")
-        VALUES (storyId, i-1, partImgKeys[i]);
-    END LOOP;
+    select * from saveStoryImg(storyId, imgKeys);
+    select * from saveStoryMedia(storyId, soundcloudUrls, 'soundcloud');
+    select * from saveStoryMedia(storyId, youtubeUrls, 'youtube');
+    select * from saveStoryMedia(storyId, vimeoUrls, 'vimeo');
     success := 1;
 END; $$
 LANGUAGE plpgsql;

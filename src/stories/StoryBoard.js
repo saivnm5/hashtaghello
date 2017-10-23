@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {getImgUrl} from '../utils/aws';
 import Shot from './Shot';
+import { isUrl } from '../utils/validations';
+import { getRootDomain } from '../utils/simpl.js';
+import { getOembedData } from '../utils/oembed.js';
 
 
 class StoryBoard extends Component {
@@ -10,8 +13,12 @@ class StoryBoard extends Component {
         this.state = {
             img: this.deriveImgUrl(this.props.data),
             shots: this.props.data.shots,
-            shotInFocus: this.props.data.shotInFocus
-        }
+            mediaUrl: '',
+            inputType: 'image', //default
+            inputError: '',
+            inputSaveBtnTxt: 'Save'
+        };
+        this.updatePart = this.updatePart.bind(this);
     }
 
     goBack = () => {
@@ -31,6 +38,9 @@ class StoryBoard extends Component {
         var imgKey = propsData.shots[shotInFocus].imgKey;
         if(imgKey === null){
             return null;
+        }
+        else if(isUrl(imgKey)){
+            return imgKey;
         }
         else{
             return getImgUrl(imgKey);
@@ -86,26 +96,129 @@ class StoryBoard extends Component {
         return shots;
     }
 
+    selectInputType = (inputType) => {
+        this.setState({
+            inputType: inputType,
+            inputError: '',
+            inputSaveBtnTxt: 'Save'
+        });
+    }
+
+    mediaPartValid = (url) => {
+
+        if(!isUrl(url)){
+            this.setState({
+                inputError: 'invalid URL'
+            });
+        }
+
+        var domain = getRootDomain(url);
+        if(this.state.inputType === 'audio'){
+            if( domain !== 'soundcloud.com' ){
+                this.setState({
+                    inputError: 'sorry, we currently only accept soundcloud links'
+                });
+            }
+            else{
+                return true;
+            }
+        }
+        else if(this.state.inputType === 'video'){
+            if( domain !== 'youtube.com' && domain !== 'vimeo.com' ){
+                this.setState({
+                    inputError: 'sorry, we currently only accept youtube/vimeo links'
+                });
+            }
+            else{
+                return true;
+            }
+        }
+    }
+
+    updatePart = () => {
+        var comp = this;
+        if( this.mediaPartValid(this.state.mediaUrl) ){
+            this.setState({
+                inputSaveBtnTxt: 'Saving...'
+            });
+            var callOembed = getOembedData(this.state.mediaUrl);
+            callOembed.then(function(response){
+                var oembedData = response.data.data.oembed;
+                comp.props.updateMediaPart(comp.props.data.shotInFocus, comp.state.mediaUrl, oembedData.thumbnail_url);
+            });
+        }
+    }
+
+    handleMediaUrlChange = (event) => {
+        this.setState({
+            mediaUrl: event.target.value
+        });
+    }
+
+    mediaInputComp = (placeholder) => {
+        return(
+            <div className="input">
+                <div>
+                    <input type="text" className="form"
+                        placeholder={placeholder}
+                        onChange={this.handleMediaUrlChange}
+                        value={this.state.mediaUrl}
+                    />
+                </div>
+                <div>
+                    <div className="font-error">{this.state.inputError}</div>
+                    <div className="btn right-align" onClick={this.updatePart} >
+                        {this.state.inputSaveBtnTxt}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    mediaInputObj = () => {
+        var mediaInput = { audio: null, video: null}
+
+        if(this.state.inputType !== 'image'){
+            var placeholder = '';
+            if(this.state.inputType === 'audio'){
+                placeholder = 'SoundCloud URL';
+                mediaInput.audio = this.mediaInputComp(placeholder);
+            }
+            else if(this.state.inputType === 'video'){
+                placeholder = 'Youtube/Vimeo URL';
+                mediaInput.video = this.mediaInputComp(placeholder);
+            }
+        }
+        return mediaInput;
+    }
+
     emptyState = () => {
+        var mediaInput = this.mediaInputObj();
+
         var emptyState = (
             <div className="storyboard-body font-heading">
-                <div className="">
+                <div>
                     Upload
                 </div>
-                <ul className="upload-options">
-                    <li onClick={this.props.triggerUpload}>
+                <div className="upload-options">
+                    <div onClick={this.props.triggerUpload}>
                         <i className="fa fa-camera-retro"></i>
-                        &nbsp;&nbsp;<span className="btn">Image</span>
-                    </li>
-                    <li>
+                        &nbsp;&nbsp;<span className="btn ">Image</span>
+                    </div>
+                    <div onClick={() => this.selectInputType('audio')}>
                         <i className="fa fa-music"></i>
-                        &nbsp;&nbsp;<span className="btn">Audio</span> (via soundcloud)
-                    </li>
-                    <li>
+                        &nbsp;&nbsp;<span className="btn ">Audio</span>&nbsp;
+                        <span className="font-sub-heading">(via soundcloud)</span>
+                    </div>
+                    {mediaInput.audio}
+                    <div onClick={() => this.selectInputType('video')}>
                         <i className="fa fa-film"></i>
-                        &nbsp;&nbsp;<span className="btn">Video</span> (via youtube/vimeo)
-                    </li>
-                </ul>
+                        &nbsp;&nbsp;<span className="btn ">Video</span>&nbsp;
+                        <span className="font-sub-heading">(via youtube/vimeo)</span>
+                    </div>
+                    {mediaInput.video}
+                </div>
+
             </div>
         );
         return emptyState;

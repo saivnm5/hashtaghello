@@ -12,18 +12,31 @@
   background-repeat: no-repeat;
 }
 .storyboard-body{
-  height: 40vh;
+  height: 70vh;
   align-items: center;
   flex-flow: column wrap;
 }
-.storyboard-body div{
+.storyboard-body > div{
   justify-content: center;
 }
 .upload-options{
-  margin: 24px 0 0 0;
+  max-width: 300px;
+  margin: 24px 0;
+  flex-flow: column wrap;
+  align-items: center;
 }
-.upload-options li{
+.upload-options > div{
   margin: 0px 0px 24px 0px;
+  align-items: center;
+}
+.upload-options div .fa{
+  justify-content: center;
+}
+.upload-options .input{
+  flex-flow: column wrap;
+}
+.upload-options .input div{
+  align-items: center;
 }
 .scene-board{
   position: fixed;

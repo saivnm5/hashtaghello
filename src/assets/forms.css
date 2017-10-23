@@ -4,6 +4,7 @@ input[type="text"].form{
     border: 0px;
     border-bottom: 1px solid white;
     width: 100%;
+    font-size: 16px !important;
 }
 input[type="text"].hashtag{
     font-size: 20px !important;

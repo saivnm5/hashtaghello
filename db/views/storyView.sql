@@ -9,9 +9,9 @@ from story
 join hashtag
 on story."hashtag" = hashtag."id"
 join part
-on part.id = (
+on part."id" = (
     select id from part
-    where part."story" = part."id"
+    where part."story" = story."id"
     order by "order" asc
     limit 1
 )

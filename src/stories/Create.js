@@ -163,6 +163,15 @@ class Create extends Component {
     });
   }
 
+  updateMediaPart = (shotIndex, url, thumbnailUrl) => {
+    var shotB = this.state.shots;
+    shotB[shotIndex].imgKey = thumbnailUrl;
+    shotB[shotIndex].url = url;
+    this.setState({
+      shots: shotB
+    });
+  }
+
   updateShotPhoto = (imgKey, shotIndex) => {
     var shotB = this.state.shots;
     shotB[shotIndex].imgKey = imgKey;
@@ -221,6 +230,7 @@ class Create extends Component {
                     triggerUpload = {this.triggerUpload}
                     updateShotPhoto = {this.updateShotPhoto}
                     changeStage = {this.changeStage}
+                    updateMediaPart = {this.updateMediaPart}
                     data = {this.state}
                   />
     }
