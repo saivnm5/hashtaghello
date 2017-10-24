@@ -21,6 +21,7 @@ class Home extends Component {
       storyId: storyId,
       hashtag: '',
       description: '',
+      creator: '',
       shots: [],
       activePart: 0
     }
@@ -39,7 +40,7 @@ class Home extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n creator \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           id: this.state.storyId
         }
@@ -54,6 +55,7 @@ class Home extends Component {
         comp.setState({
             hashtag: '#'+story.hashtag,
             description: story.description,
+            creator: story.creator,
             shots: story.parts,
             activePart: story.parts.length
         });
@@ -80,14 +82,15 @@ class Home extends Component {
 
   render() {
     var parts = [];
-    for(var i=0; i<this.state.shots.length; i++){
+    var i = 0;
+    for(; i<this.state.shots.length; i++){
       var activeClass = '';
       if(i === this.state.activePart){ activeClass = 'active'; }
-      parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} />)
+      parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} key={i} />)
     }
     if(this.state.activePart === this.state.shots.length){ activeClass = 'active'; }
     else{ activeClass = ''; }
-    parts.push(<TheEnd activeClass={activeClass} />);
+    parts.push(<TheEnd activeClass={activeClass} data={this.state} key={i+1} />);
     return (
       <div className="view-story-container">
       <div className="container view-story" tabIndex="1">

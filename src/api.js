@@ -34,6 +34,7 @@ var schema = buildSchema(`
     type Story{
         id: Int!
         hashtag: String!
+        creator: String
         description: String
         imgKey: String
         thumbnailUrl: String
@@ -43,6 +44,7 @@ var schema = buildSchema(`
     type ViewStory{
         hashtag: String!
         description: String
+        creator: String
         parts: [Part]
     }
 
@@ -155,6 +157,7 @@ var root = {
         var story = results[0][0];
         response.hashtag = story.hashtag;
         response.description = story.description;
+        response.creator = story.creator;
         return db.query(sql2).then(function(results){
             var rows = results[0];
             response.parts = rows;

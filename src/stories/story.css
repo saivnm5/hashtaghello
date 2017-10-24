@@ -90,7 +90,7 @@
 	flex-flow: column wrap;
 }
 .view-story .the-end.part .credits{
-	height: 30vh;
+	height: 25vh;
 	align-items: center;
 }
 .the-end.part .credits, .the-end.part .payment, .the-end.part .share{
@@ -98,7 +98,8 @@
 }
 .the-end.part .content{
 	flex-flow: column wrap;
-	width: 70%;
+	width: 100%;
+	max-width: 500px;
 }
 .the-end.part .content div{
 	justify-content: center;

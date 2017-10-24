@@ -127,6 +127,12 @@ ul{
 li{
   margin: 8px 0;
 }
+.hide{
+  display: none;
+}
+.show{
+  display: flex;
+}
 
 
 /* Footer */
