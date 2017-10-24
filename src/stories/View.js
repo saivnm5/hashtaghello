@@ -101,8 +101,8 @@ class Home extends Component {
         </div>
         <div className="body">
         <Swipeable
-          onSwipingLeft={this.showRight}
-          onSwipingRight={this.showLeft}
+          onSwipedLeft={this.showRight}
+          onSwipedRight={this.showLeft}
         >
           {parts}
         </Swipeable>
