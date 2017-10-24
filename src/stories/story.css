@@ -86,6 +86,30 @@
 .view-story .part .body iframe{
 	width: 100%;
 }
+.view-story .the-end.part{
+	flex-flow: column wrap;
+}
+.view-story .the-end.part .credits{
+	height: 30vh;
+	align-items: center;
+}
+.the-end.part .credits, .the-end.part .payment, .the-end.part .share{
+	justify-content: center
+}
+.the-end.part .content{
+	flex-flow: column wrap;
+	width: 70%;
+}
+.the-end.part .content div{
+	justify-content: center;
+	text-align: center;
+	align-items: center
+}
+.the-end.part .content .pay-trigger .fa{
+	margin-left: 8px;
+	font-size: 18px;
+	color: #C3C3C3;
+}
 
 
 

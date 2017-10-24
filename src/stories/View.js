@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Swipeable from 'react-swipeable';
 import ViewPart from './ViewPart';
-
+import TheEnd from './TheEnd';
 
 class Home extends Component {
 
@@ -54,7 +54,8 @@ class Home extends Component {
         comp.setState({
             hashtag: '#'+story.hashtag,
             description: story.description,
-            shots: story.parts
+            shots: story.parts,
+            activePart: story.parts.length
         });
     });
   }
@@ -70,7 +71,7 @@ class Home extends Component {
 
   showRight = () => {
     var currentActive = this.state.activePart;
-    if(currentActive !== (this.state.shots.length-1)){
+    if(currentActive !== (this.state.shots.length)){
       this.setState({
         activePart: currentActive + 1
       });
@@ -84,6 +85,9 @@ class Home extends Component {
       if(i === this.state.activePart){ activeClass = 'active'; }
       parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} />)
     }
+    if(this.state.activePart === this.state.shots.length){ activeClass = 'active'; }
+    else{ activeClass = ''; }
+    parts.push(<TheEnd activeClass={activeClass} />);
     return (
       <div className="view-story-container">
       <div className="container view-story" tabIndex="1">

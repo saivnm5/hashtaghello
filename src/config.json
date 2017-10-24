@@ -1,5 +1,5 @@
 {
-    "DEBUG": false,
+    "DEBUG": true,
     "localApiRoot": "http://localhost:5000",
     "apiRoot": "http://hashtaghello.herokuapp.com",
     "db": {

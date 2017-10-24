@@ -13,7 +13,7 @@ class Index extends Component {
   }
 
   componentWillMount(){
-    if(localStorage.getItem('isLoggedIn') === "true" && localStorage.getItem('authToken') !== null){
+    if(localStorage.getItem('isLoggedIn') === "true" && localStorage.getItem('authToken') !== null && localStorage.getItem('actorName') !== null){
       this.setState({
         isLoggedIn: true
       });
