@@ -6,7 +6,7 @@ class ChooseHashtag extends Component {
 
     constructor(props){
         super(props);
-        var name = localStorage.getItem('name').split(' ')[0];
+        var name = localStorage.getItem('actorName').split(' ')[0];
         this.state = {
             name: name
         };
