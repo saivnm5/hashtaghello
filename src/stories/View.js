@@ -57,7 +57,7 @@ class Home extends Component {
             description: story.description,
             creator: story.creator,
             shots: story.parts,
-            activePart: story.parts.length
+            activePart: 0
         });
     });
   }

@@ -5,7 +5,8 @@ class TheEnd extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			shareClass: 'hide'
+			shareClass: 'hide',
+			paymentOn: false
 		};
 	}
 
@@ -20,10 +21,17 @@ class TheEnd extends Component {
 		});
 	}
 
-	render(){
+	triggerPayment = () => {
+		this.setState({
+			paymentOn: true
+		});
+	}
 
-		return(
-			<div className={"part the-end "+this.props.activeClass}>
+	render(){
+		var content = null;
+		if(!this.state.paymentOn){
+			content = (
+			<div className="the-end">
 				<div className="credits">
 					<div className="content">
 						<div className="font-sub-heading">this story was brought to you by</div>
@@ -37,7 +45,7 @@ class TheEnd extends Component {
 						</div>
 						<br/>
 						<div className="pay-trigger">
-							<span className="font-heading btn">Pay As Much As You Wish</span>
+							<span className="font-heading btn" onClick={this.triggerPayment}>Pay As Much As You Wish</span>
 							<i className="fa fa-question-circle-o"></i>
 						</div>
 						<div className="font-sub-heading">
@@ -69,11 +77,70 @@ class TheEnd extends Component {
 								Share
 							</a>
 						</div>
-
-
 					</div>
-
 				</div>
+			</div>
+			);
+		}
+		else{
+			content = (
+				<div className="the-end">
+					<div className="payment-form">
+						<div className="content">
+
+							<div>
+								<div>
+									<div className="font-sub-heading right-align">pay to&nbsp;&nbsp;</div>
+								</div>
+								<div>
+									<span className="font-heading">{this.props.data.creator}</span>
+								</div>
+							</div>
+							<br/>
+
+							<div>
+								<div>
+									<div className="font-sub-heading right-align">for the story&nbsp;&nbsp;</div>
+								</div>
+								<div>
+									<span className="font-heading">{this.props.data.hashtag}</span>
+								</div>
+							</div>
+							<br/>
+
+							<div>
+								<div className="form-label">
+									<div className="right-align">an amount of :&nbsp;</div>
+								</div>
+								<div>
+									<input type="text" className="form" placeholder="(plz enter)" />
+								</div>
+							</div>
+							<br/>
+
+							<div>
+								<div className="form-label">
+									<div className="right-align">from:&nbsp;</div>
+								</div>
+								<div>
+									<input type="text" className="form" placeholder="anonymous" />
+								</div>
+							</div>
+							<br/><br/><br/>
+
+							<div>
+									<span className="font-heading btn">Proceed To Pay</span>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			);
+		}
+
+		return(
+			<div className={"part "+this.props.activeClass}>
+				{content}
 			</div>
 		);
 	}

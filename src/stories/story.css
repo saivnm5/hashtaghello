@@ -86,30 +86,39 @@
 .view-story .part .body iframe{
 	width: 100%;
 }
-.view-story .the-end.part{
+.view-story .part .the-end{
 	flex-flow: column wrap;
 }
-.view-story .the-end.part .credits{
-	height: 25vh;
+.view-story .part .the-end .credits{
+	height: 30vh;
 	align-items: center;
 }
-.the-end.part .credits, .the-end.part .payment, .the-end.part .share{
+.part .the-end .credits, .part .the-end .payment, .part .the-end .share, .part .the-end .payment-form{
 	justify-content: center
 }
-.the-end.part .content{
+.part .the-end .content{
 	flex-flow: column wrap;
 	width: 100%;
 	max-width: 500px;
 }
-.the-end.part .content div{
+.part .the-end .content > div{
 	justify-content: center;
 	text-align: center;
 	align-items: center
 }
-.the-end.part .content .pay-trigger .fa{
+.part .the-end .content .pay-trigger .fa{
 	margin-left: 8px;
 	font-size: 18px;
 	color: #C3C3C3;
+}
+.part .the-end .payment-form{
+	padding-top: 20vh;
+}
+.payment-form input{
+	border-bottom: 0 !important;
+}
+.payment-form .form-label{
+	font-size: 16px;
 }
 
 
