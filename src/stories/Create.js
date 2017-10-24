@@ -3,6 +3,7 @@ import axios from 'axios';
 import {uploadPhoto} from '../utils/aws';
 import ChooseHashtag from './ChooseHashtag';
 import StoryBoard from './StoryBoard';
+import { getRootDomain } from '../utils/simpl.js';
 import './create.css';
 
 const STAGES = [
@@ -11,6 +12,9 @@ const STAGES = [
   'PUBLISH'
 ];
 
+const defaultPart = {
+  imgKey: null, mediaHTML: null, url: null
+};
 
 class Create extends Component {
 
@@ -22,20 +26,21 @@ class Create extends Component {
       storyId = props.match.params.id;
       this.loadData(storyId);
     }
-    for(var i=0; i<100; i++){
-      shots.push({imgKey: null, originalOrder: i});
+    for(var i=0; i<3; i++){
+      shots.push(defaultPart);
     }
 
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[1],
+        stage: STAGES[0],
         story: storyId,
         shots: shots,
         shotInFocus: 0,
         uploadInProgress: false,
         uploadPercentage: 0
     };
+    this.updatePart = this.updatePart.bind(this);
   }
 
   loadData = (storyId) => {
@@ -122,13 +127,32 @@ class Create extends Component {
   }
 
   saveStory = () => {
-
     var apiRoot = localStorage.getItem('apiRoot');
-    var shots = [];
+    var imgKeys = []; var soundcloudUrls = [];
+    var youtubeUrls = []; var vimeoUrls = [];
+    var ___ = '###'; // delimiter
+    var order = 0;
     for(var i=0; i < this.state.shots.length; i++){
-      var imgKey = this.state.shots[i].imgKey;
-      if(imgKey){
-        shots.push(imgKey);
+      var part = this.state.shots[i];
+      var string = '';
+      if(part.url){
+        var domain = getRootDomain(part.url);
+        string = order+___+part.url+___+part.imgKey;
+        order++;
+        if(domain === 'soundcloud.com'){
+          soundcloudUrls.push(string);
+        }
+        else if(domain === 'youtube.com'){
+          youtubeUrls.push(string);
+        }
+        else if(domain === 'vimeo.com'){
+          vimeoUrls.push(string);
+        }
+      }
+      else if(part.imgKey){
+        string = order+___+part.imgKey;
+        imgKeys.push(string);
+        order++;
       }
     }
     var data = {
@@ -136,7 +160,10 @@ class Create extends Component {
         variables: {
           input:{
             story: this.state.story,
-            shots: shots
+            imgKeys: imgKeys,
+            soundcloudUrls: soundcloudUrls,
+            youtubeUrls: youtubeUrls,
+            vimeoUrls: vimeoUrls
           }
         }
     }
@@ -163,21 +190,37 @@ class Create extends Component {
     });
   }
 
-  updateMediaPart = (shotIndex, url, thumbnailUrl) => {
+  updatePart = (shotIndex, type, url, oembedData) => {
     var shotB = this.state.shots;
-    shotB[shotIndex].imgKey = thumbnailUrl;
-    shotB[shotIndex].url = url;
-    this.setState({
-      shots: shotB
-    });
-  }
+    var part = {};
 
-  updateShotPhoto = (imgKey, shotIndex) => {
-    var shotB = this.state.shots;
-    shotB[shotIndex].imgKey = imgKey;
+    if(type === 'image'){
+      part = {
+        imgKey: url,
+        url: null,
+        mediaHTML: null
+      };
+    }
+    else if(type === 'audio' || type === 'video'){
+      part = {
+        imgKey: oembedData.thumbnail_url,
+        url: url,
+        mediaHTML: oembedData.html
+      };
+    }
+    shotB[shotIndex] = part;
+
     this.setState({
       shots: shotB,
       uploadInProgress: false
+    });
+  }
+
+  removePart = (shotIndex) => {
+    var shotB = this.state.shots;
+    shotB[shotIndex] = defaultPart;
+    this.setState({
+      shots: shotB
     });
   }
 
@@ -189,7 +232,7 @@ class Create extends Component {
 
   handleImageUpload = (event) => {
     var callbackObj = {
-      success: this.updateShotPhoto,
+      success: this.updatePart,
       shotIndex: this.state.shotInFocus,
       progress: this.uploadProgress
     };
@@ -230,7 +273,8 @@ class Create extends Component {
                     triggerUpload = {this.triggerUpload}
                     updateShotPhoto = {this.updateShotPhoto}
                     changeStage = {this.changeStage}
-                    updateMediaPart = {this.updateMediaPart}
+                    updatePart = {this.updatePart}
+                    removePart = {this.removePart}
                     data = {this.state}
                   />
     }

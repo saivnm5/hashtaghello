@@ -1,7 +1,7 @@
-CREATE OR REPLACE FUNCTION saveStorySoundcloud(
+CREATE OR REPLACE FUNCTION saveStoryMedia(
     storyId integer,
     mediaUrls text[],
-    mediaSource text[],
+    mediaSource text,
     OUT success integer)
 AS $$
 DECLARE

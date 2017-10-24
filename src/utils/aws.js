@@ -44,7 +44,7 @@ export function uploadPhoto(files, callbackObj) {
         }
         var imgKey = data.key;
         var shotIndex = callbackObj.shotIndex;
-        callbackObj.success(imgKey, shotIndex);
+        callbackObj.success(shotIndex, 'image', imgKey);
       });
 
     },

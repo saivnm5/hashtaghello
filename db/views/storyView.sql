@@ -4,7 +4,11 @@ select
 story."id",
 hashtag."realText" as "hashtag",
 story."description",
-part."imgKey"
+part."imgKey",
+part."thumbnailUrl",
+part."soundcloudUrl",
+part."youtubeUrl",
+part."vimeoUrl"
 from story
 join hashtag
 on story."hashtag" = hashtag."id"

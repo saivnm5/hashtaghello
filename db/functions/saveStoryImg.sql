@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION saveStoryImg(
     OUT success integer)
 AS $$
 DECLARE
-    i integer = 0 ;
+    i integer = 0;
     tempOrder integer;
     tempUrl text;
 BEGIN

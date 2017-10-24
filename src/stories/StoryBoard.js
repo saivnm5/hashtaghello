@@ -6,15 +6,21 @@ import { getRootDomain } from '../utils/simpl.js';
 import { getOembedData } from '../utils/oembed.js';
 
 
+const defaultState = {
+    inputType: 'image' // options: image/audio/video
+};
+
 class StoryBoard extends Component {
     constructor(props){
         super(props);
 
+        var media = this.getMedia(props.data);
         this.state = {
-            img: this.deriveImgUrl(this.props.data),
+            img: media.img,
+            mediaHTML: media.mediaHTML,
             shots: this.props.data.shots,
             mediaUrl: '',
-            inputType: 'image', //default
+            inputType: defaultState.inputType,
             inputError: '',
             inputSaveBtnTxt: 'Save'
         };
@@ -26,25 +32,43 @@ class StoryBoard extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        var media = this.getMedia(newProps.data);
+        var inputState = {
+            inputType: this.state.inputType,
+            inputError: this.state.inputError,
+            inputSaveBtnTxt: this.state.inputSaveBtnTxt,
+            mediaUrl: this.state.mediaUrl
+        };
+        if(newProps.data.shotInFocus !== this.props.data.shotInFocus){
+            inputState = {
+                inputType: defaultState.inputType,
+                inputError: '',
+                inputSaveBtnTxt: '',
+                mediaUrl: ''
+            };
+        }
         this.setState({
-            img: this.deriveImgUrl(newProps.data),
+            img: media.img,
+            mediaHTML: media.mediaHTML,
             shots: newProps.data.shots,
-            shotInFocus: newProps.data.shotInFocus
+            shotInFocus: newProps.data.shotInFocus,
+            inputType: inputState.inputType,
+            inputError: inputState.inputError,
+            inputSaveBtnTxt: inputState.inputSaveBtnTxt,
+            mediaUrl: inputState.mediaUrl
         });
     }
 
-    deriveImgUrl = (propsData) => {
+    getMedia = (propsData) => {
+        var content = { img: null, mediaHTML: null };
         var shotInFocus = propsData.shotInFocus;
-        var imgKey = propsData.shots[shotInFocus].imgKey;
-        if(imgKey === null){
-            return null;
+        if(propsData.shots[shotInFocus].url){
+            content.mediaHTML = propsData.shots[shotInFocus].mediaHTML;
         }
-        else if(isUrl(imgKey)){
-            return imgKey;
+        else if(propsData.shots[shotInFocus].imgKey){
+            content.img = getImgUrl(propsData.shots[shotInFocus].imgKey);
         }
-        else{
-            return getImgUrl(imgKey);
-        }
+        return content;
     }
 
     changeOrder = (index, direction) => {
@@ -84,12 +108,13 @@ class StoryBoard extends Component {
                     order={i}
                     key={i}
                     imgKey={this.state.shots[i].imgKey}
+                    url={this.state.shots[i].url}
                     moveShot={this.moveShot}
                     animationClass={animationClass}
                     isFocused={isFocused}
-                    originalOrder={this.state.shots[i].originalOrder}
                     updateShotInFocus={this.props.updateShotInFocus}
                     updateShotPhoto={this.props.updateShotPhoto}
+                    removePart={this.props.removePart}
                 />
             );
         }
@@ -111,26 +136,27 @@ class StoryBoard extends Component {
                 inputError: 'invalid URL'
             });
         }
-
-        var domain = getRootDomain(url);
-        if(this.state.inputType === 'audio'){
-            if( domain !== 'soundcloud.com' ){
-                this.setState({
-                    inputError: 'sorry, we currently only accept soundcloud links'
-                });
+        else{
+            var domain = getRootDomain(url);
+            if(this.state.inputType === 'audio'){
+                if( domain !== 'soundcloud.com' ){
+                    this.setState({
+                        inputError: 'sorry, we currently only accept soundcloud links'
+                    });
+                }
+                else{
+                    return true;
+                }
             }
-            else{
-                return true;
-            }
-        }
-        else if(this.state.inputType === 'video'){
-            if( domain !== 'youtube.com' && domain !== 'vimeo.com' ){
-                this.setState({
-                    inputError: 'sorry, we currently only accept youtube/vimeo links'
-                });
-            }
-            else{
-                return true;
+            else if(this.state.inputType === 'video'){
+                if( domain !== 'youtube.com' && domain !== 'vimeo.com' ){
+                    this.setState({
+                        inputError: 'sorry, we currently only accept youtube/vimeo links'
+                    });
+                }
+                else{
+                    return true;
+                }
             }
         }
     }
@@ -144,7 +170,12 @@ class StoryBoard extends Component {
             var callOembed = getOembedData(this.state.mediaUrl);
             callOembed.then(function(response){
                 var oembedData = response.data.data.oembed;
-                comp.props.updateMediaPart(comp.props.data.shotInFocus, comp.state.mediaUrl, oembedData.thumbnail_url);
+                comp.props.updatePart(
+                    comp.props.data.shotInFocus,
+                    comp.state.inputType,
+                    comp.state.mediaUrl,
+                    oembedData
+                );
             });
         }
     }
@@ -226,9 +257,14 @@ class StoryBoard extends Component {
 
     render(){
         var boardBody = null;
-        if(!this.state.img){
+        if(!this.state.img && !this.state.mediaHTML){
             boardBody = this.emptyState();
         }
+        else if(this.state.mediaHTML){
+            //boardBody = this.state.mediaHTML;
+            boardBody = <div className="storyboard-body" dangerouslySetInnerHTML={{__html: this.state.mediaHTML}} />;
+        }
+
         if(this.props.data.uploadInProgress){
             boardBody = (
                 <div className="storyboard-body">

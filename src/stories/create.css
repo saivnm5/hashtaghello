@@ -12,12 +12,16 @@
   background-repeat: no-repeat;
 }
 .storyboard-body{
-  height: 70vh;
+  height: 68vh;
   align-items: center;
+  justify-content: center;
   flex-flow: column wrap;
 }
 .storyboard-body > div{
   justify-content: center;
+}
+.storyboard-body iframe{
+  width: 100%;
 }
 .upload-options{
   max-width: 300px;
@@ -56,7 +60,6 @@
   height: 17vh;
   margin: 1vh 1vw;
   background: black;
-  opacity: 0.5;
   transition: all 0.5s;
   background-position: center;
   background-size: cover;

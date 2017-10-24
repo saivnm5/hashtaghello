@@ -30,11 +30,17 @@ class Story extends Component {
     }
 
     render() {
-        let imgArray = getImgUrl(this.props.data.imgKey, 'all');
+        let imgArray = null;
+        if(this.props.data.imgKey){
+            imgArray = getImgUrl(this.props.data.imgKey, 'all');
+        }
+        else if(this.props.data.thumbnailUrl){
+            imgArray = [this.props.data.thumbnailUrl];
+        }
         let media = <Img src={imgArray} alt={this.props.data.hashtag} />;
-        var view = null;
+        var viewComp = null;
         if(this.state.viewStory){
-            view = <View id={this.props.data.id} closeStory={this.closeStory} />
+            viewComp = <View id={this.props.data.id} closeStory={this.closeStory} />
         }
         var Edit = null;
         if(this.props.type === "home"){
@@ -60,7 +66,7 @@ class Story extends Component {
 
                     <div className="font-sub-heading">{this.props.data.description}</div>
                 </div>
-                {view}
+                {viewComp}
             </div>
         );
     }

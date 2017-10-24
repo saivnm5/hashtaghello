@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { getImgUrl } from '../utils/aws';
 import Swipeable from 'react-swipeable';
+import ViewPart from './ViewPart';
 
 
 class Home extends Component {
@@ -39,7 +39,7 @@ class Home extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n shots { \n imgKey \n } \n } \n }",
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           id: this.state.storyId
         }
@@ -54,7 +54,7 @@ class Home extends Component {
         comp.setState({
             hashtag: '#'+story.hashtag,
             description: story.description,
-            shots: story.shots
+            shots: story.parts
         });
     });
   }
@@ -81,9 +81,8 @@ class Home extends Component {
     var parts = [];
     for(var i=0; i<this.state.shots.length; i++){
       var activeClass = '';
-      var imgUrl = getImgUrl(this.state.shots[i].imgKey, 'full');
       if(i === this.state.activePart){ activeClass = 'active'; }
-      parts.push(<div className={"part "+activeClass} style={ { backgroundImage: 'url("'+imgUrl+'")' } }></div>)
+      parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} />)
     }
     return (
       <div className="view-story-container">

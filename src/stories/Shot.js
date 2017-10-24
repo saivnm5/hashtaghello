@@ -22,13 +22,14 @@ class Shot extends Component {
 
     getStyle = (props) => {
         var style = { order: props.order };
-        if(props.imgKey){
-            var url = getImgUrl(props.imgKey);
-            style.backgroundImage = 'url("'+url+'")';
+        var url = bgImg;
+        if(props.url){
+            url = props.imgKey;
         }
-        else{
-            style.backgroundImage = 'url("'+bgImg+'")';
+        else if (props.imgKey){
+            url = getImgUrl(props.imgKey);
         }
+        style.backgroundImage = 'url("'+url+'")';
         return style;
     }
 
@@ -36,8 +37,8 @@ class Shot extends Component {
         this.props.updateShotInFocus(this.state.order);
     }
 
-    removeShotPhoto = () => {
-        this.props.updateShotPhoto(null, this.state.order);
+    removePart = () => {
+        this.props.removePart(this.state.order);
     }
 
     moveRight = () => {
@@ -60,7 +61,7 @@ class Shot extends Component {
         }
         if(this.props.imgKey){
             optionClose = (
-                <div onClick={this.removeShotPhoto} >
+                <div onClick={this.removePart} >
                     <i className="fa fa-trash"></i>
                 </div>
             );

@@ -80,6 +80,12 @@
 .view-story .part.active{
 	display: flex;
 }
+.view-story .part .body{
+	align-items: center;
+}
+.view-story .part .body iframe{
+	width: 100%;
+}
 
 
 

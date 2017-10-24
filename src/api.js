@@ -13,9 +13,9 @@ var schema = buildSchema(`
 
     input PartInput{
         story: Int!
-        imgKeys: [String!],
-        soundcloudUrls: [String!],
-        youtubeUrls: [String!],
+        imgKeys: [String!]
+        soundcloudUrls: [String!]
+        youtubeUrls: [String!]
         vimeoUrls: [String!]
     }
 
@@ -27,9 +27,8 @@ var schema = buildSchema(`
 
     type Part{
         imgKey: String
-        soundcloudUrl: String,
-        youtubeUrl: String,
-        vimeoUrl: String
+        thumbnailUrl: String
+        mediaUrl: String
     }
 
     type Story{
@@ -37,6 +36,8 @@ var schema = buildSchema(`
         hashtag: String!
         description: String
         imgKey: String
+        thumbnailUrl: String
+        mediaUrl: String
     }
 
     type ViewStory{
@@ -85,19 +86,43 @@ var root = {
   },
 
   saveStory: (data) => {
-    var input = data.input;
-    var storyId = input.story;
-    var shots = input.shots;
-    var shotsArrayString = '';
-    for(var i=0; i<shots.length; i++){
-        shotsArrayString += "'"+shots[i]+"',";
+    var input = data.input; var storyId = input.story;
+    var imgKeys = input.imgKeys; var soundcloudUrls = input.soundcloudUrls;
+    var youtubeUrls = input.youtubeUrls; var vimeoUrls = input.vimeoUrls;
+    var imgArrayString = 'ARRAY['; var soundcloudArrayString = 'ARRAY[';
+    var youtubeArrayString = 'ARRAY['; var vimeoArrayString = 'ARRAY[';
+
+    for(var i=0; i<imgKeys.length; i++){
+        imgArrayString += "'"+imgKeys[i]+"',";
     }
-    shotsArrayString = shotsArrayString.slice(0, -1); // removing the last comma
+    for(var i=0; i<soundcloudUrls.length; i++){
+        soundcloudArrayString += "'"+soundcloudUrls[i]+"',";
+    }
+    for(var i=0; i<youtubeUrls.length; i++){
+        youtubeArrayString += "'"+soundcloudUrls[i]+"',";
+    }
+    for(var i=0; i<vimeoUrls.length; i++){
+        vimeoArrayString += "'"+soundcloudUrls[i]+"',";
+    }
 
-    var sql = "select * from saveStory("+storyId+", ARRAY["+shotsArrayString+"])";
+    // removing last comma
+    imgArrayString = imgArrayString.slice(0, -1);
+    soundcloudArrayString = soundcloudArrayString.slice(0, -1);
+    youtubeArrayString = youtubeArrayString.slice(0, -1);
+    vimeoArrayString = vimeoArrayString.slice(0, -1);
 
+    if(imgKeys.length === 0){ imgArrayString = 'null'; }
+    else{ imgArrayString += "]"; }
+    if(soundcloudUrls.length === 0){ soundcloudArrayString = 'null'; }
+    else{ soundcloudArrayString += "]"; }
+    if(youtubeUrls.length === 0){ youtubeArrayString = 'null' }
+    else{ youtubeArrayString += "]"; }
+    if(vimeoUrls.length === 0){ vimeoArrayString = 'null' }
+    else{ vimeoArrayString += "]"; }
+
+    var sql = "select * from saveStory("+storyId+", "+imgArrayString+", "+soundcloudArrayString+", "+youtubeArrayString+","+vimeoArrayString+")";
     return db.query(sql).then(function(response){
-        return response[0][0].success;
+        return response[0][0].output;
     }).catch(function(error){
         console.log(error);
     });
@@ -123,7 +148,7 @@ var root = {
 
   story: (data) => {
     var sql1 = "select * from storyView where id = "+data.id;
-    var sql2 = "select * from part where story = "+data.id+" order by \"order\" asc";
+    var sql2 = "select * from partView where story = "+data.id;
     var response = {};
 
     return db.query(sql1).then(function(results){
