@@ -1,3 +1,5 @@
+const config = require('../config');
+
 function extractHostname(url) {
     var hostname;
     //find & remove protocol (http, ftp, etc.) and get hostname
@@ -36,5 +38,19 @@ function getRootDomain(url) {
     return domain;
 }
 
+function createSlug(storyId, hashtag){
+    var crypto = require('crypto');
+    var hash = crypto.createHash('md5').update('hindustani'+storyId).digest("hex");
+    var slug = '#'+hashtag+'-'+hash;
+    return slug;
+}
+
+function getShareUrl(urlSlug){
+    var url = encodeURIComponent(config.apiRoot + '/view/' + urlSlug);
+    return url;
+}
+
 module.exports.getRootDomain = getRootDomain;
 module.exports.extractHostname = extractHostname;
+module.exports.createSlug = createSlug;
+module.exports.getShareUrl = getShareUrl;

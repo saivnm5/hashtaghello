@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getShareUrl } from '../utils/simpl';
 
 class TheEnd extends Component {
 
@@ -6,7 +7,8 @@ class TheEnd extends Component {
 		super(props);
 		this.state = {
 			shareClass: 'hide',
-			paymentOn: false
+			paymentOn: false,
+			shareUrl: getShareUrl(this.props.data.slug)
 		};
 	}
 
@@ -66,14 +68,14 @@ class TheEnd extends Component {
 						</div>
 						<br/>
 						<div className={this.state.shareClass}>
-							<a target="_blank" href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" rel="noopener noreferrer">
+							<a target="_blank" href={"https://twitter.com/intent/tweet?button_hashtag="+this.props.data.hashtag.replace(/^#/, '')+"&url="+this.state.shareUrl} rel="noopener noreferrer">
 								<i className="fa fa-twitter"></i>&nbsp;
 								{this.props.data.hashtag}
 							</a>
 						</div>
 						<br/>
 						<div className={this.state.shareClass}>
-							<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" rel="noopener noreferrer">
+							<a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u="+this.state.shareUrl} rel="noopener noreferrer">
 								<i className="fa fa-facebook"></i>&nbsp;
 								Share
 							</a>

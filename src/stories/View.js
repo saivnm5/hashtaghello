@@ -22,6 +22,7 @@ class Home extends Component {
       hashtag: '',
       description: '',
       creator: '',
+      slug: '',
       shots: [],
       activePart: 0
     }
@@ -40,7 +41,7 @@ class Home extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n creator \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n creator \n slug \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           id: this.state.storyId
         }
@@ -56,6 +57,7 @@ class Home extends Component {
             hashtag: '#'+story.hashtag,
             description: story.description,
             creator: story.creator,
+            slug: story.slug,
             shots: story.parts,
             activePart: 0
         });

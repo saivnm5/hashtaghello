@@ -34,7 +34,7 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[2],
+        stage: STAGES[0],
         story: storyId,
         shots: shots,
         shotInFocus: 0,

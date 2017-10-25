@@ -7,7 +7,8 @@ actor."name" as creator,
 story."description",
 part."imgKey",
 part."thumbnailUrl",
-concat(part."soundcloudUrl", part."youtubeUrl", part."vimeoUrl") as "mediaUrl"
+concat(part."soundcloudUrl", part."youtubeUrl", part."vimeoUrl") as "mediaUrl",
+url."slug"
 from story
 join hashtag
 on story."hashtag" = hashtag."id"
@@ -19,5 +20,12 @@ on part."id" = (
     where part."story" = story."id"
     order by "order" asc
     limit 1
+)
+left join url
+on url."id" = (
+	select "id" from url
+	where url."story" = story."id"
+	order by url."id" desc
+	limit 1
 )
 order by story."createdAt" desc

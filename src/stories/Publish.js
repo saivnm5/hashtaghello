@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {getImgUrl} from '../utils/aws';
+import { getShareUrl } from '../utils/simpl';
 import Img from 'react-image';
+import axios from 'axios';
 
 
 class Publish extends Component {
@@ -10,7 +12,9 @@ class Publish extends Component {
         super(props);
         this.state = {
             option: 'private',
-            isPublished: false
+            isPublished: false,
+            publishBtnTxt: 'Publish',
+            shareUrl: ''
         };
     }
 
@@ -30,7 +34,42 @@ class Publish extends Component {
 
     publishStory = () => {
         this.setState({
-            isPublished: true
+            publishBtnTxt: 'Publishing...'
+        });
+
+        var comp = this;
+        var apiRoot = localStorage.getItem('apiRoot');
+        let headers = { "Authorization" : localStorage.getItem("authToken") };
+        var isPrivate = true;
+        if(this.state.option === 'public'){
+            isPrivate = false;
+        }
+        var data = {
+            query: "mutation publishStory($input: PublishInput) { \n publishStory(input: $input) \n }",
+            variables: {
+              input:{
+                story: this.props.data.story,
+                isPrivate: isPrivate
+              }
+            }
+        };
+
+        axios({
+          method: 'post',
+          url: apiRoot+'/api',
+          headers: headers,
+          data: data
+        }).then(function(response){
+            var data = response.data.data;
+            var shareUrl = getShareUrl(data.publishStory);
+            comp.setState({
+                shareUrl: shareUrl,
+                isPublished: true
+            });
+        }).catch(function(response){
+            this.setState({
+                publishBtnTxt: 'Publish'
+            });
         });
     }
 
@@ -113,7 +152,7 @@ class Publish extends Component {
 
                     <div className={showPublishBtnClass}>
                         <span className="font-heading btn" onClick={this.publishStory}>
-                            Publish
+                            {this.state.publishBtnTxt}
                         </span>
                     </div>
                     <div className={showPublishedClass}>
@@ -124,17 +163,18 @@ class Publish extends Component {
                     <br/><br/>
 
                     <div className={showShareClass}>
-                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" rel="noopener noreferrer">
-                            <i className="fa fa-facebook"></i>&nbsp;
-                            Share
-                        </a>
-                    </div>
-                    <br/>
-                    <div className={showShareClass}>
-                        <a target="_blank" href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" rel="noopener noreferrer">
+                        <a target="_blank" href={"https://twitter.com/intent/tweet?button_hashtag="+this.props.data.hashtag.replace(/^#/, '')+"&url="+this.state.shareUrl} rel="noopener noreferrer">
                                 <i className="fa fa-twitter"></i>&nbsp;
                                 {this.props.data.hashtag}
                             </a>
+                    </div>
+                    <br/>
+
+                    <div className={showShareClass}>
+                        <a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u="+this.state.shareUrl} rel="noopener noreferrer">
+                            <i className="fa fa-facebook"></i>&nbsp;
+                            Share
+                        </a>
                     </div>
 
                 </div>

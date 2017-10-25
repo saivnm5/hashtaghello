@@ -1,7 +1,7 @@
 var { graphql, buildSchema } = require('graphql');
 var stories = require('./stories/initData');
 var db = require('./db');
-var { getRootDomain } = require('./utils/simpl');
+var { getRootDomain, createSlug } = require('./utils/simpl');
 var axios = require('axios');
 
 var schema = buildSchema(`
@@ -25,6 +25,11 @@ var schema = buildSchema(`
         fbUserId: String!
     }
 
+    input PublishInput{
+        story: Int!
+        isPrivate: Boolean
+    }
+
     type Part{
         imgKey: String
         thumbnailUrl: String
@@ -45,6 +50,7 @@ var schema = buildSchema(`
         hashtag: String!
         description: String
         creator: String
+        slug: String
         parts: [Part]
     }
 
@@ -64,6 +70,7 @@ var schema = buildSchema(`
         createOrUpdateStory(input: StoryInput): Int
         saveStory(input: PartInput): Int
         getOrCreateActor(input: ActorInput): Int
+        publishStory(input: PublishInput): String!
     }
 `);
 
@@ -158,6 +165,7 @@ var root = {
         response.hashtag = story.hashtag;
         response.description = story.description;
         response.creator = story.creator;
+        response.slug = story.slug;
         return db.query(sql2).then(function(results){
             var rows = results[0];
             response.parts = rows;
@@ -165,6 +173,20 @@ var root = {
         });
     });
 
+  },
+
+  publishStory: (data) => {
+    var input = data.input;
+    var sql1 = "select hashtag, description from storyView where id="+input.story;
+    return db.query(sql1).then(function(results){
+        var story = results[0][0];
+        var slug = createSlug(input.story, story.hashtag);
+        var sql2 = "select * from publishStory("+input.story+", "+input.isPrivate+", '"+slug+"')";
+        return db.query(sql2).then(function(results){
+            var row = results[0][0];
+            return row.slugurl;
+        });
+    });
   },
 
   oembed: (data) => {

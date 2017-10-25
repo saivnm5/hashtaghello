@@ -36,6 +36,7 @@ ALTER TABLE "public"."story" ADD COLUMN "createdAt" timestamp DEFAULT now();
 ALTER TABLE "public"."story"
   ADD COLUMN "createdBy" integer,
   ADD CONSTRAINT "story_created_by_id" FOREIGN KEY ("createdBy") REFERENCES "public"."actor"("id");
+ALTER TABLE "public"."story" ADD COLUMN "isActive" boolean DEFAULT true;
 
 
 CREATE TABLE "public"."shot" (
@@ -53,6 +54,17 @@ ALTER TABLE "public"."part"
   ADD COLUMN "youtubeUrl" text,
   ADD COLUMN "vimeoUrl" text,
   ADD COLUMN "thumbnailUrl" text;
+
+
+
+CREATE TABLE "public"."url" (
+    "id" serial,
+    "slug" text NOT NULL,
+    "expiresAt" timestamp,
+    "story" integer,
+    PRIMARY KEY ("id"),
+    CONSTRAINT "story_url_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
+);
 
 
 
