@@ -63,6 +63,9 @@ div{
 .font-bold{
   font-weight: 600;
 }
+.font-selected{
+  color: #69BF40;
+}
 a,
 a:link,
 a:visited,

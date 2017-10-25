@@ -31,6 +31,39 @@ class StoryBoard extends Component {
         this.props.changeStage(0);
     }
 
+    goToPublish = () => {
+        this.props.saveStory();
+        this.props.changeStage(2);
+    }
+
+    getMedia = (propsData) => {
+        var content = { img: null, mediaHTML: null };
+        var comp = this;
+        var shotInFocus = propsData.shotInFocus;
+        if(propsData.shots[shotInFocus].mediaUrl){
+            if(propsData.shots[shotInFocus].mediaHTML){
+                content.mediaHTML = propsData.shots[shotInFocus].mediaHTML;
+            }
+            else{
+                content.mediaHTML = 'Loading';
+                var callOembed = getOembedData(propsData.shots[shotInFocus].mediaUrl);
+                callOembed.then(function(response){
+                    var oembedData = response.data.data.oembed;
+                    comp.props.updatePart(
+                        shotInFocus,
+                        'media',
+                        propsData.shots[shotInFocus].mediaUrl,
+                        oembedData
+                    );
+                });
+            }
+        }
+        else if(propsData.shots[shotInFocus].imgKey){
+            content.img = getImgUrl(propsData.shots[shotInFocus].imgKey);
+        }
+        return content;
+    }
+
     componentWillReceiveProps(newProps) {
         var media = this.getMedia(newProps.data);
         var inputState = {
@@ -57,18 +90,6 @@ class StoryBoard extends Component {
             inputSaveBtnTxt: inputState.inputSaveBtnTxt,
             mediaUrl: inputState.mediaUrl
         });
-    }
-
-    getMedia = (propsData) => {
-        var content = { img: null, mediaHTML: null };
-        var shotInFocus = propsData.shotInFocus;
-        if(propsData.shots[shotInFocus].url){
-            content.mediaHTML = propsData.shots[shotInFocus].mediaHTML;
-        }
-        else if(propsData.shots[shotInFocus].imgKey){
-            content.img = getImgUrl(propsData.shots[shotInFocus].imgKey);
-        }
-        return content;
     }
 
     changeOrder = (index, direction) => {
@@ -107,8 +128,7 @@ class StoryBoard extends Component {
                 <Shot
                     order={i}
                     key={i}
-                    imgKey={this.state.shots[i].imgKey}
-                    url={this.state.shots[i].url}
+                    data={this.props.data.shots[i]}
                     moveShot={this.moveShot}
                     animationClass={animationClass}
                     isFocused={isFocused}
@@ -281,7 +301,7 @@ class StoryBoard extends Component {
                     <div className="btn" onClick={this.goBack}>
                       Back
                     </div>
-                    <div className="btn right-align" onClick={this.props.saveStory} >
+                    <div className="btn right-align" onClick={this.goToPublish} >
                       Publish
                     </div>
                 </div>

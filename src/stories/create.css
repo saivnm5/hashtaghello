@@ -107,3 +107,21 @@
 .scene-options div:hover{
   font-size: 24px;
 }
+
+.publish-body, .publish-body .snapshot, .publish-option{
+  flex-flow: column wrap;
+}
+.publish-body div{
+  justify-content: center
+}
+.publish-body .snapshot img{
+  max-width: 250px;
+  max-height: 250px;
+}
+.publish-option .public, .publish-option .private{
+  cursor: pointer;
+}
+.publish-option.public .public, .publish-option.private .private{
+  color: #69BF40;
+  text-decoration: underline;
+}

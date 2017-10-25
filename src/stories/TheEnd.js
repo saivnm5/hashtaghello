@@ -55,6 +55,7 @@ class TheEnd extends Component {
 				</div>
 				<div className="share">
 					<div className="content">
+
 						<br/><br/>
 						<div className="font-sub-heading">
 							or
@@ -65,14 +66,14 @@ class TheEnd extends Component {
 						</div>
 						<br/>
 						<div className={this.state.shareClass}>
-							<a href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">
+							<a target="_blank" href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" rel="noopener noreferrer">
 								<i className="fa fa-twitter"></i>&nbsp;
 								{this.props.data.hashtag}
 							</a>
 						</div>
 						<br/>
 						<div className={this.state.shareClass}>
-							<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
+							<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" rel="noopener noreferrer">
 								<i className="fa fa-facebook"></i>&nbsp;
 								Share
 							</a>

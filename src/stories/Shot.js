@@ -23,11 +23,11 @@ class Shot extends Component {
     getStyle = (props) => {
         var style = { order: props.order };
         var url = bgImg;
-        if(props.url){
-            url = props.imgKey;
+        if(props.data.mediaUrl){
+            url = props.data.thumbnailUrl;
         }
-        else if (props.imgKey){
-            url = getImgUrl(props.imgKey);
+        else if (props.data.imgKey){
+            url = getImgUrl(props.data.imgKey);
         }
         style.backgroundImage = 'url("'+url+'")';
         return style;
@@ -59,7 +59,7 @@ class Shot extends Component {
                 </div>
             );
         }
-        if(this.props.imgKey){
+        if(this.props.data.imgKey || this.props.data.mediaUrl){
             optionClose = (
                 <div onClick={this.removePart} >
                     <i className="fa fa-trash"></i>

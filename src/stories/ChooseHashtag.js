@@ -21,13 +21,6 @@ class ChooseHashtag extends Component {
                     </div>
                     <div className="btn right-align" onClick={this.props.createStory} >
                       Start
-                      <input
-                        type="file"
-                        accept="image/*"
-                        ref={(input) => { this.firstImageInput = input; }}
-                        style={{display:'none'}}
-                        onChange = {this.props.handleImageUpload}
-                      />
                     </div>
                 </div>
 

@@ -82,15 +82,18 @@ class Home extends Component {
 
   render() {
     var parts = [];
-    var i = 0;
-    for(; i<this.state.shots.length; i++){
-      var activeClass = '';
-      if(i === this.state.activePart){ activeClass = 'active'; }
-      parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} key={i} />)
+    if(this.state.shots.length > 0){
+      var i = 0;
+      for(; i<this.state.shots.length; i++){
+        var activeClass = '';
+        if(i === this.state.activePart){ activeClass = 'active'; }
+        parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} key={i} />)
+      }
+      if(this.state.activePart === this.state.shots.length){ activeClass = 'active'; }
+      else{ activeClass = ''; }
+      parts.push(<TheEnd activeClass={activeClass} data={this.state} key={i+1} />);
     }
-    if(this.state.activePart === this.state.shots.length){ activeClass = 'active'; }
-    else{ activeClass = ''; }
-    parts.push(<TheEnd activeClass={activeClass} data={this.state} key={i+1} />);
+
     return (
       <div className="view-story-container">
       <div className="container view-story" tabIndex="1">

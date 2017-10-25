@@ -3,6 +3,7 @@ import axios from 'axios';
 import {uploadPhoto} from '../utils/aws';
 import ChooseHashtag from './ChooseHashtag';
 import StoryBoard from './StoryBoard';
+import Publish from './Publish';
 import { getRootDomain } from '../utils/simpl.js';
 import './create.css';
 
@@ -13,7 +14,7 @@ const STAGES = [
 ];
 
 const defaultPart = {
-  imgKey: null, mediaHTML: null, url: null
+  imgKey: null, mediaHTML: null, mediaUrl: null
 };
 
 class Create extends Component {
@@ -33,7 +34,7 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[0],
+        stage: STAGES[2],
         story: storyId,
         shots: shots,
         shotInFocus: 0,
@@ -47,7 +48,7 @@ class Create extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n shots { \n imgKey \n } \n } \n }",
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n } \n } \n }",
         variables: {
           id: storyId
         }
@@ -59,7 +60,7 @@ class Create extends Component {
       data: data
     }).then(function(response){
         var story = response.data.data.story;
-        var shots = story.shots;
+        var shots = story.parts;
         var newShots = shots.concat(comp.state.shots);
         comp.setState({
             hashtag: '#'+story.hashtag,
@@ -135,9 +136,9 @@ class Create extends Component {
     for(var i=0; i < this.state.shots.length; i++){
       var part = this.state.shots[i];
       var string = '';
-      if(part.url){
-        var domain = getRootDomain(part.url);
-        string = order+___+part.url+___+part.imgKey;
+      if(part.mediaUrl){
+        var domain = getRootDomain(part.mediaUrl);
+        string = order+___+part.mediaUrl+___+part.thumbnailUrl;
         order++;
         if(domain === 'soundcloud.com'){
           soundcloudUrls.push(string);
@@ -175,7 +176,7 @@ class Create extends Component {
     }).then(function(response){
         var data = response.data.data;
         if(data.saveStory === 1){
-          alert('Story saved successfully!');
+          console.log('Story saved');
         }
     });
   }
@@ -197,14 +198,15 @@ class Create extends Component {
     if(type === 'image'){
       part = {
         imgKey: url,
-        url: null,
+        mediaUrl: null,
         mediaHTML: null
       };
     }
-    else if(type === 'audio' || type === 'video'){
+    else if(type === 'audio' || type === 'video' || type === 'media'){
       part = {
-        imgKey: oembedData.thumbnail_url,
-        url: url,
+        imgKey: null,
+        thumbnailUrl: oembedData.thumbnail_url,
+        mediaUrl: url,
         mediaHTML: oembedData.html
       };
     }
@@ -276,8 +278,15 @@ class Create extends Component {
                     updatePart = {this.updatePart}
                     removePart = {this.removePart}
                     data = {this.state}
-                  />
+                  />;
     }
+    else if (this.state.stage === STAGES[2]){
+      currentStage = <Publish
+                    changeStage = {this.changeStage}
+                    data = {this.state}
+                  />;
+    }
+
       return(
         <div className="container">
           {currentStage}
