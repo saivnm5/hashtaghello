@@ -36,10 +36,10 @@ class Publish extends Component {
         this.setState({
             publishBtnTxt: 'Publishing...'
         });
-
         var comp = this;
         var apiRoot = localStorage.getItem('apiRoot');
         let headers = { "Authorization" : localStorage.getItem("authToken") };
+
         var isPrivate = true;
         if(this.state.option === 'public'){
             isPrivate = false;
@@ -67,7 +67,7 @@ class Publish extends Component {
                 isPublished: true
             });
         }).catch(function(response){
-            this.setState({
+            comp.setState({
                 publishBtnTxt: 'Publish'
             });
         });

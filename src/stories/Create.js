@@ -167,12 +167,14 @@ class Create extends Component {
             vimeoUrls: vimeoUrls
           }
         }
-    }
+    };
+    let headers = { "Authorization" : localStorage.getItem("authToken") };
 
     axios({
       method: 'post',
       url: apiRoot+'/api',
-      data: data
+      data: data,
+      headers: headers
     }).then(function(response){
         var data = response.data.data;
         if(data.saveStory === 1){

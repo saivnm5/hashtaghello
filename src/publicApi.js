@@ -46,7 +46,7 @@ var root = {
 
   stories: (data, request) => {
     var sql = 'select * from storyView';
-    var pageSize = 3; var offset = 0;
+    var pageSize = 5; var offset = 0;
     if(data.page){
         offset = pageSize * data.page;
     }

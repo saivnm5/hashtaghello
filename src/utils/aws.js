@@ -21,7 +21,7 @@ export function uploadPhoto(files, callbackObj) {
     return alert('Please choose a file to upload first.');
   }
   var file = files[0];
-  var fileName = String(new Date() / 1000)+file.name;
+  var fileName = 'images/'+ String(new Date() / 1000) +file.name;
   var ignoreCompression = false;
 
   if(file.name.match(/.(gif)$/i)){
@@ -48,7 +48,7 @@ export function uploadPhoto(files, callbackObj) {
           if (err) {
             return alert('There was an error uploading your photo: ', err.message);
           }
-          var imgKey = data.key;
+          var imgKey = data.key.substring(7); // removing the prefix "images/"
           var shotIndex = callbackObj.shotIndex;
           callbackObj.success(shotIndex, 'image', imgKey);
         });
@@ -73,7 +73,7 @@ export function uploadPhoto(files, callbackObj) {
       if (err) {
         return alert('There was an error uploading your photo: ', err.message);
       }
-      var imgKey = data.key;
+      var imgKey = data.key.substring(7); // removing the prefix "images/"
       var shotIndex = callbackObj.shotIndex;
       callbackObj.success(shotIndex, 'image', imgKey);
     });
@@ -83,8 +83,8 @@ export function uploadPhoto(files, callbackObj) {
 
 export function getImgUrl(imgKey, size) {
   var imgArray = [];
-  var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/';
-  var resizedUrlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/';
+  var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/images/';
+  var resizedUrlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/images/';
 
   if(size === 'all'){
     imgArray.push(resizedUrlPrefix+'full-'+imgKey);
