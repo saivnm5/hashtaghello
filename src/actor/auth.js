@@ -30,7 +30,7 @@ var root = {
 
     var sql = "select * from getOrCreateActor('"+input.name+"',"+email+",'"+input.fbUserId+"')";
     return db.query(sql).then(function(response){
-        return response[0][0].actor;
+        return response[0][0].accesstoken;
     }).catch(function(error){
         console.log(error);
     });
