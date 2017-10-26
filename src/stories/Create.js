@@ -35,12 +35,14 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[0],
+        stage: STAGES[2],
         story: storyId,
         shots: shots,
         shotInFocus: 0,
         uploadInProgress: false,
-        uploadPercentage: 0
+        uploadPercentage: 0,
+        isPrivate: true,
+        allowPayment: true
     };
     this.updatePart = this.updatePart.bind(this);
   }
@@ -49,7 +51,7 @@ class Create extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n } \n } \n }",
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n isPrivate \n allowPayment \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n } \n } \n }",
         variables: {
           id: storyId
         }
@@ -66,6 +68,8 @@ class Create extends Component {
         comp.setState({
             hashtag: '#'+story.hashtag,
             description: story.description,
+            isPrivate: story.isPrivate,
+            allowPayment: story.allowPayment,
             shots: newShots,
             story: storyId
         });

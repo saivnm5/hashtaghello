@@ -115,13 +115,15 @@
   justify-content: center
 }
 .publish-body .snapshot img{
-  max-width: 250px;
-  max-height: 250px;
+  max-width: 200px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
 }
-.publish-option .public, .publish-option .private{
+.publish-option .public, .publish-option .private, .payment-option{
   cursor: pointer;
 }
-.publish-option.public .public, .publish-option.private .private{
+.publish-option.public .public, .publish-option.private .private, .payment-option .yes.true, .payment-option .no.false{
   color: #69BF40;
   text-decoration: underline;
 }

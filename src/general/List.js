@@ -65,7 +65,7 @@ class List extends Component {
           headers: headers
         }).then(function(response){
             var data = response.data.data;
-            if(data.stories.length === 0){
+            if(!data.stories || data.stories.length === 0){
                 comp.setState({
                     endOfList: true
                 });

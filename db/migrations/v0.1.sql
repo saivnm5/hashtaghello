@@ -46,6 +46,7 @@ ALTER TABLE "public"."story"
   ADD COLUMN "createdBy" integer,
   ADD CONSTRAINT "story_created_by_id" FOREIGN KEY ("createdBy") REFERENCES "public"."actor"("id");
 ALTER TABLE "public"."story" ADD COLUMN "isActive" boolean DEFAULT true;
+ALTER TABLE "public"."story" ADD COLUMN "allowPayment" boolean DEFAULT true;
 
 
 CREATE TABLE "public"."shot" (

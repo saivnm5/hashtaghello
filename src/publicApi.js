@@ -25,6 +25,9 @@ var schema = buildSchema(`
         hashtag: String!
         description: String
         createdByName: String
+        isPrivate: Boolean
+        allowPayment: Boolean
+        isPublished: Boolean
         slug: String
         parts: [Part]
     }
@@ -75,6 +78,9 @@ var root = {
         response.hashtag = story.hashtag;
         response.description = story.description;
         response.createdByName = story.createdByName;
+        response.isPrivate = story.isPrivate;
+        response.isPublished = story.isPublished;
+        response.allowPayment = story.allowPayment;
         response.slug = story.slug;
         return db.query(sql2).then(function(results){
             var rows = results[0];

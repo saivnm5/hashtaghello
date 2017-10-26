@@ -91,6 +91,11 @@ export function getImgUrl(imgKey, size) {
     imgArray.push(urlPrefix+imgKey);
     return(imgArray);
   }
+  else if(size === 'thumb-all'){
+    imgArray.push(resizedUrlPrefix+'thumb-'+imgKey);
+    imgArray.push(urlPrefix+imgKey);
+    return(imgArray);
+  }
   else if(size === 'full'){
     return (resizedUrlPrefix+'full-'+imgKey);
   }

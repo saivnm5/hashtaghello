@@ -11,12 +11,33 @@ class Publish extends Component {
 
     constructor(props){
         super(props);
+        var option = this.getPrivacy(props);
         this.state = {
-            option: 'private',
+            option: option,
             isPublished: false,
             publishBtnTxt: 'Publish',
-            shareUrl: ''
+            shareUrl: '',
+            allowPayment: props.data.allowPayment
         };
+    }
+
+    componentWillReceiveProps(newProps) {
+        var option = this.getPrivacy(newProps);
+        this.setState({
+            option: option,
+            allowPayment: newProps.data.allowPayment
+        });
+    }
+
+    getPrivacy = (props) => {
+        var option = '';
+        if(props.data.isPrivate){
+            option = 'private';
+        }
+        else{
+            option = 'public';
+        }
+        return option;
     }
 
     goBack = () => {
@@ -30,6 +51,16 @@ class Publish extends Component {
         }
         this.setState({
             option: option
+        });
+    }
+
+    togglePaymentOption = () => {
+        var option = true;
+        if(this.state.allowPayment === true){
+            option = false;
+        }
+        this.setState({
+            allowPayment: option
         });
     }
 
@@ -50,7 +81,8 @@ class Publish extends Component {
             variables: {
               input:{
                 story: this.props.data.story,
-                isPrivate: isPrivate
+                isPrivate: isPrivate,
+                allowPayment: this.state.allowPayment
               }
             }
         };
@@ -83,7 +115,7 @@ class Publish extends Component {
             imgUrl = [part.thumbnailUrl];
         }
         else if (part.imgKey){
-            imgUrl = getImgUrl(part.imgKey, 'all');
+            imgUrl = getImgUrl(part.imgKey, 'thumb-all');
         }
 
         var snapshotComp = (
@@ -101,15 +133,21 @@ class Publish extends Component {
         var showShareClass = 'hide';
         var showPublishBtnClass = 'show';
         var showPublishedClass = 'hide';
+        var showPublicOptionsClass = 'hide';
         if(this.state.isPublished){
             showOptionsClass = 'hide';
             showShareClass = 'show';
             showPublishBtnClass = 'hide';
             showPublishedClass = 'show';
+            showPublicOptionsClass = 'hide';
+        }
+        if(this.state.option === 'public'){
+            showPublicOptionsClass = 'show';
         }
 
         return(
             <div className="pseudo-container">
+
                 <div className="nav-header">
                     <div className="btn" onClick={this.goBack}>
                       <Link to="/profile">Back</Link>
@@ -123,34 +161,45 @@ class Publish extends Component {
                     {snapshotComp}
                     <br/><br/>
                     <div className={"font-sub-heading "+showOptionsClass}>
-                        publish story as
+                        keep story
                     </div>
 
                     <div className={showOptionsClass}>
                         <div className={"publish-option "+this.state.option}>
                             <div className="font-heading private" onClick={this.toggleOption}>
-                                Private
+                                private
                             </div>
                             <div className="font-sub-heading">
-                                visible to you &
-                            </div>
-                            <div className="font-sub-heading">
-                                people you share with
+                                visible if u share
                             </div>
                         </div>
                         <div className={"publish-option "+this.state.option}>
                             <div className="font-heading public" onClick={this.toggleOption}>
-                                Public
+                                public
                             </div>
                             <div className="font-sub-heading">
-                                visible to the world,
-                            </div>
-                            <div className="font-sub-heading">
-                                payment enabled
+                                like, out there
                             </div>
                         </div>
                     </div>
+
                     <br/>
+
+                    <div className={"font-sub-heading "+showPublicOptionsClass}>
+                        allow payment?
+                    </div>
+
+                    <div className={showPublicOptionsClass}>
+                        <div className="font-heading payment-option">
+                            <div className={"yes "+this.state.allowPayment} onClick={this.togglePaymentOption}>
+                                yes
+                            </div>
+                            <div className={"no "+this.state.allowPayment} onClick={this.togglePaymentOption}>
+                                no
+                            </div>
+                        </div>
+                    </div>
+                    <br/><br/>
 
                     <div className={showPublishBtnClass}>
                         <span className="font-heading btn" onClick={this.publishStory}>

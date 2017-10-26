@@ -20,6 +20,7 @@ var schema = buildSchema(`
     input PublishInput{
         story: Int!
         isPrivate: Boolean
+        allowPayment: Boolean
     }
 
     type Query {
@@ -60,7 +61,7 @@ var root = {
         soundcloudArrayString += "'"+soundcloudUrls[i]+"',";
     }
     for(var i=0; i<youtubeUrls.length; i++){
-        youtubeArrayString += "'"+soundcloudUrls[i]+"',";
+        youtubeArrayString += "'"+youtubeUrls[i]+"',";
     }
     for(var i=0; i<vimeoUrls.length; i++){
         vimeoArrayString += "'"+vimeoUrls[i]+"',";
@@ -100,7 +101,7 @@ var root = {
     return db.query(sql1).then(function(results){
         var story = results[0][0];
         var slug = createSlug(input.story, story.hashtag);
-        var sql2 = "select * from publishStory("+input.story+", "+input.isPrivate+", '"+slug+"')";
+        var sql2 = "select * from publishStory("+input.story+", "+input.isPrivate+", "+input.allowPayment+", '"+slug+"')";
         return db.query(sql2).then(function(results){
             var row = results[0][0];
             return row.slugurl;

@@ -9,7 +9,10 @@ story."description",
 part."imgKey",
 part."thumbnailUrl",
 concat(part."soundcloudUrl", part."youtubeUrl", part."vimeoUrl") as "mediaUrl",
-url."slug"
+url."slug",
+story."isPrivate",
+story."allowPayment",
+story."isPublished"
 from story
 join hashtag
 on story."hashtag" = hashtag."id"
@@ -29,4 +32,5 @@ on url."id" = (
 	order by url."id" desc
 	limit 1
 )
+where story."isActive" = true
 order by story."createdAt" desc
