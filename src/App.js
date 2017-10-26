@@ -34,9 +34,13 @@ class App extends Component {
 
           <div id="footer">
             <div className="font-sub-heading">
-              we publish a monthly newsletter
+              that's all folks, but if you want you can
             </div>
-            <div className="font-heading"><a href="https://hashhello.typeform.com/to/lrL7KZ"><u>#StayInTouch</u></a></div>
+            <div className="font-heading">
+              <Link to="/profile">
+                #WriteYourOwnStory
+              </Link>
+            </div>
           </div>
 
         </div>

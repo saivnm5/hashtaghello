@@ -35,7 +35,7 @@ var schema = buildSchema(`
     }
 
     type Query {
-        stories(self: Boolean): [Story]
+        stories(self: Boolean, page: Int): [Story]
         test: String
         story(id: Int!): ViewStory
         oembed(url: String!): Oembed
@@ -46,9 +46,14 @@ var root = {
 
   stories: (data, request) => {
     var sql = 'select * from storyView';
-    if(data.self){
-        sql += ' where "createdBy" ='+request.actor;
+    var pageSize = 3; var offset = 0;
+    if(data.page){
+        offset = pageSize * data.page;
     }
+    if(data.self){
+        sql += ' where "createdBy" = '+request.actor;
+    }
+    sql += ' limit '+pageSize+' offset '+offset;
     console.log(sql);
     return db.query(sql).then(function(response){
         var rows = response[0];

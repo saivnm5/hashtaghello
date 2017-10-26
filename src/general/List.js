@@ -8,26 +8,53 @@ class List extends Component {
         super(props)
 
         this.state = {
-            stories: []
+            stories: [],
+            page: 0,
+            endOfList: false
         }
     }
 
-    componentWillMount(){
+    isBottom(el) {
+        return el.getBoundingClientRect().bottom <= (window.innerHeight+60);
+    }
 
+    componentDidUpdate() {
+        if(!this.state.endOfList){
+            document.addEventListener('scroll', this.trackScrolling);
+        }
+    }
+
+    trackScrolling = () => {
+      const wrappedElement = document.getElementById('root');
+      if (this.isBottom(wrappedElement)) {
+        document.removeEventListener('scroll', this.trackScrolling);
+        this.loadContent(this.state.page+1);
+      }
+    };
+
+    loadContent = (page) => {
         var comp = this;
         var apiRoot = localStorage.getItem('apiRoot');
         var data = {};
+        var currentStories = this.state.stories;
         if(this.props.type === "profile"){
             data = {
-              query: "query ($self: Boolean) { \n stories(self: $self) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n } \n }",
+              query: "query ($self: Boolean, $page: Int) { \n stories(self: $self, page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n } \n }",
               variables: {
-                self: true
+                self: true,
+                page: page
               }
             };
         }
         else{
             data = {
                 query: "{ stories { id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl } }"
+            };
+            data = {
+              query: "query ($page: Int) { \n stories(page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n } \n }",
+              variables: {
+                page: page
+              }
             };
         }
         let headers = { "Authorization" : localStorage.getItem("authToken") };
@@ -38,11 +65,23 @@ class List extends Component {
           headers: headers
         }).then(function(response){
             var data = response.data.data;
-            comp.setState({
-                stories: data.stories
-            })
+            if(data.stories.length === 0){
+                comp.setState({
+                    endOfList: true
+                });
+            }
+            else{
+                var newStories = currentStories.concat(data.stories);
+                comp.setState({
+                    stories: newStories,
+                    page: page
+                });
+            }
         });
+    }
 
+    componentWillMount(){
+        this.loadContent(0);
     }
 
     render() {
