@@ -22,36 +22,62 @@ export function uploadPhoto(files, callbackObj) {
   }
   var file = files[0];
   var fileName = String(new Date() / 1000)+file.name;
+  var ignoreCompression = false;
 
-  new ImageCompressor(file, {
-    maxWidth: 2000,
-    maxHeight: 2000,
-    quality: 1,
-    success(result) {
+  if(file.name.match(/.(gif)$/i)){
+    ignoreCompression = true;
+  }
 
-      var params = {
-        Key: fileName,
-        Body: result,
-        ACL: 'public-read'
-      }
-      s3.upload(params)
-      .on('httpUploadProgress', function(evt) {
-        var percentage = parseInt(((evt.loaded * 100) / evt.total), 10);
-        callbackObj.progress(percentage);
-      }).send(function(err, data) {
-        if (err) {
-          return alert('There was an error uploading your photo: ', err.message);
+  if(!ignoreCompression){
+    new ImageCompressor(file, {
+      maxWidth: 2000,
+      maxHeight: 2000,
+      quality: 1,
+      success(result) {
+
+        var params = {
+          Key: fileName,
+          Body: result,
+          ACL: 'public-read'
         }
-        var imgKey = data.key;
-        var shotIndex = callbackObj.shotIndex;
-        callbackObj.success(shotIndex, 'image', imgKey);
-      });
+        s3.upload(params)
+        .on('httpUploadProgress', function(evt) {
+          var percentage = parseInt(((evt.loaded * 100) / evt.total), 10);
+          callbackObj.progress(percentage);
+        }).send(function(err, data) {
+          if (err) {
+            return alert('There was an error uploading your photo: ', err.message);
+          }
+          var imgKey = data.key;
+          var shotIndex = callbackObj.shotIndex;
+          callbackObj.success(shotIndex, 'image', imgKey);
+        });
 
-    },
-    error(e) {
-      console.log(e.message);
-    },
-  });
+      },
+      error(e) {
+        console.log(e.message);
+      },
+    });
+  }
+  else{
+    var params = {
+      Key: fileName,
+      Body: file,
+      ACL: 'public-read'
+    };
+    s3.upload(params)
+    .on('httpUploadProgress', function(evt) {
+      var percentage = parseInt(((evt.loaded * 100) / evt.total), 10);
+      callbackObj.progress(percentage);
+    }).send(function(err, data) {
+      if (err) {
+        return alert('There was an error uploading your photo: ', err.message);
+      }
+      var imgKey = data.key;
+      var shotIndex = callbackObj.shotIndex;
+      callbackObj.success(shotIndex, 'image', imgKey);
+    });
+  }
 
 }
 
@@ -71,4 +97,11 @@ export function getImgUrl(imgKey, size) {
   else{
     return (urlPrefix+imgKey);
   }
+}
+
+export function imageExists(imgUrl){
+    var http = new XMLHttpRequest();
+    http.open('HEAD', imgUrl, false);
+    http.send();
+    return http.status !== 404;
 }

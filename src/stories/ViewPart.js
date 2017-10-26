@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getImgUrl } from '../utils/aws';
+import { getImgUrl, imageExists } from '../utils/aws';
 import { getOembedData } from '../utils/oembed.js';
 
 class ViewPart extends Component {
@@ -30,6 +30,9 @@ class ViewPart extends Component {
 		var style = {};
 		if(this.props.data.imgKey){
 			var imgUrl = getImgUrl(this.props.data.imgKey, 'full');
+			if(!imageExists(imgUrl)){
+				imgUrl = getImgUrl(this.props.data.imgKey);
+			}
 			style.backgroundImage = 'url("'+imgUrl+'")';
 		}
 		else{
