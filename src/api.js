@@ -63,7 +63,7 @@ var root = {
         youtubeArrayString += "'"+soundcloudUrls[i]+"',";
     }
     for(var i=0; i<vimeoUrls.length; i++){
-        vimeoArrayString += "'"+soundcloudUrls[i]+"',";
+        vimeoArrayString += "'"+vimeoUrls[i]+"',";
     }
 
     // removing last comma

@@ -4,6 +4,7 @@ import {getImgUrl} from '../utils/aws';
 import { getShareUrl } from '../utils/simpl';
 import Img from 'react-image';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 class Publish extends Component {
@@ -70,6 +71,7 @@ class Publish extends Component {
             comp.setState({
                 publishBtnTxt: 'Publish'
             });
+            toast.error("Sorry, the story could not be published. Maybe, try again?");
         });
     }
 

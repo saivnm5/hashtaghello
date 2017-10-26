@@ -56,7 +56,7 @@ function authMiddleware(req, res, next) {
       }
       else{
         if(hardAuth){
-      	 responsees.status(401).send('Bad Access Token');
+      	 res.status(401).send('Bad Access Token');
         }
         else{
           next();

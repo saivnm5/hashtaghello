@@ -5,6 +5,7 @@ import ChooseHashtag from './ChooseHashtag';
 import StoryBoard from './StoryBoard';
 import Publish from './Publish';
 import { getRootDomain } from '../utils/simpl.js';
+import { ToastContainer } from 'react-toastify';
 import './create.css';
 
 const STAGES = [
@@ -218,6 +219,7 @@ class Create extends Component {
       shots: shotB,
       uploadInProgress: false
     });
+    this.saveStory();
   }
 
   removePart = (shotIndex) => {
@@ -298,6 +300,15 @@ class Create extends Component {
             ref={(input) => { this.imageInput = input; }}
             style={{display:'none'}}
             onChange = {this.handleImageUpload}
+          />
+           <ToastContainer
+            position="top-right"
+            type="default"
+            autoClose={1500}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            pauseOnHover
           />
         </div>
       );

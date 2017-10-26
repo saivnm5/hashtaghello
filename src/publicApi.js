@@ -88,7 +88,14 @@ var root = {
   oembed: (data) => {
     var url = data.url;
     var domain = getRootDomain(url);
-    return axios.get('http://'+domain+'/oembed', {
+    var oembedApiUrl = null;
+    if(domain === 'youtube.com' || domain === 'soundcloud.com'){
+        oembedApiUrl = 'http://'+domain+'/oembed';
+    }
+    else if(domain === 'vimeo.com'){
+        oembedApiUrl = 'https://vimeo.com/api/oembed.json';
+    }
+    return axios.get(oembedApiUrl, {
         params: {
           url: url,
           format: 'json'

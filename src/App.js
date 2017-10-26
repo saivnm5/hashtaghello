@@ -4,6 +4,7 @@ import './assets/forms.css';
 import './App.css';
 import './stories/story.css';
 import './assets/font-awesome/css/font-awesome.min.css';
+import './assets/ReactToastify.min.css';
 import logoImg from './assets/logo.png';
 import { Link } from 'react-router-dom';
 
