@@ -21,6 +21,15 @@ ALTER TABLE "public"."actor"
   ADD UNIQUE ("email"),
   ADD UNIQUE ("fbUserId");
 
+CREATE TABLE "public"."actorAuth" (
+    "id" serial,
+    "actor" integer,
+    "token" text NOT NULL,
+    PRIMARY KEY ("id"),
+    CONSTRAINT "actor_auth_id" FOREIGN KEY ("actor") REFERENCES "public"."actor"("id")
+);
+CREATE EXTENSION "uuid-ossp";
+
 
 CREATE TABLE "public"."story" (
     "id" serial,

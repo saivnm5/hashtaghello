@@ -21,7 +21,7 @@ class App extends Component {
 
             <div className="header-actions main">
               <div title="Your Stories" className="font-heading">
-                <Link to="/home">
+                <Link to="/profile">
                   <i className="fa fa-hashtag"></i>
                 </Link>
               </div>
@@ -29,7 +29,7 @@ class App extends Component {
           </div>
 
           <div>
-            <List type="featured" />
+            <List type="home" />
           </div>
 
           <div id="footer">

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Home from './Home';
+import Profile from './Profile';
 import Login from './Login';
 
 
@@ -22,7 +22,7 @@ class Index extends Component {
 
   render() {
     if(this.state.isLoggedIn){
-      return( <Home /> );
+      return( <Profile /> );
     }
     else{
       return( <Login /> );

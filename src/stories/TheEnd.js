@@ -43,7 +43,7 @@ class TheEnd extends Component {
 				<div className="payment">
 					<div className="content">
 						<div className="font-sub-heading">
-							"For they too are gatherers of fruit and frankincense, and that which they bring, though fashioned of dreams, is raiment and food for your soul."
+							For the storytellers "too are gatherers of fruit and frankincense, and that which they bring, though fashioned of dreams, is raiment and food for your soul."
 						</div>
 						<br/>
 						<div className="pay-trigger">

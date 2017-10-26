@@ -1,9 +1,9 @@
 CREATE OR REPLACE FUNCTION getActor(
    authToken text,
-   OUT actor integer)
+   OUT actorId integer)
 AS $$
 BEGIN
-	actor := null;
-  select id into actor from actor where "fbUserId" = authToken;
+	actorId := null;
+  select "actor" into actorId from "actorAuth" where "token" = authToken;
 END; $$
 LANGUAGE plpgsql;

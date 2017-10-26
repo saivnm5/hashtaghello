@@ -110,7 +110,7 @@ class Publish extends Component {
             <div className="pseudo-container">
                 <div className="nav-header">
                     <div className="btn" onClick={this.goBack}>
-                      <Link to="/home">Back</Link>
+                      <Link to="/profile">Back</Link>
                     </div>
                     <div className="btn right-align hide">
                       done

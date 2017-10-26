@@ -56,7 +56,7 @@ class Create extends Component {
 
     axios({
       method: 'post',
-      url: apiRoot+'/api',
+      url: apiRoot+'/public',
       data: data
     }).then(function(response){
         var story = response.data.data.story;
@@ -78,7 +78,7 @@ class Create extends Component {
   }
 
   handleTagChange = (event) => {
-    if(event.target.value && event.target.value.length <= 30){
+    if(event.target.value && event.target.value.length <= 30 && event.target.value[0] === '#'){
       this.setState({
         hashtag: event.target.value
       });

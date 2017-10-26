@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import List from '../general/List';
 
 
-class Home extends Component {
+class Profile extends Component {
 
   constructor(props){
     super(props);
@@ -36,11 +36,11 @@ class Home extends Component {
         </div>
 
         <div>
-          <List type="home" />
+          <List type="profile" />
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+export default Profile;

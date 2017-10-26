@@ -17,7 +17,7 @@ class ChooseHashtag extends Component {
             <div className="pseudo-container">
                 <div className="nav-header">
                     <div className="btn">
-                      <Link to="/home">Back</Link>
+                      <Link to="/profile">Back</Link>
                     </div>
                     <div className="btn right-align" onClick={this.props.createStory} >
                       Start

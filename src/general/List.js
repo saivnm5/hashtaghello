@@ -21,7 +21,7 @@ class List extends Component {
         }
         axios({
           method: 'post',
-          url: apiRoot+'/api',
+          url: apiRoot+'/public',
           data: data
         }).then(function(response){
             var data = response.data.data;
@@ -38,10 +38,10 @@ class List extends Component {
         for (var i=0; i < stories.length; i++) {
             rows.push(<Story data={stories[i]} key={i} type={this.props.type} />);
         }
-        if(this.props.type === "featured"){
+        if(this.props.type === "home"){
             text = 'stories from around the world';
         }
-        else if(this.props.type === "home"){
+        else if(this.props.type === "profile"){
             text = 'your stories';
         }
 

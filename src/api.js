@@ -1,8 +1,6 @@
 var { graphql, buildSchema } = require('graphql');
-var stories = require('./stories/initData');
 var db = require('./db');
-var { getRootDomain, createSlug } = require('./utils/simpl');
-var axios = require('axios');
+var { createSlug } = require('./utils/simpl');
 
 var schema = buildSchema(`
     input StoryInput{
@@ -19,69 +17,23 @@ var schema = buildSchema(`
         vimeoUrls: [String!]
     }
 
-    input ActorInput{
-        name: String!
-        email: String
-        fbUserId: String!
-    }
-
     input PublishInput{
         story: Int!
         isPrivate: Boolean
     }
 
-    type Part{
-        imgKey: String
-        thumbnailUrl: String
-        mediaUrl: String
-    }
-
-    type Story{
-        id: Int!
-        hashtag: String!
-        creator: String
-        description: String
-        imgKey: String
-        thumbnailUrl: String
-        mediaUrl: String
-    }
-
-    type ViewStory{
-        hashtag: String!
-        description: String
-        creator: String
-        slug: String
-        parts: [Part]
-    }
-
-    type Oembed{
-        thumbnail_url: String!,
-        html: String!
-    }
-
     type Query {
-        stories: [Story]
         test: String
-        story(id: Int!): ViewStory
-        oembed(url: String!): Oembed
     }
 
     type Mutation {
         createOrUpdateStory(input: StoryInput): Int
         saveStory(input: PartInput): Int
-        getOrCreateActor(input: ActorInput): Int
         publishStory(input: PublishInput): String!
     }
 `);
 
 var root = {
-
-  stories: () => {
-    return db.query('select * from storyView').then(function(response){
-        var rows = response[0];
-        return rows;
-    });
-  },
 
   createOrUpdateStory: (data, request) => {
     var input = data.input;
@@ -138,41 +90,8 @@ var root = {
 
   },
 
-  getOrCreateActor: (data) => {
-    var input = data.input;
-    var email = "null";
-    if(input.email){ email = "'"+input.email+"'"; }
-
-    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+",'"+input.fbUserId+"')";
-    return db.query(sql).then(function(response){
-        return response[0][0].actor;
-    }).catch(function(error){
-        console.log(error);
-    });
-  },
-
   test: (data, request) => {
     return request.actor;
-  },
-
-  story: (data) => {
-    var sql1 = "select * from storyView where id = "+data.id;
-    var sql2 = "select * from partView where story = "+data.id;
-    var response = {};
-
-    return db.query(sql1).then(function(results){
-        var story = results[0][0];
-        response.hashtag = story.hashtag;
-        response.description = story.description;
-        response.creator = story.creator;
-        response.slug = story.slug;
-        return db.query(sql2).then(function(results){
-            var rows = results[0];
-            response.parts = rows;
-            return response;
-        });
-    });
-
   },
 
   publishStory: (data) => {
@@ -187,43 +106,11 @@ var root = {
             return row.slugurl;
         });
     });
-  },
-
-  oembed: (data) => {
-    var url = data.url;
-    var domain = getRootDomain(url);
-    return axios.get('http://'+domain+'/oembed', {
-        params: {
-          url: url,
-          format: 'json'
-        }
-    })
-    .then(function (response) {
-        console.log(response);
-        var data = {};
-        data.thumbnail_url = response.data.thumbnail_url;
-        data.html = response.data.html;
-        return data;
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
   }
 };
 
-function authMiddleware(req, res, next) {
-    var authToken = req.get('Authorization');
-    var sql = "select * from getActor('"+authToken+"')";
-    db.query(sql).then(function(response){
-        if(response[0][0].actor){
-            req.actor = response[0][0].actor;
-        }
-        next();
-    });
-}
 
 module.exports = {
     schema: schema,
-    root: root,
-    authMiddleware: authMiddleware
+    root: root
 };

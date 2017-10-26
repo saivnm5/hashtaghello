@@ -4,7 +4,7 @@ import Swipeable from 'react-swipeable';
 import ViewPart from './ViewPart';
 import TheEnd from './TheEnd';
 
-class Home extends Component {
+class View extends Component {
 
   constructor(props){
     super(props);
@@ -49,7 +49,7 @@ class Home extends Component {
 
     axios({
       method: 'post',
-      url: apiRoot+'/api',
+      url: apiRoot+'/public',
       data: data
     }).then(function(response){
         var story = response.data.data.story;
@@ -125,4 +125,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default View;

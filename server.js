@@ -4,6 +4,8 @@ const path = require('path');
 const app = express();
 const graphqlHTTP = require('express-graphql');
 const API = require('./src/api');
+const AuthAPI = require('./src/actor/auth');
+const PublicAPI = require('./src/publicApi');
 
 var cors = require('cors');
 app.use(cors())
@@ -15,7 +17,17 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Serves GraphQL API
-app.use(API.authMiddleware);
+app.use(AuthAPI.authMiddleware);
+app.use('/auth', graphqlHTTP({
+  schema: AuthAPI.schema,
+  rootValue: AuthAPI.root,
+  graphiql: true,
+}));
+app.use('/public', graphqlHTTP({
+  schema: PublicAPI.schema,
+  rootValue: PublicAPI.root,
+  graphiql: true,
+}));
 app.use('/api', graphqlHTTP({
   schema: API.schema,
   rootValue: API.root,
