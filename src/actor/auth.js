@@ -39,22 +39,30 @@ var root = {
 }
 
 function authMiddleware(req, res, next) {
-	if(req.path === '/public' || req.path === '/auth'){
+  var hardAuth = true;
+	if(req.path === '/auth'){
 		next();
 	}
-	else{
-    var authToken = req.get('Authorization');
-    var sql = "select * from getActor('"+authToken+"')";
-    db.query(sql).then(function(response){
-        if(response[0][0].actorid){
-          req.actor = response[0][0].actorid;
-          next();
+  else if(req.path === '/public'){
+    hardAuth = false;
+  }
+
+  var authToken = req.get('Authorization');
+  var sql = "select * from getActor('"+authToken+"')";
+  db.query(sql).then(function(response){
+      if(response[0][0].actorid){
+        req.actor = response[0][0].actorid;
+        next();
+      }
+      else{
+        if(hardAuth){
+      	 responsees.status(401).send('Bad Access Token');
         }
         else{
-        	res.status(401).send('Bad Access Token');
+          next();
         }
-    });
-   }
+      }
+  });
 }
 
 module.exports = {

@@ -14,7 +14,7 @@ var schema = buildSchema(`
     type Story{
         id: Int!
         hashtag: String!
-        creator: String
+        createdByName: String
         description: String
         imgKey: String
         thumbnailUrl: String
@@ -24,7 +24,7 @@ var schema = buildSchema(`
     type ViewStory{
         hashtag: String!
         description: String
-        creator: String
+        createdByName: String
         slug: String
         parts: [Part]
     }
@@ -35,7 +35,7 @@ var schema = buildSchema(`
     }
 
     type Query {
-        stories: [Story]
+        stories(self: Boolean): [Story]
         test: String
         story(id: Int!): ViewStory
         oembed(url: String!): Oembed
@@ -44,8 +44,13 @@ var schema = buildSchema(`
 
 var root = {
 
-  stories: () => {
-    return db.query('select * from storyView').then(function(response){
+  stories: (data, request) => {
+    var sql = 'select * from storyView';
+    if(data.self){
+        sql += ' where "createdBy" ='+request.actor;
+    }
+    console.log(sql);
+    return db.query(sql).then(function(response){
         var rows = response[0];
         return rows;
     });
@@ -64,7 +69,7 @@ var root = {
         var story = results[0][0];
         response.hashtag = story.hashtag;
         response.description = story.description;
-        response.creator = story.creator;
+        response.createdByName = story.createdByName;
         response.slug = story.slug;
         return db.query(sql2).then(function(results){
             var rows = results[0];

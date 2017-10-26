@@ -3,7 +3,8 @@ AS
 select
 story."id",
 hashtag."realText" as "hashtag",
-actor."name" as creator,
+actor."name" as "createdByName",
+story."createdBy",
 story."description",
 part."imgKey",
 part."thumbnailUrl",

@@ -16,13 +16,26 @@ class List extends Component {
 
         var comp = this;
         var apiRoot = localStorage.getItem('apiRoot');
-        var data = {
-            query: "{ stories { id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl } }"
+        var data = {};
+        if(this.props.type === "profile"){
+            data = {
+              query: "query ($self: Boolean) { \n stories(self: $self) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n } \n }",
+              variables: {
+                self: true
+              }
+            };
         }
+        else{
+            data = {
+                query: "{ stories { id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl } }"
+            };
+        }
+        let headers = { "Authorization" : localStorage.getItem("authToken") };
         axios({
           method: 'post',
           url: apiRoot+'/public',
-          data: data
+          data: data,
+          headers: headers
         }).then(function(response){
             var data = response.data.data;
             comp.setState({

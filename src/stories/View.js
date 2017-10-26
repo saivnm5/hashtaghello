@@ -21,7 +21,7 @@ class View extends Component {
       storyId: storyId,
       hashtag: '',
       description: '',
-      creator: '',
+      createdByName: '',
       slug: '',
       shots: [],
       activePart: 0
@@ -41,7 +41,7 @@ class View extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n creator \n slug \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n createdByName \n slug \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           id: this.state.storyId
         }
@@ -56,7 +56,7 @@ class View extends Component {
         comp.setState({
             hashtag: '#'+story.hashtag,
             description: story.description,
-            creator: story.creator,
+            createdByName: story.createdByName,
             slug: story.slug,
             shots: story.parts,
             activePart: 0

@@ -49,8 +49,9 @@ class Login extends Component {
       data: data
     }).then(function(response){
         var data = response.data.data;
-        if(data.getOrCreateActor){
-          localStorage.setItem('authToken', userData.id);
+        var accessToken = data.getOrCreateActor;
+        if(accessToken){
+          localStorage.setItem('authToken', accessToken);
           localStorage.setItem('actorName', userData.name);
           localStorage.setItem('isLoggedIn', true);
           window.location.reload();
