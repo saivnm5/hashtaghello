@@ -40,7 +40,7 @@ class Story extends Component {
         let media = <Img src={imgArray} alt={this.props.data.hashtag} />;
         var viewComp = null;
         if(this.state.viewStory){
-            viewComp = <View id={this.props.data.id} closeStory={this.closeStory} />
+            viewComp = <View slug={this.props.data.slug} closeStory={this.closeStory} />
         }
         var Edit = null;
         if(this.props.type === "profile"){

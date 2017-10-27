@@ -19,6 +19,7 @@ var schema = buildSchema(`
         imgKey: String
         thumbnailUrl: String
         mediaUrl: String
+        slug: String
     }
 
     type ViewStory{
@@ -40,7 +41,7 @@ var schema = buildSchema(`
     type Query {
         stories(self: Boolean, page: Int): [Story]
         test: String
-        story(id: Int!): ViewStory
+        story(slug: String!): ViewStory
         oembed(url: String!): Oembed
     }
 `);
@@ -65,27 +66,32 @@ var root = {
   },
 
   test: (data, request) => {
-    return request.actor;
+    return 'juice';
   },
 
   story: (data) => {
-    var sql1 = "select * from storyView where id = "+data.id;
-    var sql2 = "select * from partView where story = "+data.id;
     var response = {};
-
-    return db.query(sql1).then(function(results){
-        var story = results[0][0];
-        response.hashtag = story.hashtag;
-        response.description = story.description;
-        response.createdByName = story.createdByName;
-        response.isPrivate = story.isPrivate;
-        response.isPublished = story.isPublished;
-        response.allowPayment = story.allowPayment;
-        response.slug = story.slug;
-        return db.query(sql2).then(function(results){
-            var rows = results[0];
-            response.parts = rows;
-            return response;
+    var sql = "select story from url where slug = '"+data.slug+"'";
+    console.log(sql);
+    return db.query(sql).then(function(results){
+        var url = results[0][0];
+        var sql1 = "select * from storyView where id = "+url.story;
+        var sql2 = "select * from partView where story = "+url.story;
+        console.log(sql1);
+        return db.query(sql1).then(function(results){
+            var story = results[0][0];
+            response.hashtag = story.hashtag;
+            response.description = story.description;
+            response.createdByName = story.createdByName;
+            response.isPrivate = story.isPrivate;
+            response.isPublished = story.isPublished;
+            response.allowPayment = story.allowPayment;
+            response.slug = story.slug;
+            return db.query(sql2).then(function(results){
+                var rows = results[0];
+                response.parts = rows;
+                return response;
+            });
         });
     });
 

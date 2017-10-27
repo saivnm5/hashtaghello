@@ -30,7 +30,7 @@ class Routes extends React.Component{
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />
           <Route exact path="/storyboard/:id" component={Create} />
-          <Route exact path="/view/:id" component={View} />
+          <Route exact path="/view/" component={View} />
         </div>
       </Router>
     );

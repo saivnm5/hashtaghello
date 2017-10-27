@@ -9,16 +9,16 @@ class View extends Component {
   constructor(props){
     super(props);
 
-    var storyId = null;
-    if(props.id){
-      storyId = props.id;
+    var storySlug = null;
+    if(props.slug){
+      storySlug = props.slug;
     }
-    else if(props.match.params.id){
-      storyId = props.match.params.id;
+    else if(props.location.hash){
+      storySlug = props.location.hash
     }
 
     this.state = {
-      storyId: storyId,
+      storySlug: storySlug,
       hashtag: '',
       description: '',
       createdByName: '',
@@ -41,9 +41,9 @@ class View extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n createdByName \n slug \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
-          id: this.state.storyId
+          slug: this.state.storySlug
         }
     };
 

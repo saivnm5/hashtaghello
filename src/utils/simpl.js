@@ -41,7 +41,7 @@ function getRootDomain(url) {
 function createSlug(storyId, hashtag){
     var crypto = require('crypto');
     var hash = crypto.createHash('md5').update('hindustani'+storyId).digest("hex");
-    var slug = '#'+hashtag+'-'+hash;
+    var slug = '#'+hashtag+hash;
     return slug;
 }
 

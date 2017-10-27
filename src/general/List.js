@@ -39,7 +39,7 @@ class List extends Component {
         var currentStories = this.state.stories;
         if(this.props.type === "profile"){
             data = {
-              query: "query ($self: Boolean, $page: Int) { \n stories(self: $self, page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n } \n }",
+              query: "query ($self: Boolean, $page: Int) { \n stories(self: $self, page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n slug \n } \n }",
               variables: {
                 self: true,
                 page: page
@@ -48,10 +48,7 @@ class List extends Component {
         }
         else{
             data = {
-                query: "{ stories { id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl } }"
-            };
-            data = {
-              query: "query ($page: Int) { \n stories(page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n } \n }",
+              query: "query ($page: Int) { \n stories(page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n slug \n } \n }",
               variables: {
                 page: page
               }
