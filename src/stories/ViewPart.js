@@ -30,9 +30,9 @@ class ViewPart extends Component {
 		var style = {};
 		if(this.props.data.imgKey){
 			var imgUrl = getImgUrl(this.props.data.imgKey, 'full');
-			if(!imageExists(imgUrl)){
-				imgUrl = getImgUrl(this.props.data.imgKey);
-			}
+			//if(!imageExists(imgUrl)){
+				//imgUrl = getImgUrl(this.props.data.imgKey);
+			//}
 			style.backgroundImage = 'url("'+imgUrl+'")';
 		}
 		else{
