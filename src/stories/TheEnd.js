@@ -37,7 +37,7 @@ class TheEnd extends Component {
 				<div className="credits">
 					<div className="content">
 						<div className="font-sub-heading">this story was brought to you by</div>
-						<div className="font-heading">{this.props.data.createdByName}</div>
+						<div className="font-heading">{'#'+this.props.data.createdByName}</div>
 					</div>
 				</div>
 				<div className="payment">
@@ -96,7 +96,7 @@ class TheEnd extends Component {
 									<div className="font-sub-heading right-align">pay to&nbsp;&nbsp;</div>
 								</div>
 								<div>
-									<span className="font-heading">{this.props.data.createdByName}</span>
+									<span className="font-heading">{'#'+this.props.data.createdByName}</span>
 								</div>
 							</div>
 							<br/>

@@ -14,6 +14,7 @@ BEGIN
       story ("hashtag", "description", "createdBy")
       values (hashtagFk, descriptionIn, actor)
       returning "id" into storyId;
+      select from createUrl(storyId, slug, null);
     else
       update "story"
       set "hashtag" = hashtagFk,

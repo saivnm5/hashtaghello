@@ -37,7 +37,7 @@ class App extends Component {
             <div className="font-sub-heading">
               that's all folks, but if you want you can
             </div>
-            <div className="font-heading">
+            <div className="font-heading btn">
               <Link to="/profile">
                 #WriteYourOwnStory
               </Link>

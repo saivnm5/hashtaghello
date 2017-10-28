@@ -7,9 +7,8 @@ class Profile extends Component {
 
   constructor(props){
     super(props);
-    var name = localStorage.getItem('actorName').replace(/ /g,'');
     this.state = {
-      name: name
+      hashtag: localStorage.getItem('actorHashtag')
     };
   }
 
@@ -23,7 +22,7 @@ class Profile extends Component {
           </div>
           </Link>
           <div className="header-title" >
-              #{this.state.name}
+              #{this.state.hashtag}
           </div>
 
           <div className="header-actions">

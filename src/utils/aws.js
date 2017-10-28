@@ -1,4 +1,5 @@
 import ImageCompressor from '@xkeshi/image-compressor';
+import { toast } from 'react-toastify';
 
 var awsBucketName = 'hello-source';
 var bucketRegion = 'ap-south-1';
@@ -71,7 +72,8 @@ export function uploadPhoto(files, callbackObj) {
       callbackObj.progress(percentage);
     }).send(function(err, data) {
       if (err) {
-        return alert('There was an error uploading your photo: ', err.message);
+        toast.error("There was an error. Re-upload, or maybe upload a lighter file.");
+        callbackObj.error();
       }
       var imgKey = data.key.substring(7); // removing the prefix "images/"
       var shotIndex = callbackObj.shotIndex;

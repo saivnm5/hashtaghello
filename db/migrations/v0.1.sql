@@ -20,6 +20,8 @@ CREATE TABLE "public"."actor" (
 ALTER TABLE "public"."actor"
   ADD UNIQUE ("email"),
   ADD UNIQUE ("fbUserId");
+ALTER TABLE "public"."actor" ADD COLUMN "hashtag" text NOT NULL;
+
 
 CREATE TABLE "public"."actorAuth" (
     "id" serial,

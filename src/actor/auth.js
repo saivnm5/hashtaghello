@@ -9,7 +9,7 @@ var schema = buildSchema(`
   }
 
   type Query {
-  	test: String
+  	whoami: String
   }
 
   type Mutation {
@@ -19,16 +19,27 @@ var schema = buildSchema(`
 
 var root = {
 
-	test: (data, request) => {
-    return 'in auth api';
+	whoami: (data, request) => {
+    var authToken = request.get('Authorization');
+    var sql = "select currenthashtag from getActor('"+authToken+"')";
+    console.log(sql);
+    return db.query(sql).then(function(results){
+      if(results[0][0].currenthashtag){
+        return results[0][0].currenthashtag;
+      }
+    }).
+    catch(function(error){
+      console.log(error);
+    });
   },
 
 	getOrCreateActor: (data) => {
     var input = data.input;
     var email = "null";
     if(input.email){ email = "'"+input.email+"'"; }
+    var hashtag = input.name.replace(/ /g,'');
 
-    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+",'"+input.fbUserId+"')";
+    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+",'"+input.fbUserId+"', '"+hashtag+"')";
     return db.query(sql).then(function(response){
         return response[0][0].accesstoken;
     }).catch(function(error){

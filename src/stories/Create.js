@@ -22,21 +22,21 @@ class Create extends Component {
 
   constructor(props){
     super(props);
-    var storyId = null;
+    var storySlug = null;
     var shots = [];
-    if(props.match.params.id){
-      storyId = props.match.params.id;
-      this.loadData(storyId);
+    if(props.location.hash){
+      storySlug = props.location.hash;
+      this.loadData(storySlug);
     }
-    for(var i=0; i<3; i++){
+    for(var i=0; i<100; i++){
       shots.push(defaultPart);
     }
 
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[2],
-        story: storyId,
+        stage: STAGES[0],
+        story: null,
         shots: shots,
         shotInFocus: 0,
         uploadInProgress: false,
@@ -47,13 +47,13 @@ class Create extends Component {
     this.updatePart = this.updatePart.bind(this);
   }
 
-  loadData = (storyId) => {
+  loadData = (storySlug) => {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($id: Int!) { \n story(id: $id) { \n hashtag \n description \n isPrivate \n allowPayment \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n isPrivate \n allowPayment \n slug \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n } \n } \n }",
         variables: {
-          id: storyId
+          slug: storySlug
         }
     };
 
@@ -71,7 +71,7 @@ class Create extends Component {
             isPrivate: story.isPrivate,
             allowPayment: story.allowPayment,
             shots: newShots,
-            story: storyId
+            story: story.id
         });
     });
   }
@@ -240,11 +240,18 @@ class Create extends Component {
     });
   }
 
+  errorImageUpload = () => {
+    this.setState({
+      uploadInProgress: false
+    });
+  }
+
   handleImageUpload = (event) => {
     var callbackObj = {
       success: this.updatePart,
       shotIndex: this.state.shotInFocus,
-      progress: this.uploadProgress
+      progress: this.uploadProgress,
+      error: this.errorImageUpload
     };
     uploadPhoto(event.target.files, callbackObj);
     this.setState({
@@ -308,7 +315,7 @@ class Create extends Component {
            <ToastContainer
             position="top-right"
             type="default"
-            autoClose={1500}
+            autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

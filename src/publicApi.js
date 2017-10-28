@@ -23,6 +23,7 @@ var schema = buildSchema(`
     }
 
     type ViewStory{
+        id: Int!
         hashtag: String!
         description: String
         createdByName: String
@@ -87,6 +88,8 @@ var root = {
             response.isPublished = story.isPublished;
             response.allowPayment = story.allowPayment;
             response.slug = story.slug;
+            response.id = story.id;
+            console.log(response);
             return db.query(sql2).then(function(results){
                 var rows = results[0];
                 response.parts = rows;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import {getImgUrl} from '../utils/aws';
 import { getShareUrl } from '../utils/simpl';
 import Img from 'react-image';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 
 class Publish extends Component {
@@ -134,26 +134,29 @@ class Publish extends Component {
         var showPublishBtnClass = 'show';
         var showPublishedClass = 'hide';
         var showPublicOptionsClass = 'hide';
+        var showPublishNavClass = 'hide';
+        if(this.state.option === 'public'){
+            showPublicOptionsClass = 'show';
+        }
         if(this.state.isPublished){
             showOptionsClass = 'hide';
             showShareClass = 'show';
             showPublishBtnClass = 'hide';
             showPublishedClass = 'show';
             showPublicOptionsClass = 'hide';
+            showPublishNavClass = 'show';
         }
-        if(this.state.option === 'public'){
-            showPublicOptionsClass = 'show';
-        }
+
 
         return(
             <div className="pseudo-container">
 
                 <div className="nav-header">
                     <div className="btn" onClick={this.goBack}>
-                      <Link to="/profile">Back</Link>
+                      back
                     </div>
-                    <div className="btn right-align hide">
-                      done
+                    <div className={"btn right-align "+showPublishNavClass} >
+                      <Link to="/profile">done</Link>
                     </div>
                 </div>
 
@@ -161,7 +164,7 @@ class Publish extends Component {
                     {snapshotComp}
                     <br/><br/>
                     <div className={"font-sub-heading "+showOptionsClass}>
-                        keep story
+                        publish as
                     </div>
 
                     <div className={showOptionsClass}>
@@ -178,7 +181,7 @@ class Publish extends Component {
                                 public
                             </div>
                             <div className="font-sub-heading">
-                                like, out there
+                                out there
                             </div>
                         </div>
                     </div>

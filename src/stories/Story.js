@@ -9,7 +9,8 @@ class Story extends Component {
         super(props);
         this.state = {
             viewStory: false
-        }
+        };
+        this.triggerEdit = this.triggerEdit.bind(this);
     }
 
     viewStory = () => {
@@ -25,7 +26,7 @@ class Story extends Component {
     }
 
     triggerEdit = () => {
-        var url = '/storyboard/'+this.props.data.id;
+        var url = '/storyboard/'+this.props.data.slug;
         window.location.href = url;
     }
 

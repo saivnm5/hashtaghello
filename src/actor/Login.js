@@ -6,7 +6,7 @@ import { fbLogin, getFbUserData } from '../utils/fb';
 class Login extends Component {
 
   componentWillMount(){
-    this.login();
+    //this.login();
   }
 
   login = () => {
