@@ -8,7 +8,6 @@ import './assets/ReactToastify.min.css';
 import logoImg from './assets/logo.png';
 import { Link } from 'react-router-dom';
 
-
 class App extends Component {
 
   render() {
