@@ -51,14 +51,14 @@ var root = {
 
 function authMiddleware(req, res, next) {
   var hardAuth = true;
-
-  if(req.path === '/public' || req.path === 'api'){
+  if(req.path === '/public' || req.path === '/api'){
     if(req.path === '/public'){
       hardAuth = false;
     }
-    var authToken = req.get('Authorization');
+    var authToken = req.header('Authorization');
     var sql = "select * from getActor('"+authToken+"')";
     db.query(sql).then(function(response){
+      console.log(response[0]);
         if(response[0][0].actorid){
           req.actor = response[0][0].actorid;
           next();

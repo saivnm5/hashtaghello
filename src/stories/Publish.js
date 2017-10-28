@@ -86,6 +86,7 @@ class Publish extends Component {
               }
             }
         };
+        debugger
 
         axios({
           method: 'post',

@@ -59,7 +59,6 @@ var root = {
         sql += ' where "createdBy" = '+request.actor;
     }
     sql += ' limit '+pageSize+' offset '+offset;
-    console.log(sql);
     return db.query(sql).then(function(response){
         var rows = response[0];
         return rows;
@@ -73,7 +72,6 @@ var root = {
   story: (data) => {
     var response = {};
     var sql = "select story from url where slug = '"+data.slug+"'";
-    console.log(sql);
     return db.query(sql).then(function(results){
         var url = results[0][0];
         var sql1 = "select * from storyView where id = "+url.story;
