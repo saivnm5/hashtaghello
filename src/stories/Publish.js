@@ -86,7 +86,6 @@ class Publish extends Component {
               }
             }
         };
-        debugger
 
         axios({
           method: 'post',
@@ -110,8 +109,7 @@ class Publish extends Component {
 
     render(){
         var imgUrl = null;
-        var partIndex = this.props.data.shotInFocus;
-        var part = this.props.data.shots[partIndex];
+        var part = this.props.data.shots[0];
         if(part.mediaUrl && part.mediaUrl !== ''){
             imgUrl = [part.thumbnailUrl];
         }
