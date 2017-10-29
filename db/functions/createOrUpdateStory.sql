@@ -7,6 +7,7 @@ CREATE OR REPLACE FUNCTION createOrUpdateStory(
 AS $$
 DECLARE
     hashtagFk integer;
+    slug text;
 BEGIN
     select hashtagid into hashtagFk from getOrCreateHashtag(hasgtagIn);
     if storyIn is null then
@@ -14,7 +15,6 @@ BEGIN
       story ("hashtag", "description", "createdBy")
       values (hashtagFk, descriptionIn, actor)
       returning "id" into storyId;
-      select from createUrl(storyId, slug, null);
     else
       update "story"
       set "hashtag" = hashtagFk,

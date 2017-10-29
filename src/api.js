@@ -40,8 +40,14 @@ var root = {
     var input = data.input;
     var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
     var sql = "select * from createOrUpdateStory('"+hashtag+"','"+input.description+"', "+request.actor+", "+input.id+")";
+    console.log(sql);
     return db.query(sql).then(function(response){
-        return response[0][0].storyid;
+        var storyId = response[0][0].storyid;
+        var slug = createSlug(storyId, input.hashtag);
+        var sql2 = "select output from createUrl("+storyId+", '"+slug+"', null);";
+        return db.query(sql2).then(function(results){
+            return storyId;
+        });
     }).catch(function(error){
         console.log(error);
     });
