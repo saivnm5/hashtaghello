@@ -40,7 +40,7 @@ class TheEnd extends Component {
 						<div className="font-heading">{'#'+this.props.data.createdByName}</div>
 					</div>
 				</div>
-				<div className="payment">
+				<div className="payment hide">
 					<div className="content">
 						<div className="font-sub-heading">
 							For the storytellers "too are gatherers of fruit and frankincense, and that which they bring, though fashioned of dreams, is raiment and food for your soul."
@@ -59,12 +59,12 @@ class TheEnd extends Component {
 					<div className="content">
 
 						<br/><br/>
-						<div className="font-sub-heading">
+						<div className="font-sub-heading hide">
 							or
 						</div>
 						<br/><br/>
 						<div>
-							<span className="font-heading btn" onClick={this.toggleShare}>Simply Share</span>
+							<span className="font-heading btn" onClick={this.toggleShare}>Share</span>
 						</div>
 						<br/>
 						<div className={this.state.shareClass}>
