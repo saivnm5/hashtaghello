@@ -79,5 +79,13 @@ CREATE TABLE "public"."url" (
 );
 
 
+CREATE TABLE "public"."featuredStory" (
+    "id" serial,
+    "story" integer,
+    "createdAt" text DEFAULT now(),
+    PRIMARY KEY ("id"),
+    CONSTRAINT "story_featured_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
+);
+
 
 

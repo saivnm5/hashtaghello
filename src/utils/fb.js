@@ -1,9 +1,18 @@
 /*global FB*/
 
+import config from '../config';
+
+var fbAppId = null;
+if(config.DEBUG){
+  fbAppId = config.fb_local_app_id;
+}
+else{
+  fbAppId = config.fb_prod_app_id;
+}
+
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : '380187239085835',
-    //appId      : '1961070890815728',
+    appId      : fbAppId,
     xfbml      : true,
     version    : 'v2.10'
   });

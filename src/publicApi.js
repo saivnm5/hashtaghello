@@ -50,14 +50,18 @@ var schema = buildSchema(`
 var root = {
 
   stories: (data, request) => {
-    var sql = 'select * from storyView';
+    var sql = 'select * from ';
     var pageSize = 5; var offset = 0;
     if(data.page){
         offset = pageSize * data.page;
     }
     if(data.self){
-        sql += ' where "createdBy" = '+request.actor;
+        sql += ' storyView where "createdBy" = '+request.actor;
     }
+    else{
+        sql += ' storyFeaturedView';
+    }
+
     sql += ' limit '+pageSize+' offset '+offset;
     return db.query(sql).then(function(response){
         var rows = response[0];
