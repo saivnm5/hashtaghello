@@ -83,10 +83,15 @@ class Create extends Component {
   }
 
   handleTagChange = (event) => {
-    if(event.target.value && event.target.value.length <= 30 && event.target.value[0] === '#'){
-      this.setState({
-        hashtag: event.target.value
-      });
+    var hashtag = event.target.value;
+
+    if(hashtag && hashtag.length <= 31 && hashtag[0] === '#'){
+      var hashlessTag = hashtag.replace(/^#/, '');
+      if(hashlessTag.match(/^[a-z0-9]+$/i) || !hashlessTag){
+        this.setState({
+          hashtag: hashtag
+        });
+      }
     }
   }
 
