@@ -5,7 +5,7 @@
     "db": {
         "username" : "psykrsna",
         "password" : "#hindustani#",
-        "database" : "test",
+        "database" : "production",
         "params" : {
             "logging" : false,
             "host" : "hello-prod.cuqptdxecfhw.ap-south-1.rds.amazonaws.com",

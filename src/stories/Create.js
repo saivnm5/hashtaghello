@@ -96,7 +96,8 @@ class Create extends Component {
   }
 
   handleDescriptionChange = (event) => {
-    if(event.target.value.length <= 100){
+    var numberOfLineBreaks = (event.target.value.match(/\n/g)||[]).length;
+    if(event.target.value.length <= 100 && numberOfLineBreaks === 0){
       this.setState({
         description: event.target.value
       })

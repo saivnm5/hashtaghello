@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Story from '../stories/Story';
 import axios from 'axios';
+import beginImg from '../assets/begin.png';
+import { Link } from 'react-router-dom';
 
 class List extends Component {
 
@@ -84,8 +86,28 @@ class List extends Component {
     render() {
         var rows = []; var text = '';
         var stories = this.state.stories;
-        for (var i=0; i < stories.length; i++) {
-            rows.push(<Story data={stories[i]} key={i} type={this.props.type} />);
+        if(stories.length > 0){
+            for (var i=0; i < stories.length; i++) {
+                rows.push(<Story data={stories[i]} key={i} type={this.props.type} />);
+            }
+        }
+        else{
+            rows = (
+                <div className="lets-begin-story">
+                    <div>
+                        <img src={beginImg} alt="lets begin" />
+                    </div>
+                    <div className="font-sub-heading">
+                        this is the place where your stories will come to live
+                    </div>
+                    <br/><br/>
+                    <div className="font-heading btn">
+                        <Link to="/create">
+                            Let's Begin
+                        </Link>
+                    </div>
+                </div>
+            );
         }
         if(this.props.type === "home"){
             text = 'stories from around the world';

@@ -112,6 +112,9 @@ a:hover{
 .header-back{
   margin-right: 12px;
 }
+.header-image img{
+  height: 24px;
+}
 
 /* Body/Layout/Common */
 .list, .list-body{
@@ -157,5 +160,16 @@ li{
   align-items: center;
 }
 .login-body div{
+  justify-content: center;
+}
+
+/* List */
+.lets-begin-story{
+  height: 40vh;
+  align-items:center;
+  justify-content: center;
+  flex-flow: column wrap;
+}
+.lets-begin-story > div {
   justify-content: center;
 }

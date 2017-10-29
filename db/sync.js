@@ -19,6 +19,7 @@ function readFiles(dirname, onFileContent, onError) {
   });
 }
 
+
 var sql = '';
 readFiles('./db/migrations/', function(filename, content) {
     console.log(filename);
@@ -36,7 +37,7 @@ setTimeout(function(){ // giving two seconds for the files to be read
         process.exit();
     });
 
-}, 2000);
+}, 5000);
 
 var sqlF = '';
 readFiles('./db/functions/', function(filename, content) {
@@ -56,4 +57,25 @@ setTimeout(function(){ // giving two seconds for the files to be read
         process.exit();
     });
 
-}, 2000)
+}, 5000)
+
+
+var sqlV = '';
+readFiles('./db/views/', function(filename, content) {
+    console.log(filename);
+    sqlV = sqlV + content;
+}, function(err) {
+  throw err;
+});
+
+setTimeout(function(){ // giving two seconds for the files to be read
+
+    db.query(sqlV).then(function(result){
+        console.log('Functions updated successfully!');
+        process.exit();
+    }).catch(function(error){
+        console.log('Something wrong'+error);
+        process.exit();
+    });
+
+}, 5000)
