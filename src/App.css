@@ -173,3 +173,6 @@ li{
 .lets-begin-story > div {
   justify-content: center;
 }
+.lets-begin-story img{
+  height: 100px;
+}

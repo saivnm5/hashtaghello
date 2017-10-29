@@ -91,7 +91,7 @@ class List extends Component {
                 rows.push(<Story data={stories[i]} key={i} type={this.props.type} />);
             }
         }
-        else{
+        else if(this.props.type === "profile"){
             rows = (
                 <div className="lets-begin-story">
                     <div>
