@@ -108,15 +108,22 @@ class View extends Component {
       parts.push(<TheEnd activeClass={activeClass} data={this.state} key={i+1} />);
     }
 
+    var helmet = null;
+    if(this.state.coverImg){
+      helmet = (
+        <Helmet>
+          <meta property="og:url" content={"http://hashtaghello.in/view/"+this.state.slug} />
+          <meta property="og:title" content={this.state.hashtag} />
+          <meta property="og:description" content={this.state.description} />
+          <meta property="og:image" content={this.state.coverImg} />
+          <title>{this.state.hashtag}</title>
+        </Helmet>
+      );
+    }
+
     return (
       <div className="view-story-container">
-      <Helmet>
-        <meta property="og:url" content={"http://hashtaghello.in/view/"+this.state.slug} />
-        <meta property="og:title" content={this.state.hashtag} />
-        <meta property="og:description" content={this.state.description} />
-        <meta property="og:image" content={this.state.coverImg} />
-        <title>{this.state.hashtag}</title>
-      </Helmet>
+      {helmet}
       <div className="container view-story" tabIndex="1">
         <div className="header">
           <div>
