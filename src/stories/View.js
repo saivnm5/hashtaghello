@@ -71,6 +71,7 @@ class View extends Component {
         else if(story.thumbnailUrl){
             coverImg = story.thumbnailUrl;
         }
+        document.title = '#'+story.hashtag;
         document.querySelector('meta[property="og:title"]').setAttribute("content", '#'+story.hashtag);
         document.querySelector('meta[property="og:description"]').setAttribute("content", story.description);
         document.querySelector('meta[property="og:image"]').setAttribute("content", coverImg);
