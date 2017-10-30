@@ -1,5 +1,6 @@
 import ImageCompressor from '@xkeshi/image-compressor';
 import { toast } from 'react-toastify';
+import { makeFilenameSafe } from './validate';
 
 var awsBucketName = 'hello-source';
 var bucketRegion = 'ap-south-1';
@@ -22,7 +23,7 @@ export function uploadPhoto(files, callbackObj) {
     return alert('Please choose a file to upload first.');
   }
   var file = files[0];
-  var fileName = 'images/'+ String(new Date() / 1000) +file.name;
+  var fileName = 'images/'+ String(new Date() / 1000) + makeFilenameSafe(file.name);
   var ignoreCompression = false;
 
   if(file.name.match(/.(gif)$/i)){

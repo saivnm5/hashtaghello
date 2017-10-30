@@ -10,3 +10,8 @@ export function isUrl(str) {
   return pattern.test(str);
 }
 
+export function makeFilenameSafe(text)
+{
+    return text.split(/[^a-zA-Z0-9\-\_\.]/gi).join('_');
+}
+

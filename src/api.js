@@ -106,7 +106,8 @@ var root = {
     var sql1 = "select hashtag, description from storyView where id="+input.story;
     return db.query(sql1).then(function(results){
         var story = results[0][0];
-        var slug = createSlug(input.story, story.hashtag);
+        var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
+        var slug = createSlug(input.story, hashtag);
         var sql2 = "select * from publishStory("+input.story+", "+input.isPrivate+", "+input.allowPayment+", '"+slug+"')";
         return db.query(sql2).then(function(results){
             var row = results[0][0];

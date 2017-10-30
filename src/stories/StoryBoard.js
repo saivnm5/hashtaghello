@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {getImgUrl} from '../utils/aws';
 import Shot from './Shot';
-import { isUrl } from '../utils/validations';
+import { isUrl } from '../utils/validate';
 import { getRootDomain } from '../utils/simpl.js';
 import { getOembedData } from '../utils/oembed.js';
 
@@ -113,7 +113,7 @@ class StoryBoard extends Component {
 
         setTimeout(function(){
             comp.changeOrder(index, direction);
-        }, 510);
+        }, 510); // for animation
     }
 
     Shots = () => {

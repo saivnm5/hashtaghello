@@ -253,16 +253,18 @@ class Create extends Component {
   }
 
   handleImageUpload = (event) => {
-    var callbackObj = {
-      success: this.updatePart,
-      shotIndex: this.state.shotInFocus,
-      progress: this.uploadProgress,
-      error: this.errorImageUpload
-    };
-    uploadPhoto(event.target.files, callbackObj);
-    this.setState({
-      uploadInProgress: true
-    });
+    if(event.target.files){
+      var callbackObj = {
+        success: this.updatePart,
+        shotIndex: this.state.shotInFocus,
+        progress: this.uploadProgress,
+        error: this.errorImageUpload
+      };
+      uploadPhoto(event.target.files, callbackObj);
+      this.setState({
+        uploadInProgress: true
+      });
+    }
   }
 
   updateShots = (newShots, shotInFocus) => {
@@ -272,6 +274,7 @@ class Create extends Component {
       newState.shotInFocus = shotInFocus;
     }
     this.setState(newState);
+    this.saveStory();
   }
 
   render() {
