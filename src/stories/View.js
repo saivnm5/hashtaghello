@@ -28,8 +28,10 @@ class View extends Component {
       slug: '',
       shots: [],
       activePart: 0,
-      coverImg: null
-    }
+      coverImg: null,
+      navShowClass: 'hide'
+    };
+    this.showArrows = this.showArrows.bind(this);
   }
 
   closeStory = () => {
@@ -76,11 +78,34 @@ class View extends Component {
     });
   }
 
+  componentDidUpdate() {
+    document.addEventListener('keydown', this.keyboardNav);
+    document.addEventListener('mousemove', this.showArrows);
+  }
+
+  keyboardNav = (event) => {
+    if(event.key === "ArrowRight"){
+      this.showRight();
+    }
+    else if(event.key === "ArrowLeft"){
+      this.showLeft();
+    }
+  }
+
+  showArrows = () => {
+    if(this.state.navShowClass === 'hide'){
+      this.setState({
+        navShowClass: 'show'
+      });
+    }
+  }
+
   showLeft = () => {
     var currentActive = this.state.activePart;
     if(currentActive !== 0){
       this.setState({
-        activePart: this.state.activePart - 1
+        activePart: this.state.activePart - 1,
+        navShowClass: 'hide'
       });
     }
   }
@@ -89,7 +114,8 @@ class View extends Component {
     var currentActive = this.state.activePart;
     if(currentActive !== (this.state.shots.length)){
       this.setState({
-        activePart: currentActive + 1
+        activePart: currentActive + 1,
+        navShowClass: 'hide'
       });
     }
   }
@@ -133,7 +159,7 @@ class View extends Component {
               <i className="fa fa-close" onClick={this.closeStory} ></i>
           </div>
         </div>
-        <div className="navigation">
+        <div className={"navigation "+this.state.navShowClass} >
           <i className="fa fa-caret-left left" onClick={this.showLeft} ></i>
           <i className="fa fa-caret-right right" onClick={this.showRight} ></i>
         </div>
