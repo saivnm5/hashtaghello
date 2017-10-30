@@ -4,6 +4,7 @@ import Swipeable from 'react-swipeable';
 import ViewPart from './ViewPart';
 import TheEnd from './TheEnd';
 import { getImgUrl } from '../utils/aws';
+import {Helmet} from "react-helmet";
 
 
 class View extends Component {
@@ -26,7 +27,8 @@ class View extends Component {
       createdByName: '',
       slug: '',
       shots: [],
-      activePart: 0
+      activePart: 0,
+      coverImg: null
     }
   }
 
@@ -55,15 +57,6 @@ class View extends Component {
       data: data
     }).then(function(response){
         var story = response.data.data.story;
-        comp.setState({
-            hashtag: '#'+story.hashtag,
-            description: story.description,
-            createdByName: story.createdByName,
-            slug: story.slug,
-            shots: story.parts,
-            activePart: 0
-        });
-        // set meta data
         var coverImg= null;
         if(story.imgKey){
             coverImg = getImgUrl(story.imgKey);
@@ -71,11 +64,15 @@ class View extends Component {
         else if(story.thumbnailUrl){
             coverImg = story.thumbnailUrl;
         }
-        document.title = '#'+story.hashtag;
-        document.querySelector('meta[property="og:title"]').setAttribute("content", '#'+story.hashtag);
-        document.querySelector('meta[property="og:description"]').setAttribute("content", story.description);
-        document.querySelector('meta[property="og:image"]').setAttribute("content", coverImg);
-        document.querySelector('meta[property="og:url"]').setAttribute("content", 'http://hashtaghello.in');
+        comp.setState({
+            hashtag: '#'+story.hashtag,
+            description: story.description,
+            createdByName: story.createdByName,
+            slug: story.slug,
+            shots: story.parts,
+            activePart: 0,
+            coverImg: coverImg
+        });
     });
   }
 
@@ -113,6 +110,13 @@ class View extends Component {
 
     return (
       <div className="view-story-container">
+      <Helmet>
+        <meta property="og:url" content={"http://hashtaghello.in/view/"+this.state.slug} />
+        <meta property="og:title" content={this.state.hashtag} />
+        <meta property="og:description" content={this.state.description} />
+        <meta property="og:image" content={this.state.coverImg} />
+        <title>{this.state.hashtag}</title>
+      </Helmet>
       <div className="container view-story" tabIndex="1">
         <div className="header">
           <div>
