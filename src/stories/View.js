@@ -75,6 +75,7 @@ class View extends Component {
         document.querySelector('meta[property="og:title"]').setAttribute("content", '#'+story.hashtag);
         document.querySelector('meta[property="og:description"]').setAttribute("content", story.description);
         document.querySelector('meta[property="og:image"]').setAttribute("content", coverImg);
+        document.querySelector('meta[property="og:url"]').setAttribute("content", 'http://hashtaghello.in/view/'+story.slug);;
     });
   }
 
