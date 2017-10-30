@@ -3,6 +3,8 @@ import axios from 'axios';
 import Swipeable from 'react-swipeable';
 import ViewPart from './ViewPart';
 import TheEnd from './TheEnd';
+import { getImgUrl } from '../utils/aws';
+
 
 class View extends Component {
 
@@ -41,7 +43,7 @@ class View extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           slug: this.state.storySlug
         }
@@ -61,6 +63,17 @@ class View extends Component {
             shots: story.parts,
             activePart: 0
         });
+        // set meta data
+        var coverImg= null;
+        if(story.imgKey){
+            coverImg = getImgUrl(story.imgKey);
+        }
+        else if(story.thumbnailUrl){
+            coverImg = story.thumbnailUrl;
+        }
+        document.querySelector('meta[property="og:title"]').setAttribute("content", '#'+story.hashtag);
+        document.querySelector('meta[property="og:description"]').setAttribute("content", story.description);
+        document.querySelector('meta[property="og:image"]').setAttribute("content", coverImg);
     });
   }
 

@@ -31,6 +31,8 @@ var schema = buildSchema(`
         allowPayment: Boolean
         isPublished: Boolean
         slug: String
+        imgKey: String
+        thumbnailUrl: String
         parts: [Part]
     }
 
@@ -91,6 +93,8 @@ var root = {
             response.allowPayment = story.allowPayment;
             response.slug = story.slug;
             response.id = story.id;
+            response.imgKey = story.imgKey;
+            response.thumbnailUrl = story.thumbnailUrl;
             console.log(response);
             return db.query(sql2).then(function(results){
                 var rows = results[0];

@@ -58,15 +58,15 @@ class TheEnd extends Component {
 				<div className="share">
 					<div className="content">
 
-						<br/><br/>
 						<div className="font-sub-heading hide">
 							or
 						</div>
-						<br/><br/>
+
 						<div>
 							<span className="font-heading btn" onClick={this.toggleShare}>Share</span>
 						</div>
 						<br/>
+
 						<div className={this.state.shareClass}>
 							<a target="_blank" href={"https://twitter.com/intent/tweet?button_hashtag="+this.props.data.hashtag.replace(/^#/, '')+"&url="+this.state.shareUrl} rel="noopener noreferrer">
 								<i className="fa fa-twitter"></i>&nbsp;
@@ -74,12 +74,14 @@ class TheEnd extends Component {
 							</a>
 						</div>
 						<br/>
+
 						<div className={this.state.shareClass}>
 							<a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u="+this.state.shareUrl} rel="noopener noreferrer">
 								<i className="fa fa-facebook"></i>&nbsp;
 								Share
 							</a>
 						</div>
+
 					</div>
 				</div>
 			</div>
