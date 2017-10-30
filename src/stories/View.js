@@ -46,6 +46,10 @@ class View extends Component {
   componentWillMount = () => {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
+    var startingPart = 0;
+    if(localStorage.getItem(this.state.storySlug+'-currentPart') !== null){
+      startingPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'));
+    }
     var data = {
         query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
@@ -72,7 +76,7 @@ class View extends Component {
             createdByName: story.createdByName,
             slug: story.slug,
             shots: story.parts,
-            activePart: 0,
+            activePart: startingPart,
             coverImg: coverImg
         });
     });
@@ -104,10 +108,11 @@ class View extends Component {
     var currentActive = this.state.activePart;
     if(currentActive !== 0){
       this.setState({
-        activePart: this.state.activePart - 1,
+        activePart: currentActive - 1,
         navShowClass: 'hide'
       });
     }
+    localStorage.setItem(this.state.storySlug+'-currentPart', currentActive-1);
   }
 
   showRight = () => {
@@ -118,6 +123,7 @@ class View extends Component {
         navShowClass: 'hide'
       });
     }
+    localStorage.setItem(this.state.storySlug+'-currentPart', currentActive+1);
   }
 
   render() {
