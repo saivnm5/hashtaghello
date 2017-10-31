@@ -5,6 +5,7 @@ import ViewPart from './ViewPart';
 import TheEnd from './TheEnd';
 import { getImgUrl } from '../utils/aws';
 import {Helmet} from "react-helmet";
+import onboardingGif from '../assets/view-nav-onboarding.gif';
 
 
 class View extends Component {
@@ -31,7 +32,8 @@ class View extends Component {
       coverImg: null,
       navShowClass: 'hide',
       isPrivate: true,
-      allowPayment: false
+      allowPayment: false,
+      showOnboarding: false
     };
     this.showArrows = this.showArrows.bind(this);
   }
@@ -84,11 +86,27 @@ class View extends Component {
             allowPayment: story.allowPayment
         });
     });
+
+
   }
 
   componentDidUpdate() {
+    var comp = this;
     document.addEventListener('keydown', this.keyboardNav);
     document.addEventListener('mousemove', this.showArrows);
+
+    var showOnboarding = false;
+    if( localStorage.getItem('isTouchDevice') === "true" && localStorage.getItem('showSwipeLeftAnimation') === null){
+      showOnboarding = true;
+      localStorage.setItem('showSwipeLeftAnimation', "true");
+    }
+    if(showOnboarding){
+      setTimeout(function(){
+        comp.setState({
+          showOnboarding: showOnboarding
+        });
+      }, 500);
+    }
   }
 
   componentWillUnmount() {
@@ -162,6 +180,16 @@ class View extends Component {
       );
     }
 
+    var onboardingClass = '';
+    if(this.state.showOnboarding){
+      onboardingClass = 'slow-fade'
+    }
+    var onboardingComp = (
+      <div className={"view-nav-onboarding "+onboardingClass}>
+        <img src={onboardingGif} alt="onboarding gif" />
+      </div>
+    );
+
     return (
       <div className="view-story-container">
       {helmet}
@@ -185,6 +213,7 @@ class View extends Component {
         >
           {parts}
         </Swipeable>
+        {onboardingComp}
         </div>
       </div>
       </div>

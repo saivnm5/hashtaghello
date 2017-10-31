@@ -12,6 +12,7 @@ import Create from './stories/Create';
 import Profile from './actor/Index';
 import View from './stories/View';
 import {Helmet} from "react-helmet";
+import { isTouchDevice } from './utils/simpl';
 
 
 class Routes extends React.Component{
@@ -21,6 +22,13 @@ class Routes extends React.Component{
     }
     else{
       localStorage.setItem('apiRoot', config.apiRoot);
+    }
+
+    if(isTouchDevice()){
+      localStorage.setItem('isTouchDevice', "true");
+    }
+    else{
+      localStorage.setItem('isTouchDevice', "false");
     }
   }
   render() {
