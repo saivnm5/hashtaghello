@@ -12,7 +12,9 @@ class TheEnd extends Component {
 			shareUrl: getShareUrl(this.props.data.slug),
 			paymentAmount: null,
 			paymentName: null,
-			paymentBtnText: 'Proceed To Pay'
+			paymentBtnText: 'Proceed To Pay',
+			showErrorClass: 'hide',
+			error: ''
 		};
 	}
 
@@ -46,36 +48,52 @@ class TheEnd extends Component {
 	}
 
 	redirectToPayment = () => {
-		var comp = this;
-		this.setState({
-			paymentBtnText: 'Redirecting...',
-			paymentOn: true
-		});
-		var apiRoot = localStorage.getItem('apiRoot');
+		if(this.state.paymentAmount < 10){
+			this.setState({
+				showErrorClass: 'show',
+				error: "sorry, we don't accept payments below 10 rupees"
+			});
+		}
+		else{
 
-    var data = {
-      query: "mutation ($input: PaymentInput) { \n getPaymentLink(input: $input) \n }",
-      variables: {
-        input:{
-          storySlug: this.props.data.storySlug,
-          amount: this.state.paymentAmount,
-          buyerName: this.state.paymentName
-        }
-      }
-    };
+			var comp = this;
+			var buyerName = '';
+			this.setState({
+				paymentBtnText: 'Redirecting...',
+				showErrorClass: 'hide'
+			});
+			var apiRoot = localStorage.getItem('apiRoot');
+			if(!this.state.paymentName || this.state.paymentName === ''){
+				buyerName = 'anonymous';
+			}
 
-    axios({
-      method: 'post',
-      url: apiRoot+'/public',
-      data: data
-    }).then(function(response){
-        var link = response.data.data.getPaymentLink;
-        window.location = link;
-    }).catch(function(error){
-    	comp.setState({
-      	paymentBtnText: 'Proceed To Pay'
-      });
-    });
+	    var data = {
+	      query: "mutation ($input: PaymentInput) { \n getPaymentLink(input: $input) \n }",
+	      variables: {
+	        input:{
+	          storySlug: this.props.data.storySlug,
+	          amount: this.state.paymentAmount,
+	          buyerName: buyerName
+	        }
+	      }
+	    };
+
+	    axios({
+	      method: 'post',
+	      url: apiRoot+'/public',
+	      data: data
+	    }).then(function(response){
+	        var link = response.data.data.getPaymentLink;
+	        window.location = link;
+	    }).catch(function(error){
+	    	comp.setState({
+	      	paymentBtnText: 'Proceed To Pay',
+	      	showErrorClass: 'show',
+					error: "sorry, please try again"
+	      });
+	    });
+
+	  }
 	}
 
 	render(){
@@ -203,7 +221,11 @@ class TheEnd extends Component {
 									/>
 								</div>
 							</div>
-							<br/><br/><br/>
+							<br/>
+							<div className={this.state.showErrorClass}>
+								{this.state.error}
+							</div>
+							<br/><br/>
 
 							<div>
 									<span className="font-heading btn" onClick={this.redirectToPayment}>
