@@ -36,6 +36,23 @@ class StoryBoard extends Component {
         this.props.changeStage(2);
     }
 
+    componentDidUpdate() {
+        document.addEventListener('keydown', this.keyboardControl);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.keyboardControl);
+    }
+
+    keyboardControl = (event) => {
+        if(event.key === "ArrowRight"){
+          this.moveShot(this.props.data.shotInFocus, 'right');
+        }
+        else if(event.key === "ArrowLeft"){
+          this.moveShot(this.props.data.shotInFocus, 'left');
+        }
+    }
+
     getMedia = (propsData) => {
         var content = { img: null, mediaHTML: null };
         var comp = this;

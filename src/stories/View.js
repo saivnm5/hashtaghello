@@ -87,6 +87,11 @@ class View extends Component {
     document.addEventListener('mousemove', this.showArrows);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.keyboardNav);
+    document.removeEventListener('mousemove', this.showArrows);
+  }
+
   keyboardNav = (event) => {
     if(event.key === "ArrowRight"){
       this.showRight();

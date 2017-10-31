@@ -56,9 +56,8 @@ function authMiddleware(req, res, next) {
       hardAuth = false;
     }
     var authToken = req.header('Authorization');
-    var sql = "select * from getActor('"+authToken+"')";
+    var sql = "select actorid from getActor('"+authToken+"')";
     db.query(sql).then(function(response){
-      console.log(response[0]);
         if(response[0][0].actorid){
           req.actor = response[0][0].actorid;
           next();
