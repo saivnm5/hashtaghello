@@ -25,14 +25,17 @@ class Create extends Component {
   constructor(props){
     super(props);
     var storySlug = null;
+    var editMode = false;
     var shots = [];
     if(props.location.hash){
       storySlug = props.location.hash;
       this.loadData(storySlug);
+      editMode = true;
     }
     for(var i=0; i<100; i++){
       shots.push(defaultPart);
     }
+
 
     this.state = {
         hashtag: '#',
@@ -45,9 +48,11 @@ class Create extends Component {
         uploadPercentage: 0,
         isPrivate: true,
         allowPayment: true,
-        storyboardBtnText: 'Publish'
+        storyboardBtnText: 'Publish',
+        editMode: editMode
     };
     this.updatePart = this.updatePart.bind(this);
+    this.removePart = this.removePart.bind(this);
   }
 
   loadData = (storySlug) => {

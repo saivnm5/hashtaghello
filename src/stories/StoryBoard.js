@@ -130,7 +130,7 @@ class StoryBoard extends Component {
 
         setTimeout(function(){
             comp.changeOrder(index, direction);
-        }, 510); // for animation
+        }, 210); // for animation
     }
 
     Shots = () => {
@@ -152,6 +152,7 @@ class StoryBoard extends Component {
                     updateShotInFocus={this.props.updateShotInFocus}
                     updateShotPhoto={this.props.updateShotPhoto}
                     removePart={this.props.removePart}
+                    editMode = {this.props.data.editMode}
                 />
             );
         }
