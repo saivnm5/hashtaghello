@@ -11,6 +11,7 @@ import App from './App';
 import Create from './stories/Create';
 import Profile from './actor/Index';
 import View from './stories/View';
+import {Helmet} from "react-helmet";
 
 
 class Routes extends React.Component{
@@ -26,6 +27,9 @@ class Routes extends React.Component{
     return (
       <Router>
         <div className="pseudo-root">
+          <Helmet>
+            <title>#hello</title>
+          </Helmet>
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />

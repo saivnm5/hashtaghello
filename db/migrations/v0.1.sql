@@ -91,4 +91,15 @@ CREATE TABLE "public"."featuredStory" (
 );
 
 
+CREATE TABLE "public"."payment" (
+    "id" serial,
+    "story" integer,
+    "amount" numeric(12,2),
+    "buyerName" text,
+    "instamojoRequestId" text,
+    "isSuccessful" boolean DEFAULT 'false',
+    "createdAt" timestamp DEFAULT now(),
+    PRIMARY KEY ("id"),
+    CONSTRAINT "story_payment_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
+);
 

@@ -41,11 +41,21 @@ var schema = buildSchema(`
         html: String!
     }
 
+    input PaymentInput{
+        storySlug: String!
+        amount: Float!
+        buyerName: String!
+    }
+
     type Query {
         stories(self: Boolean, page: Int): [Story]
         test: String
         story(slug: String!): ViewStory
         oembed(url: String!): Oembed
+    }
+
+    type Mutation {
+        getPaymentLink(input: PaymentInput): String
     }
 `);
 
@@ -128,6 +138,54 @@ var root = {
     })
     .catch(function (error) {
         console.log(error);
+    });
+  },
+
+  getPaymentLink: (data) => {
+    var input = data.input;
+    var apiRoot = 'https://www.instamojo.com/api/1.1/payment-requests/';
+    var headers = {
+        "X-Api-Key" : "b627e32eb0c9a9ea11eb31c03d8fba57",
+        "X-Auth-Token" : "045e3ffe31f1f5e7a5ee9dd0ae45db76"
+    };
+
+    var sql = "select story from url where slug = '"+input.storySlug+"'";
+    return db.query(sql).then(function(results){
+    if(results[0][0]){
+
+        var url = results[0][0];
+        var data = {
+            amount: input.amount,
+            purpose: 'Story ID - '+url.story,
+            buyer_name: input.buyerName,
+            redirect_url: 'http://hashtaghello.in'
+        };
+
+        return axios({
+            method: 'post',
+            url: apiRoot,
+            data: data,
+            headers: headers
+        }).then(function(response){
+
+          var data = response.data;
+          var link = data.payment_request.longurl;
+          var requestId = data.payment_request.id;
+          var sql = "select * from createPaymentRequest( "+url.story+", "+input.amount+", '"+input.buyerName+"', '"+requestId+"')";
+
+          return db.query(sql).then(function(results){
+            if(results[0][0].paymentid){
+                return link;
+            }
+            else{
+                return null
+            }
+          });
+
+        }).catch(function(errors){
+            console.log(errors.response.data);
+        });
+    }
     });
   }
 };

@@ -29,7 +29,9 @@ class View extends Component {
       shots: [],
       activePart: 0,
       coverImg: null,
-      navShowClass: 'hide'
+      navShowClass: 'hide',
+      isPrivate: true,
+      allowPayment: false
     };
     this.showArrows = this.showArrows.bind(this);
   }
@@ -51,7 +53,7 @@ class View extends Component {
       startingPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'), 10);
     }
     var data = {
-        query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n isPrivate \n allowPayment \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           slug: this.state.storySlug
         }
@@ -77,7 +79,9 @@ class View extends Component {
             slug: story.slug,
             shots: story.parts,
             activePart: startingPart,
-            coverImg: coverImg
+            coverImg: coverImg,
+            isPrivate: story.isPrivate,
+            allowPayment: story.allowPayment
         });
     });
   }
@@ -116,8 +120,8 @@ class View extends Component {
         activePart: currentActive - 1,
         navShowClass: 'hide'
       });
+      localStorage.setItem(this.state.storySlug+'-currentPart', currentActive-1);
     }
-    localStorage.setItem(this.state.storySlug+'-currentPart', currentActive-1);
   }
 
   showRight = () => {
@@ -127,8 +131,8 @@ class View extends Component {
         activePart: currentActive + 1,
         navShowClass: 'hide'
       });
+      localStorage.setItem(this.state.storySlug+'-currentPart', currentActive+1);
     }
-    localStorage.setItem(this.state.storySlug+'-currentPart', currentActive+1);
   }
 
   render() {

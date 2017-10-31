@@ -1,5 +1,5 @@
 /* Text Input */
-input[type="text"].form{
+input[type="text"].form, input[type="number"].form{
     background: transparent;
     border: 0px;
     border-bottom: 1px solid white;
@@ -8,6 +8,12 @@ input[type="text"].form{
 }
 input[type="text"].hashtag{
     font-size: 20px !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 /* Textarea */

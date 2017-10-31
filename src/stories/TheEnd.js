@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getShareUrl } from '../utils/simpl';
+import axios from 'axios';
 
 class TheEnd extends Component {
 
@@ -8,8 +9,23 @@ class TheEnd extends Component {
 		this.state = {
 			shareClass: 'hide',
 			paymentOn: false,
-			shareUrl: getShareUrl(this.props.data.slug)
+			shareUrl: getShareUrl(this.props.data.slug),
+			paymentAmount: null,
+			paymentName: null,
+			paymentBtnText: 'Proceed To Pay'
 		};
+	}
+
+	handleAmountChange = (event) => {
+		this.setState({
+			paymentAmount: parseInt(event.target.value,10)
+		});
+	}
+
+	handleNameChange = (event) => {
+		this.setState({
+			paymentName: event.target.value
+		});
 	}
 
 	toggleShare = () => {
@@ -29,8 +45,51 @@ class TheEnd extends Component {
 		});
 	}
 
+	redirectToPayment = () => {
+		var comp = this;
+		this.setState({
+			paymentBtnText: 'Redirecting...',
+			paymentOn: true
+		});
+		var apiRoot = localStorage.getItem('apiRoot');
+
+    var data = {
+      query: "mutation ($input: PaymentInput) { \n getPaymentLink(input: $input) \n }",
+      variables: {
+        input:{
+          storySlug: this.props.data.storySlug,
+          amount: this.state.paymentAmount,
+          buyerName: this.state.paymentName
+        }
+      }
+    };
+
+    axios({
+      method: 'post',
+      url: apiRoot+'/public',
+      data: data
+    }).then(function(response){
+        var link = response.data.data.getPaymentLink;
+        window.location = link;
+    }).catch(function(error){
+    	comp.setState({
+      	paymentBtnText: 'Proceed To Pay'
+      });
+    });
+	}
+
 	render(){
 		var content = null;
+		var showPaymentClass = 'hide';
+		var showShareClass = 'show';
+		if(!this.props.data.isPrivate && this.props.data.allowPayment){
+			showPaymentClass = 'show';
+		}
+		else if(this.props.data.isPrivate){
+			showShareClass = 'hide';
+		}
+
+
 		if(!this.state.paymentOn){
 			content = (
 			<div className="the-end">
@@ -40,7 +99,7 @@ class TheEnd extends Component {
 						<div className="font-heading">{'#'+this.props.data.createdByName}</div>
 					</div>
 				</div>
-				<div className="payment hide">
+				<div className={"payment "+showPaymentClass}>
 					<div className="content">
 						<div className="font-sub-heading">
 							For the storytellers "too are gatherers of fruit and frankincense, and that which they bring, though fashioned of dreams, is raiment and food for your soul."
@@ -48,18 +107,19 @@ class TheEnd extends Component {
 						<br/>
 						<div className="pay-trigger">
 							<span className="font-heading btn" onClick={this.triggerPayment}>Pay As Much As You Wish</span>
-							<i className="fa fa-question-circle-o"></i>
 						</div>
 						<div className="font-sub-heading">
 							91% of what you pay goes to the artist(s)
 						</div>
 					</div>
 				</div>
-				<div className="share">
+				<div className={"share "+showShareClass}>
 					<div className="content">
 
-						<div className="font-sub-heading hide">
+						<div className={"font-sub-heading "+showPaymentClass}>
+							<br/><br/>
 							or
+							<br/><br/>
 						</div>
 
 						<div>
@@ -118,7 +178,13 @@ class TheEnd extends Component {
 									<div className="right-align">an amount of :&nbsp;</div>
 								</div>
 								<div>
-									<input type="text" className="form" placeholder="(plz enter)" />
+									<input
+										type="number"
+										className="form"
+										placeholder="₹"
+										value={this.state.paymentAmount}
+										onChange={this.handleAmountChange}
+									/>
 								</div>
 							</div>
 							<br/>
@@ -128,13 +194,21 @@ class TheEnd extends Component {
 									<div className="right-align">from:&nbsp;</div>
 								</div>
 								<div>
-									<input type="text" className="form" placeholder="anonymous" />
+									<input
+										type="text"
+										className="form"
+										placeholder="(your name)"
+										value={this.state.paymentName}
+										onChange={this.handleNameChange}
+									/>
 								</div>
 							</div>
 							<br/><br/><br/>
 
 							<div>
-									<span className="font-heading btn">Proceed To Pay</span>
+									<span className="font-heading btn" onClick={this.redirectToPayment}>
+										{this.state.paymentBtnText}
+									</span>
 							</div>
 
 						</div>

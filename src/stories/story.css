@@ -91,7 +91,7 @@
 	flex-flow: column wrap;
 }
 .view-story .part .the-end .credits{
-	height: 20vh;
+	height: 25vh;
 	align-items: center;
 }
 .part .the-end .credits, .part .the-end .payment, .part .the-end .share, .part .the-end .payment-form{
