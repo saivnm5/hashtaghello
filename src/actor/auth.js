@@ -78,8 +78,38 @@ function authMiddleware(req, res, next) {
 	}
 }
 
+function isAuthorized(table, actor, objectId){
+  var sql = null;
+  if(objectId){
+    sql = "select count(*) from \""+table+"\" where \"createdBy\" = "+actor+" and \"id\" = "+objectId;
+  }
+  else{
+      sql = "select count(*) from \"actor\" where \"id\" = "+actor;
+  }
+
+  const isAllowed = new Promise((resolve, reject) => {
+
+    db.query(sql).then(function(results){
+      console.log('Authorization | '+results[0][0].count+' | '+sql);
+      if(results[0][0].count == 1){
+        resolve(true);
+      }
+      else{
+        console.log('inside reject');
+        reject(true);
+      }
+    })
+    .catch(function(error){
+      reject(true);
+    });
+
+  });
+  return isAllowed;
+}
+
 module.exports = {
   schema: schema,
   root: root,
-  authMiddleware: authMiddleware
+  authMiddleware: authMiddleware,
+  isAuthorized: isAuthorized
 };

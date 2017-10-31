@@ -31,6 +31,7 @@ CREATE TABLE "public"."actorAuth" (
     CONSTRAINT "actor_auth_id" FOREIGN KEY ("actor") REFERENCES "public"."actor"("id")
 );
 CREATE EXTENSION "uuid-ossp";
+ALTER TABLE "public"."actorAuth" ADD COLUMN "createdAt" timestamp DEFAULT now();
 
 
 CREATE TABLE "public"."story" (
@@ -77,6 +78,8 @@ CREATE TABLE "public"."url" (
     PRIMARY KEY ("id"),
     CONSTRAINT "story_url_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
 );
+ALTER TABLE "public"."url" ADD COLUMN "createdAt" timestamp DEFAULT now();
+
 
 
 CREATE TABLE "public"."featuredStory" (

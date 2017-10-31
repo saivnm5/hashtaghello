@@ -106,36 +106,37 @@ class Create extends Component {
 
   createStory = () => {
 
-    var comp = this;
-    var apiRoot = localStorage.getItem('apiRoot');
-    let headers = { "Authorization" : localStorage.getItem("authToken") };
-    var data = {
-        query: "mutation createOrUpdateStory($input: StoryInput) { \n createOrUpdateStory(input: $input) \n }",
-        variables: {
-          input:{
-            hashtag: comp.state.hashtag,
-            description: comp.state.description,
-            id: comp.state.story
+    if(this.state.hashtag.length > 1){
+      var comp = this;
+      var apiRoot = localStorage.getItem('apiRoot');
+      let headers = { "Authorization" : localStorage.getItem("authToken") };
+      var data = {
+          query: "mutation createOrUpdateStory($input: StoryInput) { \n createOrUpdateStory(input: $input) \n }",
+          variables: {
+            input:{
+              hashtag: comp.state.hashtag,
+              description: comp.state.description,
+              id: comp.state.story
+            }
           }
-        }
-    };
+      };
 
-    axios({
-      method: 'post',
-      url: apiRoot+'/api',
-      headers: headers,
-      data: data
-    }).then(function(response){
-        var data = response.data.data;
-        comp.setState({
-            story: data.createOrUpdateStory
-        });
-    });
+      axios({
+        method: 'post',
+        url: apiRoot+'/api',
+        headers: headers,
+        data: data
+      }).then(function(response){
+          var data = response.data.data;
+          comp.setState({
+              story: data.createOrUpdateStory
+          });
+      });
 
-    this.setState({
-      stage: STAGES[1]
-    });
-    //this.triggerUpload();
+      this.setState({
+        stage: STAGES[1]
+      });
+    }
   }
 
   saveStory = () => {

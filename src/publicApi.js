@@ -82,7 +82,6 @@ var root = {
         var url = results[0][0];
         var sql1 = "select * from storyView where id = "+url.story;
         var sql2 = "select * from partView where story = "+url.story;
-        console.log(sql1);
         return db.query(sql1).then(function(results){
             var story = results[0][0];
             response.hashtag = story.hashtag;
@@ -95,7 +94,6 @@ var root = {
             response.id = story.id;
             response.imgKey = story.imgKey;
             response.thumbnailUrl = story.thumbnailUrl;
-            console.log(response);
             return db.query(sql2).then(function(results){
                 var rows = results[0];
                 response.parts = rows;
@@ -123,7 +121,6 @@ var root = {
         }
     })
     .then(function (response) {
-        console.log(response);
         var data = {};
         data.thumbnail_url = response.data.thumbnail_url;
         data.html = response.data.html;

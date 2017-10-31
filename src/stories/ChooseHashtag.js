@@ -25,8 +25,8 @@ class ChooseHashtag extends Component {
                 </div>
 
                 <div className="create-body">
-                    <div className="font-heading">Hello {this.state.name},</div>
-                    <div className="font-sub-heading">What's your story?</div>
+                    <div className="font-heading hide">Hello {this.state.name},</div>
+                    <div className="font-sub-heading">so, what's your story?</div>
                     <br/><br/>
                     <div>
                       <input

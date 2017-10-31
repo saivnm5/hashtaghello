@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION publishStory(
     OUT slugUrl text)
 AS $$
 BEGIN
-    select "output" into slugUrl from createUrl(storyId, slug, null);
+    select "output" into slugUrl from getOrCreateUrl(storyId, slug, null);
     update "story"
     set "isPrivate" = isPrivate,
     "isPublished" = true,

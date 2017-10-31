@@ -18,7 +18,7 @@ join hashtag
 on story."hashtag" = hashtag."id"
 join actor
 on story."createdBy" = actor."id"
-join part
+left join part
 on part."id" = (
     select id from part
     where part."story" = story."id"
