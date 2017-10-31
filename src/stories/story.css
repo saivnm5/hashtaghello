@@ -85,6 +85,7 @@
 }
 .view-story .part .body iframe{
 	width: 100%;
+	max-height: 70vh;
 }
 .view-story .part .the-end{
 	flex-flow: column wrap;

@@ -110,7 +110,7 @@ class List extends Component {
             );
         }
         if(this.props.type === "home"){
-            text = 'stories from around the world';
+            text = 'featured stories';
         }
         else if(this.props.type === "profile"){
             text = 'your stories';

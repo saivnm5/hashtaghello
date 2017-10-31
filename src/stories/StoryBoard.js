@@ -102,7 +102,7 @@ class StoryBoard extends Component {
         shotB.splice(shotInFocus, 0, temp);
         shotB[index].animationClass = '';
         shotB[shotInFocus].animationClass = '';
-        this.props.updateShots(shotB, shotInFocus);
+        this.props.updateShots(shotB, shotInFocus, true);
     }
 
     moveShot = (index, direction) => {
@@ -302,7 +302,7 @@ class StoryBoard extends Component {
                       Back
                     </div>
                     <div className="btn right-align" onClick={this.goToPublish} >
-                      Publish
+                      {this.props.data.storyboardBtnText}
                     </div>
                 </div>
 

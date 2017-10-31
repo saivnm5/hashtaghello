@@ -48,7 +48,7 @@ class View extends Component {
     var apiRoot = localStorage.getItem('apiRoot');
     var startingPart = 0;
     if(localStorage.getItem(this.state.storySlug+'-currentPart') !== null){
-      startingPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'));
+      startingPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'), 10);
     }
     var data = {
         query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",

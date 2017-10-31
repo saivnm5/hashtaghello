@@ -90,8 +90,9 @@ function isAuthorized(table, actor, objectId){
   const isAllowed = new Promise((resolve, reject) => {
 
     db.query(sql).then(function(results){
-      console.log('Authorization | '+results[0][0].count+' | '+sql);
+      console.log('Authorization | '+sql);
       if(results[0][0].count == 1){
+        console.log('Authorized');
         resolve(true);
       }
       else{

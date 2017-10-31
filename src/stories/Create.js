@@ -7,6 +7,8 @@ import Publish from './Publish';
 import { getRootDomain } from '../utils/simpl.js';
 import { ToastContainer } from 'react-toastify';
 import './create.css';
+import { toast } from 'react-toastify';
+
 
 const STAGES = [
   'HASHTAG',
@@ -42,7 +44,8 @@ class Create extends Component {
         uploadInProgress: false,
         uploadPercentage: 0,
         isPrivate: true,
-        allowPayment: true
+        allowPayment: true,
+        storyboardBtnText: 'Publish'
     };
     this.updatePart = this.updatePart.bind(this);
   }
@@ -140,6 +143,11 @@ class Create extends Component {
   }
 
   saveStory = () => {
+    this.setState({
+      storyboardBtnText: 'Saving...'
+    });
+
+    var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var imgKeys = []; var soundcloudUrls = [];
     var youtubeUrls = []; var vimeoUrls = [];
@@ -192,6 +200,15 @@ class Create extends Component {
         if(data.saveStory === 1){
           console.log('Story saved');
         }
+        comp.setState({
+          storyboardBtnText: 'Publish'
+        });
+
+    }).catch(function(error){
+      comp.setState({
+        storyboardBtnText: 'Publish'
+      });
+      toast.warn("The update could not be saved. You may ignore this but, remember to publish before exiting.");
     });
   }
 
@@ -268,14 +285,16 @@ class Create extends Component {
     }
   }
 
-  updateShots = (newShots, shotInFocus) => {
+  updateShots = (newShots, shotInFocus, proper) => {
     var newState = {};
     newState.shots = newShots;
     if(shotInFocus !== undefined){
       newState.shotInFocus = shotInFocus;
     }
     this.setState(newState);
-    this.saveStory();
+    if(proper){
+      this.saveStory();
+    }
   }
 
   render() {
@@ -325,7 +344,7 @@ class Create extends Component {
            <ToastContainer
             position="top-right"
             type="default"
-            autoClose={5000}
+            autoClose={6000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

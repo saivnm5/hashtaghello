@@ -56,7 +56,7 @@ var root = {
     });
   },
 
-  saveStory: (data) => {
+  saveStory: (data, request) => {
     var input = data.input; var storyId = input.story;
 
     return isAuthorized('story', request.actor, storyId).then(function(authorized){
@@ -95,6 +95,7 @@ var root = {
         else{ vimeoArrayString += "]"; }
 
         var sql = "select * from saveStory("+storyId+", "+imgArrayString+", "+soundcloudArrayString+", "+youtubeArrayString+","+vimeoArrayString+")";
+        console.log(sql);
         return db.query(sql).then(function(response){
             return response[0][0].output;
         }).catch(function(error){
@@ -108,7 +109,7 @@ var root = {
     return request.actor;
   },
 
-  publishStory: (data) => {
+  publishStory: (data, request) => {
     var input = data.input;
     return isAuthorized('story', request.actor, input.story).then(function(authorized){
 
