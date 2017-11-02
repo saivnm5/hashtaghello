@@ -21,6 +21,10 @@ ALTER TABLE "public"."actor"
   ADD UNIQUE ("email"),
   ADD UNIQUE ("fbUserId");
 ALTER TABLE "public"."actor" ADD COLUMN "hashtag" text NOT NULL;
+ALTER TABLE "public"."actor"
+  ADD COLUMN "googleUserId" text,
+  ADD UNIQUE ("googleUserId");
+
 
 
 CREATE TABLE "public"."actorAuth" (

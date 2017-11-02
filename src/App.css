@@ -158,6 +158,8 @@ li{
 .login-body{
   height: 60vh;
   align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
 }
 .login-body div{
   justify-content: center;

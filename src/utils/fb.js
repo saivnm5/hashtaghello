@@ -37,7 +37,6 @@ export function fbLogin(callbackObj){
     else {
       FB.login(function(response) {
         if (response.status === 'connected') {
-          localStorage.setItem('isLoggedIn', "true");
           callbackObj.success(response.userId);
         } else {
           alert('Login unsuccessful');
