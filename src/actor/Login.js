@@ -60,10 +60,42 @@ class Login extends Component {
     });
   }
 
+  getOrCreateActorGoogle = (userData) => {
+    var apiRoot = localStorage.getItem('apiRoot');
+
+    var data = {
+        query: "mutation getOrCreateActor($input: ActorInput) { \n getOrCreateActor(input: $input) \n }",
+        variables: {
+          input:{
+            name: userData.name,
+            email: userData.email,
+            googleUserId: userData.id,
+            fbUserId: null
+          }
+        }
+    }
+
+    axios({
+      method: 'post',
+      url: apiRoot+'/auth',
+      data: data
+    }).then(function(response){
+        var data = response.data.data;
+        var accessToken = data.getOrCreateActor;
+        if(accessToken){
+          localStorage.setItem('authToken', accessToken);
+          localStorage.setItem('actorName', userData.name);
+          localStorage.setItem('isLoggedIn', true);
+          window.location.reload();
+        }
+    });
+  }
+
   gLogin = () => {
+    var callbackObj = { success: this.getOrCreateActorGoogle };
     var comp = this;
     if (typeof window.gapi.client !== 'undefined') {
-      googleLogin();
+      googleLogin(callbackObj);
     }
     else{
       setTimeout(function(){
