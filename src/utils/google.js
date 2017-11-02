@@ -1,8 +1,9 @@
 /*global gapi*/
 
+import axios from 'axios';
 const googleClientId = '548479216000-iuq150q34kvrqdarm1tfi0katsm1ptgs.apps.googleusercontent.com';
 const googleApiKey = 'AIzaSyDujDQRk4Zp-P3d_QDHYeG7b4_GBYuflYc';
-import axios from 'axios';
+
 
 function initClient() {
   gapi.client.init({
