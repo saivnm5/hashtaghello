@@ -10,10 +10,8 @@ function initClient() {
       clientId: googleClientId,
       scope: 'profile'
   }).then(function () {
-    // Listen for sign-in state changes.
-    //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-    // Handle the initial sign-in state.
-    //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    gapi.auth2.getAuthInstance().isSignedIn.listen(justChecking);
+    justChecking(gapi.auth2.getAuthInstance().isSignedIn.get());
   });
 }
 
@@ -27,10 +25,20 @@ function makeApiCall(callbackObj) {
     userData.name = response.result.names[0].displayName;
     userData.email = response.result.emailAddresses[0].value;
     userData.id = response.result.resourceName.split('/')[1];
-    callbackObj.success(userData);
+    if(callbackObj){
+      callbackObj.success(userData);
+    }
   }, function(reason) {
     console.log('Error: ' + reason.result.error.message);
   });
+}
+
+function justChecking(isSignedIn, callbackObj) {
+  // When signin status changes, this function is called.
+  // If the signin status is changed to signedIn, we make an API call.
+  if (isSignedIn) {
+    makeApiCall(callbackObj);
+  }
 }
 
 function updateSigninStatus(isSignedIn, callbackObj) {
