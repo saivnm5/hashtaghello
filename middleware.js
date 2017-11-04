@@ -38,7 +38,7 @@ function metaMiddleware(req, res, next){
 		var sql = 'select hashtag, description, "imgKey", "thumbnailUrl" from storyView where id = '+storyId;
 		db.query(sql).then(function(response){
 			var story = response[0][0];
-			var title = story.hashtag;
+			var title = '#'+story.hashtag;
 			var description = story.description;
 			var url = 'http://hashtaghello.in'+req.originalUrl;
 			var image = null;
