@@ -3,7 +3,7 @@ import axios from 'axios';
 import Swipeable from 'react-swipeable';
 import ViewPart from './ViewPart';
 import TheEnd from './TheEnd';
-import { getImgUrl } from '../utils/aws';
+import { getImgUrl } from '../utils/simpl';
 import {Helmet} from "react-helmet";
 import onboardingGif from '../assets/view-nav-onboarding.gif';
 
@@ -27,6 +27,7 @@ class View extends Component {
       description: '',
       createdByName: '',
       slug: '',
+      storyId: null,
       shots: [],
       activePart: 0,
       coverImg: null,
@@ -55,7 +56,7 @@ class View extends Component {
       startingPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'), 10);
     }
     var data = {
-        query: "query ($slug: String!) { \n story(slug: $slug) { \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n isPrivate \n allowPayment \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n isPrivate \n allowPayment \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
         variables: {
           slug: this.state.storySlug
         }
@@ -80,6 +81,7 @@ class View extends Component {
             createdByName: story.createdByName,
             slug: story.slug,
             shots: story.parts,
+            storyId: story.id,
             activePart: startingPart,
             coverImg: coverImg,
             isPrivate: story.isPrivate,
@@ -171,10 +173,6 @@ class View extends Component {
     if(this.state.coverImg){
       helmet = (
         <Helmet>
-          <meta property="og:url" content={"http://hashtaghello.in/view/"+this.state.slug} />
-          <meta property="og:title" content={this.state.hashtag} />
-          <meta property="og:description" content={this.state.description} />
-          <meta property="og:image" content={this.state.coverImg} />
           <title>{this.state.hashtag}</title>
         </Helmet>
       );

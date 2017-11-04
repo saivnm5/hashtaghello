@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {getImgUrl} from '../utils/aws';
-import { getShareUrl } from '../utils/simpl';
+import { getShareUrl, getImgUrl } from '../utils/simpl';
 import Img from 'react-image';
 import axios from 'axios';
 import { toast } from 'react-toastify';

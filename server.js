@@ -6,6 +6,7 @@ const graphqlHTTP = require('express-graphql');
 const API = require('./src/api');
 const AuthAPI = require('./src/actor/auth');
 const PublicAPI = require('./src/publicApi');
+const { metaMiddleware } = require('./middleware');
 
 var cors = require('cors');
 app.use(cors())
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 // Serves GraphQL API
 app.use(AuthAPI.authMiddleware);
+app.use(metaMiddleware);
 app.use('/auth', graphqlHTTP({
   schema: AuthAPI.schema,
   rootValue: AuthAPI.root,

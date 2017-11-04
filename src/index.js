@@ -37,14 +37,12 @@ class Routes extends React.Component{
         <div className="pseudo-root">
           <Helmet>
             <title>#hello</title>
-            <meta name="og:title" content="#hello" />
-            <meta name="og:description" content="a space for the storytellers of the world" />
           </Helmet>
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />
           <Route exact path="/storyboard/" component={Create} />
-          <Route exact path="/view/" component={View} />
+          <Route exact path="/view" component={View} />
         </div>
       </Router>
     );

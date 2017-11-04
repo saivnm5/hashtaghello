@@ -9,7 +9,7 @@ class TheEnd extends Component {
 		this.state = {
 			shareClass: 'hide',
 			paymentOn: false,
-			shareUrl: getShareUrl(this.props.data.slug),
+			shareUrl: getShareUrl(this.propds.data.storyId, this.props.data.slug),
 			paymentAmount: null,
 			paymentName: null,
 			paymentBtnText: 'Proceed To Pay',

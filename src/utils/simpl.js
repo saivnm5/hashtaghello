@@ -45,8 +45,8 @@ function createSlug(storyId, hashtag){
     return slug;
 }
 
-function getShareUrl(urlSlug){
-    var url = encodeURIComponent(config.apiRoot + '/view/' + urlSlug);
+function getShareUrl(id, urlSlug){
+    var url = encodeURIComponent(config.apiRoot + '/view?id='+ id + urlSlug);
     return url;
 }
 
@@ -57,8 +57,32 @@ function isTouchDevice() {
   return check;
 };
 
+function getImgUrl(imgKey, size) {
+  var imgArray = [];
+  var urlPrefix = 'https://hello-source.s3.ap-south-1.amazonaws.com/images/';
+  var resizedUrlPrefix = 'https://hello-sourceresized.s3.ap-south-1.amazonaws.com/images/';
+
+  if(size === 'all'){
+    imgArray.push(resizedUrlPrefix+'full-'+imgKey);
+    imgArray.push(urlPrefix+imgKey);
+    return(imgArray);
+  }
+  else if(size === 'thumb-all'){
+    imgArray.push(resizedUrlPrefix+'thumb-'+imgKey);
+    imgArray.push(urlPrefix+imgKey);
+    return(imgArray);
+  }
+  else if(size === 'full'){
+    return (resizedUrlPrefix+'full-'+imgKey);
+  }
+  else{
+    return (urlPrefix+imgKey);
+  }
+}
+
 module.exports.getRootDomain = getRootDomain;
 module.exports.extractHostname = extractHostname;
 module.exports.createSlug = createSlug;
 module.exports.getShareUrl = getShareUrl;
 module.exports.isTouchDevice = isTouchDevice;
+module.exports.getImgUrl = getImgUrl;

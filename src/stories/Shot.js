@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import bgImg from '../assets/bg.jpg';
-import {getImgUrl} from '../utils/aws';
+import {getImgUrl} from '../utils/simpl';
 
 
 class Shot extends Component {

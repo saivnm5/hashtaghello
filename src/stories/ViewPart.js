@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getImgUrl, imageExists } from '../utils/aws';
+import { imageExists } from '../utils/aws';
+import { getImgUrl } from '../utils/simpl';
 import { getOembedData } from '../utils/oembed.js';
 
 class ViewPart extends Component {
