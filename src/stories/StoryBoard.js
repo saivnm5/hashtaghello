@@ -76,7 +76,13 @@ class StoryBoard extends Component {
             }
         }
         else if(propsData.shots[shotInFocus].imgKey){
-            content.img = getImgUrl(propsData.shots[shotInFocus].imgKey);
+            var shot = propsData.shots[shotInFocus];
+            if(shot.isNew === true){
+                content.img = getImgUrl(shot.imgKey);
+            }
+            else{
+                content.img = getImgUrl(shot.imgKey, 'full');
+            }
         }
         return content;
     }

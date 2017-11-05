@@ -88,6 +88,7 @@ var root = {
   story: (data) => {
     var response = {};
     var sql = "select story from url where slug = '"+data.slug+"'";
+    // select story from getStory(slug, accessToken, request.actor)
     return db.query(sql).then(function(results){
         var url = results[0][0];
         var sql1 = "select * from storyView where id = "+url.story;

@@ -83,7 +83,7 @@ CREATE TABLE "public"."url" (
     CONSTRAINT "story_url_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
 );
 ALTER TABLE "public"."url" ADD COLUMN "createdAt" timestamp DEFAULT now();
-
+ALTER TABLE "public"."url" DROP COLUMN "expiresAt";
 
 
 CREATE TABLE "public"."featuredStory" (
