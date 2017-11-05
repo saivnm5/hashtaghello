@@ -89,10 +89,3 @@ export function uploadPhoto(file, callbackObj) {
   }
 
 }
-
-export function imageExists(imgUrl){
-    var http = new XMLHttpRequest();
-    http.open('HEAD', imgUrl, false);
-    http.send();
-    return http.status !== 404;
-}

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { imageExists } from '../utils/aws';
 import { getImgUrl } from '../utils/simpl';
 import { getOembedData } from '../utils/oembed.js';
 
@@ -15,7 +14,7 @@ class ViewPart extends Component {
 	componentWillMount = () => {
 		var comp = this;
 		var mediaUrl = this.props.data.mediaUrl;
-		if(mediaUrl){
+		if(mediaUrl && this.props.load === true){
 			var callOembed = getOembedData(mediaUrl);
         callOembed.then(function(response){
             var oembedData = response.data.data.oembed;
@@ -31,9 +30,6 @@ class ViewPart extends Component {
 		var style = {};
 		if(this.props.data.imgKey){
 			var imgUrl = getImgUrl(this.props.data.imgKey, 'full');
-			//if(!imageExists(imgUrl)){
-				//imgUrl = getImgUrl(this.props.data.imgKey);
-			//}
 			style.backgroundImage = 'url("'+imgUrl+'")';
 		}
 		else{
