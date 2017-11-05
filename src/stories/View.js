@@ -157,14 +157,21 @@ class View extends Component {
 
   render() {
     var parts = [];
+    var activePart = this.state.activePart;
+    var loadRangeMin = activePart - 3;
+    var loadRangeMax = activePart + 3;
     if(this.state.shots.length > 0){
       var i = 0;
       for(; i<this.state.shots.length; i++){
         var activeClass = '';
-        if(i === this.state.activePart){ activeClass = 'active'; }
-        parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} key={i} />)
+        var load = false;
+        if(i === activePart){ activeClass = 'active'; }
+        if(i >= loadRangeMin && i <= loadRangeMax){
+          load = true;
+        }
+        parts.push(<ViewPart data={this.state.shots[i]} activeClass={activeClass} key={i} load={load} />)
       }
-      if(this.state.activePart === this.state.shots.length){ activeClass = 'active'; }
+      if(activePart === this.state.shots.length){ activeClass = 'active'; }
       else{ activeClass = ''; }
       parts.push(<TheEnd activeClass={activeClass} data={this.state} key={i+1} />);
     }

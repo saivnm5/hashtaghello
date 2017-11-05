@@ -40,11 +40,19 @@ class ViewPart extends Component {
 			style.background = 'none';
 		}
 
-		return(
-			<div className={"part "+this.props.activeClass} style={ style }>
-				{this.state.mediaHTML}
-			</div>
-		);
+		if(this.props.load === true){
+			return (
+				<div className={"part "+this.props.activeClass} style={ style }>
+					{this.state.mediaHTML}
+				</div>
+			);
+		}
+		else{
+			return (
+				<div className="part ">
+				</div>
+			);
+		}
 	}
 
 }
