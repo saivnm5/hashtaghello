@@ -32,6 +32,7 @@
 .upload-options > div{
   margin: 0px 0px 24px 0px;
   align-items: center;
+  justify-content: center
 }
 .upload-options div .fa{
   justify-content: center;

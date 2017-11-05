@@ -21,7 +21,8 @@ class StoryBoard extends Component {
             mediaUrl: '',
             inputType: defaultState.inputType,
             inputError: '',
-            inputSaveBtnTxt: 'Save'
+            inputSaveBtnTxt: 'Save',
+            showMediaOptions: false
         };
         this.updatePart = this.updatePart.bind(this);
     }
@@ -130,6 +131,12 @@ class StoryBoard extends Component {
         setTimeout(function(){
             comp.changeOrder(index, direction);
         }, 210); // for animation
+    }
+
+    showMediaOptions = () => {
+        this.setState({
+            showMediaOptions: true
+        });
     }
 
     Shots = () => {
@@ -261,26 +268,35 @@ class StoryBoard extends Component {
 
     emptyState = () => {
         var mediaInput = this.mediaInputObj();
+        var showMediaOptions = 'hide';
+        var showMediaToggle = 'show';
+        if(this.state.showMediaOptions){
+            showMediaOptions = 'show';
+            showMediaToggle = 'hide';
+        }
 
         var emptyState = (
             <div className="storyboard-body font-heading">
                 <div>
-                    Upload
+                    Add
                 </div>
                 <div className="upload-options">
                     <div onClick={this.props.triggerUpload}>
                         <i className="fa fa-camera-retro"></i>
-                        &nbsp;&nbsp;<span className="btn ">Image</span>
+                        &nbsp;&nbsp;<span className="soft-btn ">photos</span>
                     </div>
-                    <div onClick={() => this.selectInputType('audio')}>
+                    <div className={"font-sub-heading soft-btn "+showMediaToggle} onClick={this.showMediaOptions}>
+                        or songs
+                    </div>
+                    <div className={showMediaOptions} onClick={() => this.selectInputType('audio')}>
                         <i className="fa fa-music"></i>
-                        &nbsp;&nbsp;<span className="btn ">Audio</span>&nbsp;
+                        &nbsp;&nbsp;<span className="soft-btn ">audio</span>&nbsp;
                         <span className="font-sub-heading">(via soundcloud)</span>
                     </div>
                     {mediaInput.audio}
-                    <div onClick={() => this.selectInputType('video')}>
+                    <div className={showMediaOptions} onClick={() => this.selectInputType('video')}>
                         <i className="fa fa-film"></i>
-                        &nbsp;&nbsp;<span className="btn ">Video</span>&nbsp;
+                        &nbsp;&nbsp;<span className="soft-btn ">video</span>&nbsp;
                         <span className="font-sub-heading">(via youtube/vimeo)</span>
                     </div>
                     {mediaInput.video}
