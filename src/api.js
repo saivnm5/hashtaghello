@@ -46,7 +46,7 @@ var root = {
         return db.query(sql).then(function(response){
             var storyId = response[0][0].storyid;
             var slug = createSlug(storyId, hashtag);
-            var sql2 = "select output from getOrCreateUrl("+storyId+", '"+slug+"', null);";
+            var sql2 = "select output from getOrCreateUrl("+storyId+", '"+slug+"');";
             return db.query(sql2).then(function(results){
                 return storyId;
             });
