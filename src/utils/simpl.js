@@ -75,6 +75,9 @@ function getImgUrl(imgKey, size) {
   else if(size === 'full'){
     return (resizedUrlPrefix+'full-'+imgKey);
   }
+  else if(size === 'thumb'){
+    return (resizedUrlPrefix+'thumb-'+imgKey);
+  }
   else{
     return (urlPrefix+imgKey);
   }

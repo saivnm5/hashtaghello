@@ -18,11 +18,7 @@ var s3 = new window.AWS.S3({
   params: {Bucket: awsBucketName}
 });
 
-export function uploadPhoto(files, callbackObj) {
-  if (!files.length) {
-    return alert('Please choose a file to upload first.');
-  }
-  var file = files[0];
+export function uploadPhoto(file, callbackObj) {
   var fileName = 'images/'+ String(new Date() / 1000) + makeFilenameSafe(file.name);
   var ignoreCompression = false;
 
@@ -52,7 +48,12 @@ export function uploadPhoto(files, callbackObj) {
           }
           var imgKey = data.key.substring(7); // removing the prefix "images/"
           var shotIndex = callbackObj.shotIndex;
-          callbackObj.success(shotIndex, 'image', imgKey);
+          if(callbackObj.nextImageUpload){
+            callbackObj.nextImageUpload(callbackObj.files, callbackObj.nextIndex, shotIndex, imgKey);
+          }
+          else{
+            callbackObj.success(shotIndex, 'image', imgKey);
+          }
         });
 
       },
@@ -78,7 +79,12 @@ export function uploadPhoto(files, callbackObj) {
       }
       var imgKey = data.key.substring(7); // removing the prefix "images/"
       var shotIndex = callbackObj.shotIndex;
-      callbackObj.success(shotIndex, 'image', imgKey);
+      if(callbackObj.nextImageUpload){
+        callbackObj.nextImageUpload(callbackObj.files, shotIndex, imgKey);
+      }
+      else{
+        callbackObj.success(shotIndex, 'image', imgKey);
+      }
     });
   }
 

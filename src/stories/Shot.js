@@ -27,11 +27,11 @@ class Shot extends Component {
             url = props.data.thumbnailUrl;
         }
         else if (props.data.imgKey){
-            if(this.props.editMode){
-                url = getImgUrl(props.data.imgKey, 'full');
+            if(this.props.data.isNew === true){
+                url = getImgUrl(props.data.imgKey);
             }
             else{
-                url = getImgUrl(props.data.imgKey);
+                url = getImgUrl(props.data.imgKey, 'thumb');
             }
         }
         style.backgroundImage = 'url("'+url+'")';

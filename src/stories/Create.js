@@ -17,7 +17,7 @@ const STAGES = [
 ];
 
 const defaultPart = {
-  imgKey: null, mediaHTML: null, mediaUrl: null
+  imgKey: null, mediaHTML: null, mediaUrl: null, isNew: true
 };
 
 class Create extends Component {
@@ -25,12 +25,10 @@ class Create extends Component {
   constructor(props){
     super(props);
     var storySlug = null;
-    var editMode = false;
     var shots = [];
     if(props.location.hash){
       storySlug = props.location.hash;
       this.loadData(storySlug);
-      editMode = true;
     }
     for(var i=0; i<100; i++){
       shots.push(defaultPart);
@@ -48,8 +46,7 @@ class Create extends Component {
         uploadPercentage: 0,
         isPrivate: true,
         allowPayment: true,
-        storyboardBtnText: 'Publish',
-        editMode: editMode
+        storyboardBtnText: 'Publish'
     };
     this.updatePart = this.updatePart.bind(this);
     this.removePart = this.removePart.bind(this);
@@ -235,7 +232,8 @@ class Create extends Component {
       part = {
         imgKey: url,
         mediaUrl: null,
-        mediaHTML: null
+        mediaHTML: null,
+        isNew: true
       };
     }
     else if(type === 'audio' || type === 'video' || type === 'media'){
@@ -263,6 +261,22 @@ class Create extends Component {
     });
   }
 
+  goToNextEmptyPart = () => {
+    var currentIndex = this.state.shotInFocus;
+    var shots = this.state.shots;
+    var newIndex = null;
+    for(var i=currentIndex+1; i<shots.length; i++){
+      if(shots[i].imgKey === null && shots[i].mediaUrl === null){
+        newIndex = i;
+        break;
+      }
+    }
+    this.setState({
+      shotInFocus: newIndex
+    });
+    return newIndex;
+  }
+
   uploadProgress = (percentage) => {
     this.setState({
       uploadPercentage: percentage
@@ -275,18 +289,36 @@ class Create extends Component {
     });
   }
 
+  manageImageUpload = (files, queueIndex, shotIndex, imgKey) => {
+
+    var newShotIndex = this.state.shotInFocus;
+    var totalImages = files.length;
+    var file = files[queueIndex];
+    // updating previous image if this is a multiple upload
+    if(shotIndex !== undefined && imgKey !== undefined){
+      this.updatePart(shotIndex, 'image', imgKey);
+      newShotIndex = this.goToNextEmptyPart();
+    }
+    var callbackObj = {
+      success: this.updatePart,
+      shotIndex: newShotIndex,
+      progress: this.uploadProgress,
+      error: this.errorImageUpload
+    };
+    if(totalImages > queueIndex+1){
+      callbackObj.nextIndex = queueIndex+1;
+      callbackObj.nextImageUpload = this.manageImageUpload;
+      callbackObj.files = files;
+    }
+    uploadPhoto(file, callbackObj);
+    this.setState({
+      uploadInProgress: true
+    });
+  }
+
   handleImageUpload = (event) => {
     if(event.target.files){
-      var callbackObj = {
-        success: this.updatePart,
-        shotIndex: this.state.shotInFocus,
-        progress: this.uploadProgress,
-        error: this.errorImageUpload
-      };
-      uploadPhoto(event.target.files, callbackObj);
-      this.setState({
-        uploadInProgress: true
-      });
+      this.manageImageUpload(event.target.files, 0);
     }
   }
 
@@ -345,6 +377,7 @@ class Create extends Component {
             ref={(input) => { this.imageInput = input; }}
             style={{display:'none'}}
             onChange = {this.handleImageUpload}
+            multiple = "true"
           />
            <ToastContainer
             position="top-right"
