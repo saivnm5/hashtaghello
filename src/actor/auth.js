@@ -40,11 +40,11 @@ var root = {
     var fbUserId = "null";
     var googleUserId = "null";
     if(input.email){ email = "'"+input.email+"'"; }
-    if(input.fbUserId){ email = "'"+input.fbUserId+"'"; }
-    if(input.googleUserId){ email = "'"+input.googleUserId+"'"; }
+    if(input.fbUserId){ fbUserId = "'"+input.fbUserId+"'"; }
+    if(input.googleUserId){ googleUserId = "'"+input.googleUserId+"'"; }
     var hashtag = input.name.replace(/ /g,'');
 
-    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+",'"+input.fbUserId+"', '"+input.googleUserId+"', '"+hashtag+"')";
+    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+", "+input.fbUserId+", "+input.googleUserId+", '"+hashtag+"')";
     return db.query(sql).then(function(response){
         return response[0][0].accesstoken;
     }).catch(function(error){

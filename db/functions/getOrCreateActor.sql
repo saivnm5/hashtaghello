@@ -9,8 +9,10 @@ AS $$
 DECLARE
   actor integer;
 BEGIN
-	select id into actor from actor where "fbUserId" = fbUserId;
-  if actor is null then
+  if fbUserId is not null then
+	  select id into actor from actor where "fbUserId" = fbUserId;
+  end if;
+  if googleUserId is not null then
     select id into actor from actor where "googleUserId" = googleUserId;
   end if;
 	if actor is null then
