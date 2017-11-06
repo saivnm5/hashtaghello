@@ -44,7 +44,7 @@ var root = {
     if(input.googleUserId){ googleUserId = "'"+input.googleUserId+"'"; }
     var hashtag = input.name.replace(/ /g,'');
 
-    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+", "+input.fbUserId+", "+input.googleUserId+", '"+hashtag+"')";
+    var sql = "select * from getOrCreateActor('"+input.name+"',"+email+", "+fbUserId+", "+googleUserId+", '"+hashtag+"')";
     return db.query(sql).then(function(response){
         return response[0][0].accesstoken;
     }).catch(function(error){
