@@ -23,7 +23,7 @@ class Login extends Component {
   login = () => {
     var comp = this;
     var callbackObj = { success: this.getActor };
-    if (typeof window.FB !== undefined) {
+    if (window.FB !== undefined) {
       fbLogin(callbackObj);
     }
     else{
