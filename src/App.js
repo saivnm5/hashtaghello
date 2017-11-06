@@ -6,7 +6,7 @@ class App extends Component {
 
   render() {
     if(localStorage.getItem('isLoggedIn') === "true"){
-      return ( <Index /> );
+      return ( <Profile /> );
     }
     else{
       return ( <Landing /> );
