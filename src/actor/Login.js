@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { fbLogin, getFbUserData } from '../utils/fb';
 import { googleLogin } from '../utils/google';
-import landingImg from '../assets/img/landing.png';
+import coffeeImg from '../assets/img/coffee.png';
 import queryString from 'query-string';
 
 class Login extends Component {
@@ -120,7 +120,7 @@ class Login extends Component {
       <div className="container">
         <div className="login-body font-heading">
           <div className="login-img">
-            <img src={landingImg} alt="hashtag hello - organise photos into stories" />
+            <img src={coffeeImg} alt="hashtag hello - organise photos into stories" />
           </div>
           <br/>
           <div>

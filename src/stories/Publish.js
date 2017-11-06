@@ -93,7 +93,7 @@ class Publish extends Component {
           data: data
         }).then(function(response){
             var data = response.data.data;
-            var shareUrl = getShareUrl(data.publishStory);
+            var shareUrl = getShareUrl(this.props.data.story, data.publishStory);
             comp.setState({
                 shareUrl: shareUrl,
                 isPublished: true

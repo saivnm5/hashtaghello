@@ -168,7 +168,7 @@ li{
   justify-content: center;
 }
 .login-body .login-img img{
-  max-height: 200px;
+  height: 100px;
 }
 
 /* List */

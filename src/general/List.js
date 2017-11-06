@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Story from '../stories/Story';
 import axios from 'axios';
-import beginImg from '../assets/img/begin.png';
+import coffeeImg from '../assets/img/coffee.png';
 import { Link } from 'react-router-dom';
 
 class List extends Component {
@@ -95,7 +95,7 @@ class List extends Component {
             rows = (
                 <div className="lets-begin-story">
                     <div>
-                        <img src={beginImg} alt="lets begin" />
+                        <img src={coffeeImg} alt="lets begin" />
                     </div>
                     <div className="font-sub-heading">
                         this is the place where your stories will come to live
