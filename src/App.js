@@ -6,7 +6,7 @@ class App extends Component {
 
   render() {
     if(localStorage.getItem('isLoggedIn') === "true"){
-      return ( <Profile /> );
+      return ( <Profile location={this.props.location} /> );
     }
     else{
       return ( <Landing /> );
