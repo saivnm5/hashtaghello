@@ -30,7 +30,7 @@ class Landing extends Component {
               <img src={landingImg} alt="hashtag hello - organise photos into stories" />
             </div>
             <div className="font-x-large">
-              your life, as a story
+              your life is a story that deserves to be heard
             </div>
             <br/><br/>
             <div className="font-heading">
@@ -53,19 +53,19 @@ class Landing extends Component {
 
           <div className="landing-features font-heading color-grey">
             <div>
-              our storyboard allows you to easily re-order photos to craft a proper narrative
+              telling your story is as easy as creating a hashtag about an event in your life
             </div>
             <div className="divider">
               <hr className="bg-green" />
             </div>
             <div>
-              all stories are private by default, you can choose to share them or not
+              our storyboard allows you to easily re-order photos to craft a proper narrative
             </div>
             <div className="divider">
               <hr className="bg-red" />
             </div>
             <div>
-              this works on the web so, you don't need to install another app
+              all stories are private by default, you can choose to share them or not
             </div>
           </div>
 

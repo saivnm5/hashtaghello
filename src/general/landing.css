@@ -5,6 +5,7 @@
 }
 .landing-top div{
 	justify-content: center;
+	text-align: center;
 }
 .landing-top div img{
 	max-height: 400px;
