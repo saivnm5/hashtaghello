@@ -136,7 +136,7 @@ class StoryBoard extends Component {
 
         setTimeout(function(){
             comp.changeOrder(index, direction);
-        }, 210); // for animation
+        }, 110); // for animation
     }
 
     showMediaOptions = () => {
@@ -292,7 +292,7 @@ class StoryBoard extends Component {
                         &nbsp;&nbsp;<span className="soft-btn ">photos</span>
                     </div>
                     <div className={"font-sub-heading soft-btn "+showMediaToggle} onClick={this.showMediaOptions}>
-                        or songs
+                        or songs/videos
                     </div>
                     <div className={showMediaOptions} onClick={() => this.selectInputType('audio')}>
                         <i className="fa fa-music"></i>

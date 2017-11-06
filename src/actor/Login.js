@@ -2,11 +2,22 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { fbLogin, getFbUserData } from '../utils/fb';
 import { googleLogin } from '../utils/google';
+import landingImg from '../assets/img/landing.png';
+import queryString from 'query-string';
 
 class Login extends Component {
 
   componentWillMount(){
-    //this.login();
+    var search = this.props.location.search;
+    if(search && search !== ""){
+      var obj = queryString.parse(search);
+      if(obj.login === "fb"){
+        this.login();
+      }
+      else if(obj.login === "google"){
+        this.gLogin();
+      }
+    }
   }
 
   login = () => {
@@ -55,7 +66,7 @@ class Login extends Component {
           localStorage.setItem('authToken', accessToken);
           localStorage.setItem('actorName', userData.name);
           localStorage.setItem('isLoggedIn', true);
-          window.location.reload();
+          window.location = window.location.href.split("?")[0];
         }
     });
   }
@@ -86,7 +97,7 @@ class Login extends Component {
           localStorage.setItem('authToken', accessToken);
           localStorage.setItem('actorName', userData.name);
           localStorage.setItem('isLoggedIn', true);
-          window.location.reload();
+          window.location = window.location.href.split("?")[0];
         }
     });
   }
@@ -108,13 +119,17 @@ class Login extends Component {
     return (
       <div className="container">
         <div className="login-body font-heading">
+          <div className="login-img">
+            <img src={landingImg} alt="hashtag hello - organise photos into stories" />
+          </div>
+          <br/>
           <div>
-            Login using &nbsp;
+            login with
           </div>
           <div>
-            <span className="btn" onClick={this.login}>Facebook</span> &nbsp;
+            <span className="btn" onClick={this.gLogin}>google</span> &nbsp;
             or &nbsp;
-            <span className="btn" onClick={this.gLogin}>Google</span>
+            <span className="btn" onClick={this.login}>facebook</span>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import bgImg from '../assets/bg.jpg';
+import bgImg from '../assets/img/bg.jpg';
 import {getImgUrl} from '../utils/simpl';
 
 

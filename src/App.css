@@ -56,6 +56,9 @@ div{
   font-size: 14px;
   color: #C3C3C3;
 }
+.color-grey{
+  color: #C3C3C3;
+}
 .font-error{
   font-size: 13px;
   color: #C3C3C3;
@@ -63,7 +66,7 @@ div{
 .font-bold{
   font-weight: 600;
 }
-.font-selected{
+.font-selected, .color-green{
   color: #69BF40;
 }
 a,
@@ -156,13 +159,16 @@ li{
 
 /* Profile */
 .login-body{
-  height: 60vh;
+  height: 80vh;
   align-items: center;
   justify-content: center;
   flex-flow: column wrap;
 }
 .login-body div{
   justify-content: center;
+}
+.login-body .login-img img{
+  max-height: 200px;
 }
 
 /* List */
@@ -177,4 +183,12 @@ li{
 }
 .lets-begin-story img{
   height: 100px;
+}
+
+/* Colors */
+.bg-green{
+  background: #69BF40;
+}
+.bg-red{
+  background: #F64680;
 }

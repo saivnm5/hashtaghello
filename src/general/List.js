@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Story from '../stories/Story';
 import axios from 'axios';
-import beginImg from '../assets/begin.png';
+import beginImg from '../assets/img/begin.png';
 import { Link } from 'react-router-dom';
 
 class List extends Component {
@@ -103,7 +103,7 @@ class List extends Component {
                     <br/><br/>
                     <div className="font-heading btn">
                         <Link to="/create">
-                            Let's Begin
+                            let's begin
                         </Link>
                     </div>
                 </div>

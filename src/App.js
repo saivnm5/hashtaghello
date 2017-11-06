@@ -1,51 +1,16 @@
 import React, { Component } from 'react';
-import List from './general/List';
-import './assets/forms.css';
-import './App.css';
-import './stories/story.css';
-import './assets/font-awesome/css/font-awesome.min.css';
-import './assets/ReactToastify.min.css';
-import logoImg from './assets/logo.png';
-import { Link } from 'react-router-dom';
-
+import Home from './stories/Home';
+import Landing from './general/Landing';
 
 class App extends Component {
 
   render() {
-    return (
-        <div className="container">
-
-          <div id="header">
-            <div className="header-image" >
-              <img src={logoImg} alt="hashtag hello's logo" />
-            </div>
-
-            <div className="header-actions main">
-              <div title="Your Stories" className="font-heading">
-                <Link to="/profile">
-                  <i className="fa fa-hashtag"></i>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <List type="home" />
-          </div>
-
-          <div id="footer">
-            <div className="font-sub-heading">
-              that's all folks
-            </div>
-            <div className="font-heading btn">
-              <Link to="/profile">
-                #WriteYourOwnStory
-              </Link>
-            </div>
-          </div>
-
-        </div>
-    );
+    if(localStorage.getItem('isLoggedIn') === "true"){
+      return ( <Home /> );
+    }
+    else{
+      return ( <Landing /> );
+    }
   }
 }
 

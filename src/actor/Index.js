@@ -49,7 +49,7 @@ class Index extends Component {
       return( <Profile /> );
     }
     else{
-      return( <Login /> );
+      return( <Login location={this.props.location} /> );
     }
   }
 }

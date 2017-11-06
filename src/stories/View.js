@@ -5,7 +5,7 @@ import ViewPart from './ViewPart';
 import TheEnd from './TheEnd';
 import { getImgUrl } from '../utils/simpl';
 import {Helmet} from "react-helmet";
-import onboardingGif from '../assets/view-nav-onboarding.gif';
+import onboardingGif from '../assets/img/view-nav-onboarding.gif';
 
 
 class View extends Component {
