@@ -105,7 +105,7 @@ class Login extends Component {
   gLogin = () => {
     var callbackObj = { success: this.getOrCreateActorGoogle };
     var comp = this;
-    if (typeof window.gapi.client !== undefined && typeof window.gapi.auth2 !== undefined) {
+    if (window.gapi.client !== undefined && window.gapi.auth2 !== undefined) {
       googleLogin(callbackObj);
     }
     else{
