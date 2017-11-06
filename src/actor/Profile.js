@@ -16,11 +16,13 @@ class Profile extends Component {
     return (
       <div className="container">
         <div id="header">
+          {/*
           <Link to="/">
           <div className="header-back">
             <i className="fa fa-arrow-left"></i>
           </div>
           </Link>
+          */}
           <div className="header-title" >
               #{this.state.hashtag}
           </div>
