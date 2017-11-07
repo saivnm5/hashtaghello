@@ -30,7 +30,7 @@ class Landing extends Component {
               <img src={landingImg} alt="hashtag hello - organise photos into stories" />
             </div>
             <div className="font-heading">
-              your life, as a story
+              your life is a story
             </div>
             <br/><br/>
             <div className="font-heading">
@@ -53,7 +53,7 @@ class Landing extends Component {
 
           <div className="landing-features font-heading color-grey">
             <div>
-              telling your story is as easy as creating a hashtag about an event in your life
+              telling your story is as easy as choosing a hashtag, adding photos and re-arranging them.
             </div>
             <div className="divider">
               <hr className="bg-green" />
