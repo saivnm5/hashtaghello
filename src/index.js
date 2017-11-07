@@ -45,7 +45,6 @@ class Routes extends React.Component{
           </Helmet>
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />
           <Route exact path="/storyboard/" component={Create} />
           <Route exact path="/view" component={View} />
