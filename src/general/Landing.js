@@ -53,7 +53,7 @@ class Landing extends Component {
 
           <div className="landing-features font-heading color-grey">
             <div>
-              telling your story is as easy as choosing a hashtag, adding photos and re-arranging them.
+              telling your story is as easy as choosing a hashtag, adding photos and re-arranging them
             </div>
             <div className="divider">
               <hr className="bg-green" />
