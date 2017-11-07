@@ -10,6 +10,7 @@ import App from './App';
 import Create from './stories/Create';
 import Profile from './actor/Index';
 import View from './stories/View';
+import Featured from './stories/Featured';
 import {Helmet} from "react-helmet";
 import { isTouchDevice } from './utils/simpl';
 import './assets/forms.css';
@@ -44,9 +45,11 @@ class Routes extends React.Component{
           </Helmet>
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />
           <Route exact path="/storyboard/" component={Create} />
           <Route exact path="/view" component={View} />
+          <Route exact path="/featured" component={Featured} />
         </div>
       </Router>
     );

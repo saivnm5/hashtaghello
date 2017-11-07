@@ -109,7 +109,7 @@ class List extends Component {
                 </div>
             );
         }
-        if(this.props.type === "home"){
+        if(this.props.type === "featured"){
             text = 'featured stories';
         }
         else if(this.props.type === "profile"){

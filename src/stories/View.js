@@ -158,8 +158,8 @@ class View extends Component {
   render() {
     var parts = [];
     var activePart = this.state.activePart;
-    var loadRangeMin = activePart - 3;
-    var loadRangeMax = activePart + 3;
+    var loadRangeMin = activePart - 2;
+    var loadRangeMax = activePart + 2;
     if(this.state.shots.length > 0){
       var i = 0;
       for(; i<this.state.shots.length; i++){

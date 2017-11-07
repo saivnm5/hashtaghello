@@ -31,14 +31,14 @@ class Story extends Component {
     }
 
     render() {
-        let imgArray = null;
+        let imgUrl = null;
         if(this.props.data.imgKey){
-            imgArray = getImgUrl(this.props.data.imgKey, 'all');
+            imgUrl = getImgUrl(this.props.data.imgKey, 'full');
         }
         else if(this.props.data.thumbnailUrl){
-            imgArray = [this.props.data.thumbnailUrl];
+            imgUrl = this.props.data.thumbnailUrl;
         }
-        let media = <Img src={imgArray} alt={this.props.data.hashtag} />;
+        let style = { backgroundImage : 'url("'+imgUrl+'")'};
         var viewComp = null;
         if(this.state.viewStory){
             viewComp = <View slug={this.props.data.slug} closeStory={this.closeStory} />
@@ -54,8 +54,7 @@ class Story extends Component {
 
         return (
             <div className="story">
-                <div className="story-media" onClick={this.viewStory}>
-                    {media}
+                <div className="story-media" onClick={this.viewStory} style={style}>
                 </div>
                 <div className="story-content">
                     <div>

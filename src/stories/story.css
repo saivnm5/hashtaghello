@@ -6,10 +6,10 @@
 .story-media{
   margin-bottom: 8px;
   cursor: pointer;
-}
-.story-media img{
-  width: 100%;
-  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
 }
 .story-content{
   flex-flow: column wrap;

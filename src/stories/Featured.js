@@ -4,7 +4,7 @@ import logoImg from '../assets/img/logo.png';
 import { Link } from 'react-router-dom';
 
 
-class Home extends Component {
+class Featured extends Component {
 
   render() {
     return (
@@ -25,7 +25,7 @@ class Home extends Component {
           </div>
 
           <div>
-            <List type="home" />
+            <List type="featured" />
           </div>
 
           <div id="footer">
@@ -44,4 +44,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Featured;
