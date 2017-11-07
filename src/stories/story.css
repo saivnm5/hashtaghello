@@ -9,7 +9,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: 70vh;
 }
 .story-content{
   flex-flow: column wrap;
