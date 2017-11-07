@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {getImgUrl} from '../utils/simpl';
 import View from './View';
-import Img from 'react-image';
 
 class Story extends Component {
 

@@ -83,8 +83,13 @@ class List extends Component {
         this.loadContent(0);
     }
 
+    logout = () => {
+        localStorage.removeItem('isLoggedIn');
+        window.location.reload();
+    }
+
     render() {
-        var rows = []; var text = '';
+        var rows = [];
         var stories = this.state.stories;
         if(stories.length > 0){
             for (var i=0; i < stories.length; i++) {
@@ -109,17 +114,25 @@ class List extends Component {
                 </div>
             );
         }
+
+        var tabComp = null;
         if(this.props.type === "featured"){
-            text = 'featured stories';
+            tabComp = <div className="font-sub-heading">featured stories</div>;
         }
         else if(this.props.type === "profile"){
-            text = 'your stories';
+            tabComp = (
+                <span>
+                    <span className="font-sub-heading">your stories</span>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span className="font-sub-heading soft-btn" onClick={this.logout}>logout</span>
+                </span>
+            );
         }
 
         return (
             <div className="list">
                 <div className="list-header">
-                    <div className="font-sub-heading">{text}</div>
+                    {tabComp}
                 </div>
                 <div className="list-body">
                     {rows}
