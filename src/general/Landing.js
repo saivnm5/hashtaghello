@@ -30,7 +30,7 @@ class Landing extends Component {
               <img src={landingImg} alt="hashtag hello - organise photos into stories" />
             </div>
             <div className="font-heading">
-              your life is a story
+              your life as a story
             </div>
             <br/><br/>
             <div className="font-heading">
