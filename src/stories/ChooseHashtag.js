@@ -25,8 +25,8 @@ class ChooseHashtag extends Component {
                 </div>
 
                 <div className="create-body">
-                    <div className="font-heading hide">Hello {this.state.name},</div>
-                    <div className="font-sub-heading">so, what's your story?</div>
+                    <div className="font-heading">choose a hashtag</div>
+                    <div className="font-sub-heading">just something to identify your idea with</div>
                     <br/><br/>
                     <div>
                       <input
@@ -40,7 +40,7 @@ class ChooseHashtag extends Component {
                     <div>
                       <textarea
                         className="form"
-                        placeholder="Description"
+                        placeholder="description"
                         value={this.props.data.description}
                         onChange={this.props.handleDescriptionChange}
                       />
