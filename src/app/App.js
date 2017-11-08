@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Landing from './general/Landing';
-import Profile from './actor/Index';
+import Landing from '../general/Landing';
+import Profile from '../actor/Index';
 
 class App extends Component {
 

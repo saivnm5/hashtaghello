@@ -85,7 +85,7 @@ class List extends Component {
 
     logout = () => {
         localStorage.removeItem('isLoggedIn');
-        window.location.reload();
+        window.location = '/';
     }
 
     render() {

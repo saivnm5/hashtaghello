@@ -3,9 +3,9 @@ const morgan = require('morgan');
 const path = require('path');
 const app = express();
 const graphqlHTTP = require('express-graphql');
-const API = require('./src/api');
+const API = require('./src/app/api');
 const AuthAPI = require('./src/actor/auth');
-const PublicAPI = require('./src/publicApi');
+const PublicAPI = require('./src/app/publicApi');
 const { metaMiddleware } = require('./middleware');
 
 var cors = require('cors');

@@ -95,6 +95,7 @@ class View extends Component {
   componentDidUpdate() {
     var comp = this;
     document.addEventListener('keydown', this.keyboardNav);
+    document.addEventListener('click', this.touchNav);
     document.addEventListener('mousemove', this.showArrows);
 
     var showOnboarding = false;
@@ -113,7 +114,18 @@ class View extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.keyboardNav);
+    document.removeEventListener('click', this.touchNav);
     document.removeEventListener('mousemove', this.showArrows);
+  }
+
+  touchNav = (event) => {
+    var midpoint = window.innerWidth / 2;
+    if(event.x < midpoint){
+      this.showLeft();
+    }
+    else{
+      this.showRight();
+    }
   }
 
   keyboardNav = (event) => {
@@ -134,6 +146,7 @@ class View extends Component {
   }
 
   showLeft = () => {
+    console.log('left');
     var currentActive = this.state.activePart;
     if(currentActive !== 0){
       this.setState({
@@ -145,6 +158,7 @@ class View extends Component {
   }
 
   showRight = () => {
+    console.log('right');
     var currentActive = this.state.activePart;
     if(currentActive !== (this.state.shots.length)){
       this.setState({

@@ -31,14 +31,11 @@
 	align-items: center;
 	font-size: 18px;
 	z-index: 1;
-	visibility: hidden;
+	visibility: visible;
 	background: rgba(25, 25, 25, .2);
 }
 .view-story .header .fa{
 	cursor: pointer;
-}
-.view-story:hover .header{
-	visibility: visible;
 }
 
 .view-story .navigation{

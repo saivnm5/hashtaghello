@@ -1,6 +1,6 @@
 var { graphql, buildSchema } = require('graphql');
-var db = require('./db');
-var { getRootDomain } = require('./utils/simpl');
+var db = require('../db');
+var { getRootDomain } = require('../utils/simpl');
 var axios = require('axios');
 
 var schema = buildSchema(`

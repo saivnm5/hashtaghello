@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import config from './config';
-import App from './App';
+import App from './app/App';
 import Create from './stories/Create';
 import Profile from './actor/Index';
 import View from './stories/View';
@@ -14,7 +14,7 @@ import Featured from './stories/Featured';
 import {Helmet} from "react-helmet";
 import { isTouchDevice } from './utils/simpl';
 import './assets/forms.css';
-import './App.css';
+import './assets/app.css';
 import './stories/story.css';
 import './assets/font-awesome/css/font-awesome.min.css';
 import './assets/ReactToastify.min.css';

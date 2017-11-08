@@ -1,7 +1,7 @@
 var { graphql, buildSchema } = require('graphql');
-var db = require('./db');
-var { createSlug } = require('./utils/simpl');
-var { isAuthorized } = require('./actor/auth');
+var db = require('../db');
+var { createSlug } = require('../utils/simpl');
+var { isAuthorized } = require('../actor/auth');
 
 var schema = buildSchema(`
     input StoryInput{
