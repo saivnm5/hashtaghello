@@ -26,7 +26,7 @@ class ChooseHashtag extends Component {
 
                 <div className="create-body">
                     <div className="font-heading">choose a hashtag</div>
-                    <div className="font-sub-heading">just something to identify your idea with</div>
+                    <div className="font-sub-heading">just something to identify your story with</div>
                     <br/><br/>
                     <div>
                       <input
