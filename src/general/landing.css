@@ -13,6 +13,9 @@
 .landing-top-img{
 	margin: 25px 0px;
 }
+.landing-tagline{
+	margin-bottom: 32px;
+}
 
 .landing-features{
 	flex-flow: column wrap;

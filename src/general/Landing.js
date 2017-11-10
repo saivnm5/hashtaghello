@@ -29,10 +29,9 @@ class Landing extends Component {
             <div className="landing-top-img">
               <img src={landingImg} alt="hashtag hello - organise photos into stories" />
             </div>
-            <div className="font-heading">
+            <div className="font-heading landing-tagline">
               our lives as a story
             </div>
-            <br/><br/>
             <div className="font-heading">
               start creating with
             </div>
