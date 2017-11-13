@@ -41,7 +41,9 @@ var root = {
     var input = data.input;
     return isAuthorized('story', request.actor, input.id).then(function(authorized){
         var hashtag = input.hashtag.replace(/^#/, ''); //removing prepended hashtag
-        var sql = "select * from createOrUpdateStory('"+hashtag+"','"+input.description+"', "+request.actor+", "+input.id+")";
+
+        var description = db.escape(input.description);
+        var sql = "select * from createOrUpdateStory('"+hashtag+"', "+description+", "+request.actor+", "+input.id+")";
         console.log(sql);
         return db.query(sql).then(function(response){
             var storyId = response[0][0].storyid;
@@ -114,11 +116,13 @@ var root = {
     return isAuthorized('story', request.actor, input.story).then(function(authorized){
 
         var sql1 = "select hashtag, description from storyView where id="+input.story;
+        console.log(sql1);
         return db.query(sql1).then(function(results){
             var story = results[0][0];
             var hashtag = story.hashtag.replace(/^#/, ''); //removing prepended hashtag
             var slug = createSlug(input.story, hashtag);
             var sql2 = "select * from publishStory("+input.story+", "+input.isPrivate+", "+input.allowPayment+", '"+slug+"')";
+            console.log(sql2);
             return db.query(sql2).then(function(results){
                 var row = results[0][0];
                 return row.slugurl;

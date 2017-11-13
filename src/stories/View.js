@@ -51,9 +51,9 @@ class View extends Component {
   componentWillMount = () => {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
-    var startingPart = 0;
+    var currentPart = 0;
     if(localStorage.getItem(this.state.storySlug+'-currentPart') !== null){
-      startingPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'), 10);
+      currentPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'), 10);
     }
     var data = {
         query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n isPrivate \n allowPayment \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
@@ -75,6 +75,10 @@ class View extends Component {
         else if(story.thumbnailUrl){
             coverImg = story.thumbnailUrl;
         }
+        var activePart = 0;
+        if(currentPart !== story.parts.length){
+          activePart = currentPart;
+        }
         comp.setState({
             hashtag: '#'+story.hashtag,
             description: story.description,
@@ -82,14 +86,12 @@ class View extends Component {
             slug: story.slug,
             shots: story.parts,
             storyId: story.id,
-            activePart: startingPart,
+            activePart: activePart,
             coverImg: coverImg,
             isPrivate: story.isPrivate,
             allowPayment: story.allowPayment
         });
     });
-
-
   }
 
   componentDidUpdate() {
@@ -172,8 +174,8 @@ class View extends Component {
   render() {
     var parts = [];
     var activePart = this.state.activePart;
-    var loadRangeMin = activePart - 2;
-    var loadRangeMax = activePart + 2;
+    var loadRangeMin = activePart - 1;
+    var loadRangeMax = activePart + 3;
     if(this.state.shots.length > 0){
       var i = 0;
       for(; i<this.state.shots.length; i++){

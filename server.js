@@ -1,5 +1,5 @@
 const express = require('express');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const path = require('path');
 const app = express();
 const graphqlHTTP = require('express-graphql');
@@ -12,7 +12,7 @@ var cors = require('cors');
 app.use(cors())
 
 // Logger
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+//app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
 // Serves static assets
 app.use(express.static(path.join(__dirname, 'build')));

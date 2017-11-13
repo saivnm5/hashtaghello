@@ -45,6 +45,7 @@ var root = {
     var hashtag = input.name.replace(/ /g,'');
 
     var sql = "select * from getOrCreateActor('"+input.name+"',"+email+", "+fbUserId+", "+googleUserId+", '"+hashtag+"')";
+    console.log(sql);
     return db.query(sql).then(function(response){
         return response[0][0].accesstoken;
     }).catch(function(error){
@@ -96,11 +97,10 @@ function isAuthorized(table, actor, objectId){
     db.query(sql).then(function(results){
       console.log('Authorization | '+sql);
       if(results[0][0].count == 1){
-        console.log('Authorized');
         resolve(true);
       }
       else{
-        console.log('inside reject');
+        console.log('Unauthorized');
         reject(true);
       }
     })

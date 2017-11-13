@@ -11,7 +11,7 @@ class ViewPart extends Component {
 		};
 	}
 
-	componentWillMount = () => {
+	componentWillUpdate = () => {
 		var comp = this;
 		var mediaUrl = this.props.data.mediaUrl;
 		if(mediaUrl && this.props.load === true){
