@@ -121,8 +121,8 @@ class View extends Component {
   }
 
   touchNav = (event) => {
-    var midpoint = window.innerWidth / 2;
-    if(event.x < midpoint){
+    var midpointX = window.innerWidth / 2;
+    if(event.x < midpointX){
       this.showLeft();
     }
     else{

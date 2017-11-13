@@ -38,10 +38,25 @@ class StoryBoard extends Component {
 
     componentDidUpdate() {
         document.addEventListener('keydown', this.keyboardControl);
+        document.addEventListener('click', this.touchNav);
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.keyboardControl);
+    }
+
+    touchNav = (event) => {
+        var midpointX = window.innerWidth / 2;
+        var activeY = window.innerHeight * 0.75;
+        var currentPart = this.props.data.shotInFocus;
+        if(event.y <= activeY){
+            if(event.x < midpointX && currentPart !== 0){
+              this.props.updateShotInFocus(currentPart-1);
+            }
+            else{
+              this.props.updateShotInFocus(currentPart+1);
+            }
+        }
     }
 
     keyboardControl = (event) => {
