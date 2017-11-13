@@ -113,7 +113,7 @@ class TheEnd extends Component {
 			<div className="the-end">
 				<div className="credits">
 					<div className="content">
-						<div className="font-sub-heading">this story was brought to you by</div>
+						<div className="font-sub-heading">this story was created by</div>
 						<div className="font-heading">{'#'+this.props.data.createdByName}</div>
 					</div>
 				</div>
