@@ -122,7 +122,17 @@ class List extends Component {
         else if(this.props.type === "profile"){
             tabComp = (
                 <span>
-                    <span className="font-sub-heading">your stories</span>
+                    <span className="font-sub-heading">
+                        <Link to="/">
+                            your stories
+                        </Link>
+                    </span>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span className="font-sub-heading soft-btn">
+                        <Link to="/featured">
+                            featured stories
+                        </Link>
+                    </span>
                     &nbsp;&nbsp;|&nbsp;&nbsp;
                     <span className="font-sub-heading soft-btn" onClick={this.logout}>logout</span>
                 </span>

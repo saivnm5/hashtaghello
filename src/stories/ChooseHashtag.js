@@ -40,7 +40,7 @@ class ChooseHashtag extends Component {
                     <div>
                       <textarea
                         className="form"
-                        placeholder="description"
+                        placeholder="summary"
                         value={this.props.data.description}
                         onChange={this.props.handleDescriptionChange}
                       />
