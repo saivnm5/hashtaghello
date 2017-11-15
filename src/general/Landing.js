@@ -30,7 +30,7 @@ class Landing extends Component {
               <img src={landingImg} alt="hashtag hello - organise photos into stories" />
             </div>
             <div className="font-heading landing-tagline">
-              our lives as a story
+              our lives, as a story
             </div>
             <div className="font-heading">
               start creating with
@@ -52,19 +52,19 @@ class Landing extends Component {
 
           <div className="landing-features font-heading color-grey">
             <div>
-              telling your story is as easy as choosing a hashtag, adding photos and re-arranging them
+              #multimedia - poems are just as important as films
             </div>
             <div className="divider">
               <hr className="bg-green" />
             </div>
             <div>
-              our storyboard allows you to easily re-order photos to craft a proper narrative
+              #immersive - there are no likes, comments, followers etc. to bother about
             </div>
             <div className="divider">
               <hr className="bg-red" />
             </div>
             <div>
-              all stories are private by default, you can choose to share them or not
+              #private - no one can message no one, nor view another's profile
             </div>
           </div>
 
