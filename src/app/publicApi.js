@@ -48,7 +48,7 @@ var schema = buildSchema(`
     }
 
     type Query {
-        stories(self: Boolean, page: Int): [Story]
+        stories(type: String, page: Int): [Story]
         test: String
         story(slug: String!): ViewStory
         oembed(url: String!): Oembed
@@ -64,17 +64,22 @@ var root = {
   stories: (data, request) => {
     var sql = 'select * from ';
     var pageSize = 5; var offset = 0;
+
+    if(data.type === 'self'){
+        sql += ' storyView where "createdBy" = '+request.actor;
+    }
+    else if(data.type === 'featured'){
+        sql += ' storyFeaturedView';
+    }
+    else if(data.type === 'public'){
+        sql += ' storyPublicView';
+    }
+
     if(data.page){
         offset = pageSize * data.page;
     }
-    if(data.self){
-        sql += ' storyView where "createdBy" = '+request.actor;
-    }
-    else{
-        sql += ' storyFeaturedView';
-    }
-
     sql += ' limit '+pageSize+' offset '+offset;
+
     return db.query(sql).then(function(response){
         var rows = response[0];
         return rows;

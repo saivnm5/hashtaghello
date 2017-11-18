@@ -37,7 +37,7 @@ class Profile extends Component {
         </div>
 
         <div>
-          <List type="profile" />
+          <List type="self" />
         </div>
       </div>
     );

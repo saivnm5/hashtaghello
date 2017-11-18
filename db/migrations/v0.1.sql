@@ -93,6 +93,10 @@ CREATE TABLE "public"."featuredStory" (
     PRIMARY KEY ("id"),
     CONSTRAINT "story_featured_id" FOREIGN KEY ("story") REFERENCES "public"."story"("id")
 );
+ALTER TABLE "public"."featuredStory" RENAME TO "curatedStory";
+ALTER TABLE "public"."curatedStory"
+  ADD COLUMN "isFeatured" boolean,
+  ADD COLUMN "isCensored" boolean;
 
 
 CREATE TABLE "public"."payment" (

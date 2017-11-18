@@ -66,7 +66,7 @@ class Login extends Component {
           localStorage.setItem('authToken', accessToken);
           localStorage.setItem('actorName', userData.name);
           localStorage.setItem('isLoggedIn', true);
-          window.location = window.location.href.split("?")[0];
+          window.location = '/';
         }
     });
   }
@@ -97,7 +97,7 @@ class Login extends Component {
           localStorage.setItem('authToken', accessToken);
           localStorage.setItem('actorName', userData.name);
           localStorage.setItem('isLoggedIn', true);
-          window.location = window.location.href.split("?")[0];
+          window.location = '/';
         }
     });
   }

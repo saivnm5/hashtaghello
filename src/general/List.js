@@ -3,6 +3,7 @@ import Story from '../stories/Story';
 import axios from 'axios';
 import coffeeImg from '../assets/img/coffee.png';
 import { Link } from 'react-router-dom';
+import './list.css';
 
 class List extends Component {
 
@@ -39,23 +40,15 @@ class List extends Component {
         var apiRoot = localStorage.getItem('apiRoot');
         var data = {};
         var currentStories = this.state.stories;
-        if(this.props.type === "profile"){
-            data = {
-              query: "query ($self: Boolean, $page: Int) { \n stories(self: $self, page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n slug \n } \n }",
-              variables: {
-                self: true,
-                page: page
-              }
-            };
-        }
-        else{
-            data = {
-              query: "query ($page: Int) { \n stories(page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n slug \n } \n }",
-              variables: {
-                page: page
-              }
-            };
-        }
+
+        data = {
+          query: "query ($type: String, $page: Int) { \n stories(type: $type, page: $page) { \n id \n hashtag \n description \n imgKey \n thumbnailUrl \n mediaUrl \n slug \n } \n }",
+          variables: {
+            page: page,
+            type: this.props.type
+          }
+        };
+
         let headers = { "Authorization" : localStorage.getItem("authToken") };
         axios({
           method: 'post',
@@ -96,7 +89,7 @@ class List extends Component {
                 rows.push(<Story data={stories[i]} key={i} type={this.props.type} />);
             }
         }
-        else if(this.props.type === "profile"){
+        else if(this.props.type === "self"){
             rows = (
                 <div className="lets-begin-story">
                     <div>
@@ -115,20 +108,42 @@ class List extends Component {
             );
         }
 
+        var featuredTabClass = '';
+        var publicTabClass = '';
+        var selfTabClass = '';
+        var selectedTabClass = 'selected-tab';
+        if(this.props.type === 'self'){
+            selfTabClass = selectedTabClass;
+        }
+        else if(this.props.type === 'public'){
+            publicTabClass = selectedTabClass;
+        }
+        else if(this.props.type === 'featured'){
+            featuredTabClass = selectedTabClass;
+        }
+
+
         var tabComp = (
             <span>
-                <span className="font-sub-heading">
-                    <Link to="/">
+                <span className={"font-sub-heading soft-btn "+featuredTabClass}>
+                    <Link to="/featured">
+                        featured
+                    </Link>
+                </span>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <span className={"font-sub-heading soft-btn "+publicTabClass}>
+                    <Link to="/public">
+                        public
+                    </Link>
+                </span>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <span className={"font-sub-heading "+selfTabClass}>
+                    <Link to="/profile">
                         your stories
                     </Link>
                 </span>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
-                <span className="font-sub-heading soft-btn">
-                    <Link to="/featured">
-                        featured stories
-                    </Link>
-                </span>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+
                 <span className="font-sub-heading soft-btn" onClick={this.logout}>logout</span>
             </span>
         );

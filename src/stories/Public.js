@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import ListPage from '../general/ListPage';
 
-class Featured extends Component {
+class Public extends Component {
 
   render() {
     return (
-      <ListPage type="featured" />
+      <ListPage type="public" />
     );
   }
 }
 
-export default Featured;
+export default Public;
