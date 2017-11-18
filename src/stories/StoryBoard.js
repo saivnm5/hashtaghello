@@ -17,6 +17,7 @@ class StoryBoard extends Component {
         this.state = {
             img: media.img,
             mediaHTML: media.mediaHTML,
+            text: media.text,
             shots: this.props.data.shots,
             mediaUrl: '',
             inputType: defaultState.inputType,
@@ -46,30 +47,42 @@ class StoryBoard extends Component {
     }
 
     touchNav = (event) => {
-        var midpointX = window.innerWidth / 2;
-        var activeY = window.innerHeight * 0.75;
-        var currentPart = this.props.data.shotInFocus;
-        if(event.y <= activeY){
-            if(event.x < midpointX && currentPart !== 0){
-              this.props.updateShotInFocus(currentPart-1);
-            }
-            else{
-              this.props.updateShotInFocus(currentPart+1);
+        var canProcess = true;
+        var storyboardEl = document.getElementsByClassName('storyboard')[0];
+        if(event.target.className.includes('soft-btn') || event.target.className.includes('btn') || storyboardEl.contains(event.target))
+        {
+            canProcess = false;
+        }
+
+        if(canProcess){
+            var midpointX = window.innerWidth / 2;
+            var activeY = window.innerHeight * 0.75;
+            var currentPart = this.props.data.shotInFocus;
+
+            if(event.y <= activeY){
+                if(event.x < midpointX && currentPart !== 0){
+                  this.props.updateShotInFocus(currentPart-1);
+                }
+                else{
+                  this.props.updateShotInFocus(currentPart+1);
+                }
             }
         }
     }
 
     keyboardControl = (event) => {
-        if(event.key === "ArrowRight"){
-          this.moveShot(this.props.data.shotInFocus, 'right');
-        }
-        else if(event.key === "ArrowLeft"){
-          this.moveShot(this.props.data.shotInFocus, 'left');
+        if(this.state.inputType !== 'text'){
+            if(event.key === "ArrowRight"){
+              this.moveShot(this.props.data.shotInFocus, 'right');
+            }
+            else if(event.key === "ArrowLeft"){
+              this.moveShot(this.props.data.shotInFocus, 'left');
+            }
         }
     }
 
     getMedia = (propsData) => {
-        var content = { img: null, mediaHTML: null };
+        var content = { img: null, mediaHTML: null, text: '' };
         var comp = this;
         var shotInFocus = propsData.shotInFocus;
         if(propsData.shots[shotInFocus].mediaUrl){
@@ -288,43 +301,51 @@ class StoryBoard extends Component {
     }
 
     emptyState = () => {
-        var mediaInput = this.mediaInputObj();
-        var showMediaOptions = 'hide';
-        var showMediaToggle = 'show';
-        if(this.state.showMediaOptions){
-            showMediaOptions = 'show';
-            showMediaToggle = 'hide';
+        var emptyState = null;
+
+        if(this.state.inputType === 'text'){
+            emptyState = (
+                <div className="storyboard-body">
+                    <div className="text-input">
+                        <textarea
+                            className="form"
+                            placeholder="start writing here..."
+                        />
+                    </div>
+                </div>
+            );
+        }
+        else{
+            var mediaInput = this.mediaInputObj();
+
+            emptyState = (
+                <div className="storyboard-body font-heading">
+                    <div className="upload-options">
+                        <div onClick={() => this.selectInputType('text')}>
+                            <i className="fa fa-pencil"></i>
+                            &nbsp;&nbsp;<span className="soft-btn ">write</span>
+                        </div>
+                        <div onClick={this.props.triggerUpload}>
+                            <i className="fa fa-camera-retro"></i>
+                            &nbsp;&nbsp;<span className="soft-btn ">add photos</span>
+                        </div>
+                        <div onClick={() => this.selectInputType('audio')}>
+                            <i className="fa fa-music"></i>
+                            &nbsp;&nbsp;<span className="soft-btn ">audio</span>&nbsp;
+                            <span className="font-sub-heading">(via soundcloud)</span>
+                        </div>
+                        {mediaInput.audio}
+                        <div onClick={() => this.selectInputType('video')}>
+                            <i className="fa fa-film"></i>
+                            &nbsp;&nbsp;<span className="soft-btn ">or video</span>&nbsp;
+                            <span className="font-sub-heading">(via youtube/vimeo)</span>
+                        </div>
+                        {mediaInput.video}
+                    </div>
+                </div>
+            );
         }
 
-        var emptyState = (
-            <div className="storyboard-body font-heading">
-                <div>
-                    Add
-                </div>
-                <div className="upload-options">
-                    <div onClick={this.props.triggerUpload}>
-                        <i className="fa fa-camera-retro"></i>
-                        &nbsp;&nbsp;<span className="soft-btn ">photos</span>
-                    </div>
-                    <div className={"font-sub-heading soft-btn "+showMediaToggle} onClick={this.showMediaOptions}>
-                        or songs/videos
-                    </div>
-                    <div className={showMediaOptions} onClick={() => this.selectInputType('audio')}>
-                        <i className="fa fa-music"></i>
-                        &nbsp;&nbsp;<span className="soft-btn ">audio</span>&nbsp;
-                        <span className="font-sub-heading">(via soundcloud)</span>
-                    </div>
-                    {mediaInput.audio}
-                    <div className={showMediaOptions} onClick={() => this.selectInputType('video')}>
-                        <i className="fa fa-film"></i>
-                        &nbsp;&nbsp;<span className="soft-btn ">video</span>&nbsp;
-                        <span className="font-sub-heading">(via youtube/vimeo)</span>
-                    </div>
-                    {mediaInput.video}
-                </div>
-
-            </div>
-        );
         return emptyState;
     }
 
@@ -334,7 +355,6 @@ class StoryBoard extends Component {
             boardBody = this.emptyState();
         }
         else if(this.state.mediaHTML){
-            //boardBody = this.state.mediaHTML;
             boardBody = <div className="storyboard-body" dangerouslySetInnerHTML={{__html: this.state.mediaHTML}} />;
         }
 
