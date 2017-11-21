@@ -42,7 +42,7 @@ class Routes extends React.Component{
       <Router>
         <div className="pseudo-root">
           <Helmet>
-            <title>#hello</title>
+            <title>#hello - stories of the people, by the people, for the people</title>
           </Helmet>
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
