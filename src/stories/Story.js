@@ -43,7 +43,7 @@ class Story extends Component {
             viewComp = <View slug={this.props.data.slug} closeStory={this.closeStory} />
         }
         var Edit = null;
-        if(this.props.type === "profile"){
+        if(this.props.type === "self"){
             Edit = (
                 <div className="font-sub-heading right-align btn" onClick={this.triggerEdit} >
                     edit
