@@ -63,7 +63,7 @@ var root = {
 
   stories: (data, request) => {
     var sql = 'select * from ';
-    var pageSize = 5; var offset = 0;
+    var pageSize = 6; var offset = 0;
 
     if(data.type === 'self'){
         sql += ' storyView where "createdBy" = '+request.actor;

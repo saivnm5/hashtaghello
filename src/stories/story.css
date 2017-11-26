@@ -6,10 +6,10 @@
 .story-media{
   margin-bottom: 8px;
   cursor: pointer;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 70vh;
+  height: 50vh;
 }
 .story-content{
   flex-flow: column wrap;

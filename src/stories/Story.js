@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {getImgUrl} from '../utils/simpl';
 import View from './View';
+import bgImg from '../assets/img/bg.jpg';
 
 class Story extends Component {
 
@@ -30,7 +31,7 @@ class Story extends Component {
     }
 
     render() {
-        let imgUrl = null;
+        let imgUrl = bgImg;
         if(this.props.data.imgKey){
             imgUrl = getImgUrl(this.props.data.imgKey, 'full');
         }

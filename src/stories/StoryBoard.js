@@ -43,18 +43,28 @@ class StoryBoard extends Component {
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.keyboardControl);
+        document.removeEventListener('click', this.touchNav);
     }
 
     touchNav = (event) => {
-        var midpointX = window.innerWidth / 2;
-        var activeY = window.innerHeight * 0.75;
-        var currentPart = this.props.data.shotInFocus;
-        if(event.y <= activeY){
-            if(event.x < midpointX && currentPart !== 0){
-              this.props.updateShotInFocus(currentPart-1);
-            }
-            else{
-              this.props.updateShotInFocus(currentPart+1);
+        var canProcess = true;
+        var storyboardEl = document.getElementsByClassName('storyboard')[0];
+        if(event.target.className.includes('soft-btn') || event.target.className.includes('btn') || storyboardEl.contains(event.target))
+        {
+            canProcess = false;
+        }
+
+        if(canProcess){
+            var midpointX = window.innerWidth / 2;
+            var activeY = window.innerHeight * 0.75;
+            var currentPart = this.props.data.shotInFocus;
+            if(event.y <= activeY){
+                if(event.x < midpointX && currentPart !== 0){
+                  this.props.updateShotInFocus(currentPart-1);
+                }
+                else{
+                  this.props.updateShotInFocus(currentPart+1);
+                }
             }
         }
     }

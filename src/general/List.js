@@ -18,7 +18,7 @@ class List extends Component {
     }
 
     isBottom(el) {
-        return el.getBoundingClientRect().bottom <= (window.innerHeight+80);
+        return el.getBoundingClientRect().bottom <= (window.innerHeight+120);
     }
 
     componentDidUpdate() {
