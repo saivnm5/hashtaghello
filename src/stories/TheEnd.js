@@ -80,7 +80,7 @@ class TheEnd extends Component {
 
 	    axios({
 	      method: 'post',
-	      url: apiRoot+'/public',
+	      url: apiRoot+'/get',
 	      data: data
 	    }).then(function(response){
 	        var link = response.data.data.getPaymentLink;

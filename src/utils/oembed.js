@@ -10,7 +10,7 @@ export function getOembedData(url){
   };
   return axios({
     method: 'post',
-    url: apiRoot+'/public',
+    url: apiRoot+'/get',
     data: data
   });
 }

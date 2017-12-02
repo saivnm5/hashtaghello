@@ -52,7 +52,7 @@ class List extends Component {
         let headers = { "Authorization" : localStorage.getItem("authToken") };
         axios({
           method: 'post',
-          url: apiRoot+'/public',
+          url: apiRoot+'/get',
           data: data,
           headers: headers
         }).then(function(response){

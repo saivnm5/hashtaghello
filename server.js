@@ -26,7 +26,7 @@ app.use('/auth', graphqlHTTP({
   rootValue: AuthAPI.root,
   graphiql: true,
 }));
-app.use('/public', graphqlHTTP({
+app.use('/get', graphqlHTTP({
   schema: PublicAPI.schema,
   rootValue: PublicAPI.root,
   graphiql: config.DEBUG,

@@ -64,7 +64,7 @@ class Create extends Component {
 
     axios({
       method: 'post',
-      url: apiRoot+'/public',
+      url: apiRoot+'/get',
       data: data
     }).then(function(response){
         var story = response.data.data.story;

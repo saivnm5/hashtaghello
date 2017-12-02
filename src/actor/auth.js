@@ -57,8 +57,8 @@ var root = {
 
 function authMiddleware(req, res, next) {
   var hardAuth = true;
-  if(req.path === '/public' || req.path === '/api'){
-    if(req.path === '/public'){
+  if(req.path === '/get' || req.path === '/api'){
+    if(req.path === '/get'){
       hardAuth = false;
     }
     var authToken = req.header('Authorization');
