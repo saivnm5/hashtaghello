@@ -7,6 +7,7 @@ const API = require('./src/app/api');
 const AuthAPI = require('./src/actor/auth');
 const PublicAPI = require('./src/app/publicApi');
 const { metaMiddleware } = require('./middleware');
+const config = require('./src/config');
 
 var cors = require('cors');
 app.use(cors())
@@ -28,12 +29,12 @@ app.use('/auth', graphqlHTTP({
 app.use('/public', graphqlHTTP({
   schema: PublicAPI.schema,
   rootValue: PublicAPI.root,
-  graphiql: true,
+  graphiql: config.DEBUG,
 }));
 app.use('/api', graphqlHTTP({
   schema: API.schema,
   rootValue: API.root,
-  graphiql: true,
+  graphiql: config,
 }));
 
 // Serves React's build
