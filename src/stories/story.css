@@ -32,6 +32,7 @@
 	font-size: 18px;
 	z-index: 1;
 	visibility: visible;
+	opacity: 0.5;
 	background: rgba(25, 25, 25, .2);
 }
 .view-story .header .fa{
@@ -67,6 +68,7 @@
 	height: 100vh;
 	position: relative;
 	top: -5vh;
+	font-size: 16px;
 }
 .view-story .part{
 	background-position: center;
@@ -79,6 +81,9 @@
 }
 .view-story .part .body{
 	align-items: center;
+}
+.view-story .part .text-body{
+	padding-top: 10vh;
 }
 .view-story .part .body iframe{
 	width: 100%;

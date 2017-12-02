@@ -9,6 +9,7 @@ var schema = buildSchema(`
         imgKey: String
         thumbnailUrl: String
         mediaUrl: String
+        text: String
     }
 
     type Story{

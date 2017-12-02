@@ -7,23 +7,30 @@ class ViewPart extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			mediaHTML: null
+			mediaHTML: this.getMediaHTML(props)
 		};
 	}
 
-	componentWillUpdate = () => {
+	componentWillReceiveProps = (props) => {
+		this.setState({
+			mediaHTML: this.getMediaHTML(props)
+		})
+	}
+
+	getMediaHTML = (props) => {
 		var comp = this;
-		var mediaUrl = this.props.data.mediaUrl;
-		if(mediaUrl && this.props.load === true){
-			var callOembed = getOembedData(mediaUrl);
+		let media = null;
+		if(props.data.mediaUrl && props.load === true){
+			var callOembed = getOembedData(props.data.mediaUrl);
         callOembed.then(function(response){
-            var oembedData = response.data.data.oembed;
-            var media = <div className="body" dangerouslySetInnerHTML={{__html: oembedData.html}} />;
-            comp.setState({
-            	mediaHTML: media
-            });
+            let oembedData = response.data.data.oembed;
+            media = <div className="body" dangerouslySetInnerHTML={{__html: oembedData.html}} />;
         });
 		}
+		else if(props.data.text){
+			media = <div className="text-body" dangerouslySetInnerHTML={{__html: props.data.text}} />;
+		}
+		return media;
 	}
 
 	render(){

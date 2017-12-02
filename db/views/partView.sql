@@ -6,6 +6,7 @@ select
 "imgKey",
 "thumbnailUrl",
 concat("soundcloudUrl", "youtubeUrl", "vimeoUrl") as "mediaUrl",
-"order"
+"order",
+"text"
 from part
 order by "order" asc;

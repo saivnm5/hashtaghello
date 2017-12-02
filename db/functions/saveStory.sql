@@ -4,6 +4,7 @@ CREATE OR REPLACE FUNCTION saveStory(
     soundcloudUrls text[] default null,
     youtubeUrls text[] default null,
     vimeoUrls text[] default null,
+    texts text[] default null,
     OUT output integer)
 AS $$
 DECLARE
@@ -24,6 +25,9 @@ BEGIN
     end if;
     if vimeoUrls is not null then
         select "success" into output from saveStoryMedia(storyId, vimeoUrls, 'vimeo');
+    end if;
+    if texts is not null then
+        select "success" into output from saveStoryText(storyId, texts);
     end if;
 END; $$
 LANGUAGE plpgsql;

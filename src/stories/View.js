@@ -56,7 +56,7 @@ class View extends Component {
       currentPart = parseInt(localStorage.getItem(this.state.storySlug+'-currentPart'), 10);
     }
     var data = {
-        query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n isPrivate \n allowPayment \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n  } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n createdByName \n slug \n imgKey \n thumbnailUrl \n isPrivate \n allowPayment \n parts { \n imgKey \n thumbnailUrl \n mediaUrl \n text \n  } \n } \n }",
         variables: {
           slug: this.state.storySlug
         }
@@ -75,8 +75,8 @@ class View extends Component {
         else if(story.thumbnailUrl){
             coverImg = story.thumbnailUrl;
         }
-        var activePart = 0;
-        if(currentPart !== story.parts.length){
+        let activePart = 0;
+        if(currentPart < story.parts.length){
           activePart = currentPart;
         }
         comp.setState({

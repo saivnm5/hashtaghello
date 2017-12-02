@@ -38,7 +38,7 @@ class Create extends Component {
     this.state = {
         hashtag: '#',
         description: '',
-        stage: STAGES[1],
+        stage: STAGES[0],
         story: null,
         shots: shots,
         shotInFocus: 0,
@@ -56,7 +56,7 @@ class Create extends Component {
     var comp = this;
     var apiRoot = localStorage.getItem('apiRoot');
     var data = {
-        query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n isPrivate \n allowPayment \n slug \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n } \n } \n }",
+        query: "query ($slug: String!) { \n story(slug: $slug) { \n id \n hashtag \n description \n isPrivate \n allowPayment \n slug \n parts { \n imgKey \n mediaUrl \n thumbnailUrl \n text \n } \n } \n }",
         variables: {
           slug: storySlug
         }
@@ -153,6 +153,7 @@ class Create extends Component {
     var apiRoot = localStorage.getItem('apiRoot');
     var imgKeys = []; var soundcloudUrls = [];
     var youtubeUrls = []; var vimeoUrls = [];
+    var texts = [];
     var ___ = '###'; // delimiter
     var order = 0;
     for(var i=0; i < this.state.shots.length; i++){
@@ -177,6 +178,11 @@ class Create extends Component {
         imgKeys.push(string);
         order++;
       }
+      else if(part.text){
+        string = order+___+part.text;
+        texts.push(string);
+        order++;
+      }
     }
     var data = {
         query: "mutation saveStory($input: PartInput) { \n saveStory(input: $input) \n }",
@@ -186,7 +192,8 @@ class Create extends Component {
             imgKeys: imgKeys,
             soundcloudUrls: soundcloudUrls,
             youtubeUrls: youtubeUrls,
-            vimeoUrls: vimeoUrls
+            vimeoUrls: vimeoUrls,
+            texts: texts
           }
         }
     };
@@ -265,7 +272,7 @@ class Create extends Component {
         shots: shotB,
         uploadInProgress: false
       });
-      //this.saveStory();
+      this.saveStory();
     }
   }
 

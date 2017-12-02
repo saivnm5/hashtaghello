@@ -71,6 +71,7 @@ ALTER TABLE "public"."part"
   ADD COLUMN "youtubeUrl" text,
   ADD COLUMN "vimeoUrl" text,
   ADD COLUMN "thumbnailUrl" text;
+ALTER TABLE "public"."part" ADD COLUMN "text" text;
 
 
 

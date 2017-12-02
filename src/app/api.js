@@ -16,6 +16,7 @@ var schema = buildSchema(`
         soundcloudUrls: [String!]
         youtubeUrls: [String!]
         vimeoUrls: [String!]
+        texts: [String!]
     }
 
     input PublishInput{
@@ -65,8 +66,8 @@ var root = {
 
         var imgKeys = input.imgKeys; var soundcloudUrls = input.soundcloudUrls;
         var youtubeUrls = input.youtubeUrls; var vimeoUrls = input.vimeoUrls;
-        var imgArrayString = 'ARRAY['; var soundcloudArrayString = 'ARRAY[';
-        var youtubeArrayString = 'ARRAY['; var vimeoArrayString = 'ARRAY[';
+        let texts = input.texts;
+        let imgArrayString = soundcloudArrayString = youtubeArrayString = vimeoArrayString = textArrayString = 'ARRAY[';
 
         for(var i=0; i<imgKeys.length; i++){
             imgArrayString += "'"+imgKeys[i]+"',";
@@ -80,12 +81,16 @@ var root = {
         for(var i=0; i<vimeoUrls.length; i++){
             vimeoArrayString += "'"+vimeoUrls[i]+"',";
         }
+        for(var i=0; i<texts.length; i++){
+            textArrayString += "'"+texts[i]+"',";
+        }
 
         // removing last comma
         imgArrayString = imgArrayString.slice(0, -1);
         soundcloudArrayString = soundcloudArrayString.slice(0, -1);
         youtubeArrayString = youtubeArrayString.slice(0, -1);
         vimeoArrayString = vimeoArrayString.slice(0, -1);
+        textArrayString = textArrayString.slice(0, -1);
 
         if(imgKeys.length === 0){ imgArrayString = 'null'; }
         else{ imgArrayString += "]"; }
@@ -95,8 +100,10 @@ var root = {
         else{ youtubeArrayString += "]"; }
         if(vimeoUrls.length === 0){ vimeoArrayString = 'null' }
         else{ vimeoArrayString += "]"; }
+        if(texts.length === 0){ textArrayString = 'null' }
+        else{ textArrayString += "]"; }
 
-        var sql = "select * from saveStory("+storyId+", "+imgArrayString+", "+soundcloudArrayString+", "+youtubeArrayString+","+vimeoArrayString+")";
+        var sql = "select * from saveStory("+storyId+", "+imgArrayString+", "+soundcloudArrayString+", "+youtubeArrayString+","+vimeoArrayString+", "+textArrayString+")";
         console.log(sql);
         return db.query(sql).then(function(response){
             return response[0][0].output;
