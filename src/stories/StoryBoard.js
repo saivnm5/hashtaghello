@@ -113,6 +113,9 @@ class StoryBoard extends Component {
                 content.img = getImgUrl(shot.imgKey, 'full');
             }
         }
+        else if(propsData.shots[shotInFocus].text){
+            content.text = propsData.shots[shotInFocus].text;
+        }
         return content;
     }
 
@@ -135,6 +138,7 @@ class StoryBoard extends Component {
         this.setState({
             img: media.img,
             mediaHTML: media.mediaHTML,
+            text: media.text,
             shots: newProps.data.shots,
             shotInFocus: newProps.data.shotInFocus,
             inputType: inputState.inputType,
@@ -264,6 +268,11 @@ class StoryBoard extends Component {
         });
     }
 
+    handleTextInput = (event) => {
+        let text = event.target.value;
+        this.props.updatePart(this.props.data.shotInFocus, 'text', null, null, text);
+    }
+
     mediaInputComp = (placeholder) => {
         return(
             <div className="input">
@@ -301,20 +310,26 @@ class StoryBoard extends Component {
         return mediaInput;
     }
 
+    textInputObj = () => {
+        return (
+            <div className="storyboard-body">
+                <div className="text-input">
+                    <textarea
+                        className="form"
+                        placeholder="start writing here..."
+                        onChange={this.handleTextInput}
+                        value={this.state.text}
+                    />
+                </div>
+            </div>
+        );
+    }
+
     emptyState = () => {
         var emptyState = null;
 
         if(this.state.inputType === 'text'){
-            emptyState = (
-                <div className="storyboard-body">
-                    <div className="text-input">
-                        <textarea
-                            className="form"
-                            placeholder="start writing here..."
-                        />
-                    </div>
-                </div>
-            );
+            emptyState = this.textInputObj();
         }
         else{
             var mediaInput = this.mediaInputObj();
@@ -352,11 +367,14 @@ class StoryBoard extends Component {
 
     render(){
         var boardBody = null;
-        if(!this.state.img && !this.state.mediaHTML){
+        if(!this.state.img && !this.state.mediaHTML && !this.state.text){
             boardBody = this.emptyState();
         }
         else if(this.state.mediaHTML){
             boardBody = <div className="storyboard-body" dangerouslySetInnerHTML={{__html: this.state.mediaHTML}} />;
+        }
+        else if(this.state.text){
+            boardBody = this.textInputObj();
         }
 
         if(this.props.data.uploadInProgress){

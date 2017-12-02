@@ -17,7 +17,7 @@ const STAGES = [
 ];
 
 const defaultPart = {
-  imgKey: null, mediaHTML: null, mediaUrl: null, isNew: true
+  imgKey: null, mediaHTML: null, mediaUrl: null, isNew: true, text: null
 };
 
 class Create extends Component {
@@ -224,9 +224,16 @@ class Create extends Component {
     });
   }
 
-  updatePart = (shotIndex, type, url, oembedData) => {
+  isValidText = (text) => {
+    const MAX_LINES = 14;
+    const MAX_LENGTH = 560;
+    return text.split(/\r*\n/).length <= MAX_LINES && text.length <= MAX_LENGTH ? true : false;
+  }
+
+  updatePart = (shotIndex, type, url, oembedData, text) => {
     var shotB = this.state.shots;
     var part = {};
+    var isValid = true;
 
     if(type === 'image'){
       part = {
@@ -244,13 +251,22 @@ class Create extends Component {
         mediaHTML: oembedData.html
       };
     }
-    shotB[shotIndex] = part;
+    else if(type === 'text'){
+      isValid = this.isValidText(text);
+      part = {
+        imgKey: null, thumbnailUrl: null, mediaUrl: null, mediaHTML: null,
+        text: text
+      };
+    }
 
-    this.setState({
-      shots: shotB,
-      uploadInProgress: false
-    });
-    this.saveStory();
+    if(isValid){
+      shotB[shotIndex] = part;
+      this.setState({
+        shots: shotB,
+        uploadInProgress: false
+      });
+      //this.saveStory();
+    }
   }
 
   removePart = (shotIndex) => {
