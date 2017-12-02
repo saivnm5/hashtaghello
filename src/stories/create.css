@@ -43,6 +43,12 @@
 .upload-options .input div{
   align-items: center;
 }
+.storyboard-body .text-input{
+  max-width: 550px;
+}
+.storyboard-body .text-input textarea{
+  height: 58vh;
+}
 .scene-board{
   position: fixed;
   bottom: 0;
