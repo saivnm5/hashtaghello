@@ -4,7 +4,7 @@ import {uploadPhoto} from '../utils/aws';
 import ChooseHashtag from './ChooseHashtag';
 import StoryBoard from './StoryBoard';
 import Publish from './Publish';
-import { getRootDomain } from '../utils/simpl.js';
+import { getRootDomain, getLines } from '../utils/simpl.js';
 import { ToastContainer } from 'react-toastify';
 import './create.css';
 import { toast } from 'react-toastify';
@@ -101,8 +101,8 @@ class Create extends Component {
   }
 
   handleDescriptionChange = (event) => {
-    var numberOfLineBreaks = (event.target.value.match(/\n/g)||[]).length;
-    if(event.target.value.length <= 100 && numberOfLineBreaks === 0){
+    var lines = getLines(event.target.value).length;
+    if(event.target.value.length <= 100 && lines === 1){
       this.setState({
         description: event.target.value
       })
@@ -234,7 +234,7 @@ class Create extends Component {
   isValidText = (text) => {
     const MAX_LINES = 14;
     const MAX_LENGTH = 560;
-    return text.split(/\r*\n/).length <= MAX_LINES && text.length <= MAX_LENGTH ? true : false;
+    return getLines(text).length <= MAX_LINES && text.length <= MAX_LENGTH ? true : false;
   }
 
   updatePart = (shotIndex, type, url, oembedData, text) => {

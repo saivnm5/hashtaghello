@@ -90,9 +90,14 @@ function getImgUrl(imgKey, size) {
   }
 }
 
+function getLines(text){
+    return text.split(/\r*\n/);
+}
+
 module.exports.getRootDomain = getRootDomain;
 module.exports.extractHostname = extractHostname;
 module.exports.createSlug = createSlug;
 module.exports.getShareUrl = getShareUrl;
 module.exports.isTouchDevice = isTouchDevice;
 module.exports.getImgUrl = getImgUrl;
+module.exports.getLines = getLines;

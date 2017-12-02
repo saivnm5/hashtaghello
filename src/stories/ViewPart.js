@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getImgUrl } from '../utils/simpl';
+import { getImgUrl, getLines } from '../utils/simpl';
 import { getOembedData } from '../utils/oembed.js';
 
 class ViewPart extends Component {
@@ -18,7 +18,6 @@ class ViewPart extends Component {
 	}
 
 	getMediaHTML = (props) => {
-		var comp = this;
 		let media = null;
 		if(props.data.mediaUrl && props.load === true){
 			var callOembed = getOembedData(props.data.mediaUrl);
@@ -28,7 +27,12 @@ class ViewPart extends Component {
         });
 		}
 		else if(props.data.text){
-			media = <div className="text-body" dangerouslySetInnerHTML={{__html: props.data.text}} />;
+			let lines = getLines(props.data.text);
+			let text = '';
+			for(let line of lines){
+				text += line + '<br/>';
+			}
+			media = <div className="text-body" dangerouslySetInnerHTML={{__html: text}} />;
 		}
 		return media;
 	}
