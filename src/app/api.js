@@ -82,7 +82,7 @@ var root = {
             vimeoArrayString += "'"+vimeoUrls[i]+"',";
         }
         for(var i=0; i<texts.length; i++){
-            textArrayString += "'"+texts[i]+"',";
+            textArrayString += db.escape(texts[i])+",";
         }
 
         // removing last comma
