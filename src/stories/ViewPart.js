@@ -7,24 +7,27 @@ class ViewPart extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			mediaHTML: this.getMediaHTML(props)
+			mediaHTML: null
 		};
+		this.setMediaHTML(props);
 	}
 
 	componentWillReceiveProps = (props) => {
-		this.setState({
-			mediaHTML: this.getMediaHTML(props)
-		})
+		this.setMediaHTML(props);
 	}
 
-	getMediaHTML = (props) => {
+	setMediaHTML = (props) => {
+		let comp = this;
 		let media = null;
 		if(props.data.mediaUrl && props.load === true){
 			var callOembed = getOembedData(props.data.mediaUrl);
         callOembed.then(function(response){
             let oembedData = response.data.data.oembed;
-            media = <div className="body" dangerouslySetInnerHTML={{__html: oembedData.html}} />;
-        });
+						media = <div className="body" dangerouslySetInnerHTML={{__html: oembedData.html}} />;
+						comp.setState({
+							mediaHTML: media
+						});
+				});
 		}
 		else if(props.data.text){
 			let lines = getLines(props.data.text);
@@ -33,8 +36,10 @@ class ViewPart extends Component {
 				text += line + '<br/>';
 			}
 			media = <div className="text-body" dangerouslySetInnerHTML={{__html: text}} />;
+			comp.setState({
+				mediaHTML: media
+			});
 		}
-		return media;
 	}
 
 	render(){
