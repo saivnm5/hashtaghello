@@ -18,7 +18,7 @@ class List extends Component {
     }
 
     isBottom(el) {
-        return el.getBoundingClientRect().bottom <= (window.innerHeight+120);
+        return el.getBoundingClientRect().bottom <= (window.innerHeight+500);
     }
 
     componentDidUpdate() {
@@ -108,6 +108,12 @@ class List extends Component {
             );
         }
 
+        let showLogout = 'hide';
+        if(localStorage.getItem('isLoggedIn')){
+            showLogout = 'show-inline';
+        }
+
+
         var featuredTabClass = '';
         var publicTabClass = '';
         var selfTabClass = '';
@@ -142,9 +148,9 @@ class List extends Component {
                         your stories
                     </Link>
                 </span>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+                &nbsp;&nbsp;<span className={showLogout}>|</span>&nbsp;&nbsp;
 
-                <span className="font-sub-heading soft-btn" onClick={this.logout}>logout</span>
+                <span className={"font-sub-heading soft-btn "+showLogout} onClick={this.logout}>logout</span>
             </span>
         );
 
