@@ -33,7 +33,7 @@ class Landing extends Component {
               stories of the people, by the people, for the people
             </div>
             <div className="font-heading">
-              start creating with
+              start yours with
             </div>
             <div className="font-heading">
               <span className="btn">
@@ -52,19 +52,19 @@ class Landing extends Component {
 
           <div className="landing-features font-heading color-grey">
             <div>
-              #multimedia - poems are just as important as films
+              #meaningful - we believe your life is a story, not a feed.
             </div>
             <div className="divider">
               <hr className="bg-green" />
             </div>
             <div>
-              #immersive - there are no likes, comments, followers etc. to bother about
+              #personal - your stories are safe here. share them only when you feel like.
             </div>
             <div className="divider">
               <hr className="bg-red" />
             </div>
             <div>
-              #private - no one can message no one, nor view another's profile
+              #enjoyable - we take the effort of curating public stories, so you don't have to.
             </div>
           </div>
 
