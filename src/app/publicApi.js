@@ -69,11 +69,11 @@ var root = {
     if(data.type === 'self'){
         sql += ' storyView where "createdBy" = '+request.actor;
     }
-    else if(data.type === 'featured'){
-        sql += ' storyFeaturedView';
-    }
     else if(data.type === 'public'){
-        sql += ' storyPublicView';
+        sql += ' storyCuratedView';
+    }
+    else{
+        sql += ' storyView';
     }
 
     if(data.page){

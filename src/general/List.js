@@ -114,7 +114,6 @@ class List extends Component {
         }
 
 
-        var featuredTabClass = '';
         var publicTabClass = '';
         var selfTabClass = '';
         var selectedTabClass = 'selected-tab';
@@ -124,22 +123,13 @@ class List extends Component {
         else if(this.props.type === 'public'){
             publicTabClass = selectedTabClass;
         }
-        else if(this.props.type === 'featured'){
-            featuredTabClass = selectedTabClass;
-        }
 
 
         var tabComp = (
             <span>
-                <span className={"font-sub-heading soft-btn "+featuredTabClass}>
-                    <Link to="/featured">
-                        featured
-                    </Link>
-                </span>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
                 <span className={"font-sub-heading soft-btn "+publicTabClass}>
                     <Link to="/public">
-                        public
+                        public stories
                     </Link>
                 </span>
                 &nbsp;&nbsp;|&nbsp;&nbsp;

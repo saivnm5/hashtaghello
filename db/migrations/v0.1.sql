@@ -98,7 +98,7 @@ ALTER TABLE "public"."featuredStory" RENAME TO "curatedStory";
 ALTER TABLE "public"."curatedStory"
   ADD COLUMN "isFeatured" boolean,
   ADD COLUMN "isCensored" boolean;
-
+ALTER TABLE "public"."curatedStory" ADD COLUMN "rating" integer;
 
 CREATE TABLE "public"."payment" (
     "id" serial,

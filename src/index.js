@@ -10,8 +10,8 @@ import App from './app/App';
 import Create from './stories/Create';
 import Profile from './actor/Index';
 import View from './stories/View';
-import Featured from './stories/Featured';
 import Public from './stories/Public';
+import Feed from './stories/Feed';
 import {Helmet} from "react-helmet";
 import { isTouchDevice } from './utils/simpl';
 import './general/forms.css';
@@ -49,8 +49,8 @@ class Routes extends React.Component{
           <Route exact path="/create" component={Create} />
           <Route exact path="/storyboard/" component={Create} />
           <Route exact path="/view" component={View} />
-          <Route exact path="/featured" component={Featured} />
           <Route exact path="/public" component={Public} />
+          <Route exact path="/feed" component={Feed} />
         </div>
       </Router>
     );

@@ -4,7 +4,7 @@ import List from './List';
 import logoImg from '../assets/img/logo.png';
 
 
-class Featured extends Component {
+class ListPage extends Component {
 
   render() {
     return (
@@ -44,4 +44,4 @@ class Featured extends Component {
   }
 }
 
-export default Featured;
+export default ListPage;
