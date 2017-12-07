@@ -127,12 +127,12 @@ class Publish extends Component {
             </div>
         );
 
-        var showOptionsClass = 'show';
-        var showShareClass = 'hide';
-        var showPublishBtnClass = 'show';
-        var showPublishedClass = 'hide';
-        var showPublicOptionsClass = 'hide';
-        var showPublishNavClass = 'hide';
+        let showOptionsClass = 'show';
+        let showShareClass = 'hide';
+        let showPublishBtnClass = 'show';
+        let showPublishedClass = 'hide';
+        let showPublicOptionsClass = 'hide';
+        let publishNavText = 'publish later';
         if(this.state.option === 'public'){
             showPublicOptionsClass = 'show';
         }
@@ -142,7 +142,7 @@ class Publish extends Component {
             showPublishBtnClass = 'hide';
             showPublishedClass = 'show';
             showPublicOptionsClass = 'hide';
-            showPublishNavClass = 'show';
+            publishNavText = 'done';
         }
 
 
@@ -153,8 +153,8 @@ class Publish extends Component {
                     <div className="btn" onClick={this.goBack}>
                       back
                     </div>
-                    <div className={"btn right-align "+showPublishNavClass} >
-                      <Link to="/profile">done</Link>
+                    <div className="btn right-align" >
+                      <Link to="/profile">{publishNavText}</Link>
                     </div>
                 </div>
 
