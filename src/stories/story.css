@@ -32,7 +32,7 @@
 	font-size: 18px;
 	z-index: 1;
 	visibility: visible;
-	opacity: 0.5;
+	opacity: 0.7;
 	background: rgba(25, 25, 25, .2);
 }
 .view-story .header .fa{

@@ -9,7 +9,10 @@ class ViewPart extends Component {
 		this.state = {
 			mediaHTML: null
 		};
-		this.setMediaHTML(props);
+	}
+
+	componentDidMount(){
+		this.setMediaHTML(this.props);
 	}
 
 	componentWillReceiveProps = (props) => {
