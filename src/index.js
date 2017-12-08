@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import config from './config';
-import App from './app/App';
 import Create from './stories/Create';
 import Profile from './actor/Index';
 import View from './stories/View';
@@ -44,7 +43,7 @@ class Routes extends React.Component{
           <Helmet>
             <title>#hello - stories of the people, by the people, for the people</title>
           </Helmet>
-          <Route exact path="/" component={App} />
+          <Route exact path="/" component={Public} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />
           <Route exact path="/storyboard/" component={Create} />

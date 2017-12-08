@@ -7,6 +7,10 @@ import logoImg from '../assets/img/logo.png';
 class ListPage extends Component {
 
   render() {
+    let showOptions = 'hide';
+    if(localStorage.getItem('isLoggedIn')){
+      showOptions = 'show';
+    }
     return (
         <div className="container">
 
@@ -15,7 +19,7 @@ class ListPage extends Component {
               <img src={logoImg} alt="hashtag hello's logo" />
             </div>
 
-            <div className="header-actions main">
+            <div className={"header-actions main "+showOptions}>
               <div title="Your Stories" className="font-heading">
                 <Link to="/create">
                   <i className="fa fa-plus"></i>
